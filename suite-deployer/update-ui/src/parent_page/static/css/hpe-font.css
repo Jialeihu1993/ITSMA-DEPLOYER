@@ -1,0 +1,57 @@
+@charset "utf-8";
+@font-face {
+    font-family: HPEMetricRegular;
+    src: url('font/MetricHPE_Web/MetricHPE-Web-Regular.woff');
+}
+@font-face {
+    font-family: HPEMetricRegularItalic;
+    src: url('font/MetricHPE_Web/MetricHPE-Web-RegularItalic.woff');
+}
+@font-face {
+    font-family: HPEMetricBold;
+    src: url('font/MetricHPE_Web/MetricHPE-Web-Bold.woff');
+}
+@font-face {
+    font-family: HPEMetricBoldItalic;
+    src: url('font/MetricHPE_Web/MetricHPE-Web-BoldItalic.woff');
+}
+@font-face {
+    font-family: HPEMetricBlack;
+    src: url('font/MetricHPE_Web/MetricHPE-Web-Black.woff');
+}
+@font-face {
+    font-family: HPEMetricBlackItalic;
+    src: url('font/MetricHPE_Web/MetricHPE-Web-BlackItalic.woff');
+}
+@font-face {
+    font-family: HPEMetricLight;
+    src: url('font/MetricHPE_Web/MetricHPE-Web-Light.woff');
+}
+@font-face {
+    font-family: HPEMetricLightItalic;
+    src: url('font/MetricHPE_Web/MetricHPE-Web-LightItalic.woff');
+}
+@font-face {
+    font-family: HPEMetricMedium;
+    src: url('font/MetricHPE_Web/MetricHPE-Web-Medium.woff');
+}
+@font-face {
+    font-family: HPEMetricMediumItalic;
+    src: url('font/MetricHPE_Web/MetricHPE-Web-MediumItalic.woff');
+}
+@font-face {
+    font-family: HPEMetricSemibold;
+    src: url('font/MetricHPE_Web/MetricHPE-Web-Semibold.woff');
+}
+@font-face {
+    font-family: HPEMetricSemiboldItalic;
+    src: url('font/MetricHPE_Web/MetricHPE-Web-SemiboldItalic.woff');
+}
+@font-face {
+    font-family: HPEMetricThin;
+    src: url('font/MetricHPE_Web/MetricHPE-Web-Thin.woff');
+}
+@font-face {
+    font-family: HPEMetricThinItalic;
+    src: url('font/MetricHPE_Web/MetricHPE-Web-ThinItalic.woff');
+}

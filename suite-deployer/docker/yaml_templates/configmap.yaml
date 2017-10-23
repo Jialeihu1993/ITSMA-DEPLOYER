@@ -1,0 +1,584 @@
+#configmap for ITSM
+# see https://github.com/kubernetes/contrib/blob/master/ingress/controllers/nginx/configuration.md#allowed-parameters-in-configuration-config-map
+apiVersion: v1
+data:
+  enable-vts-status: "true"
+  proxy-body-size: 64m
+  server-name-hash-bucket-size: "256"
+  proxy-connect-timeout: "180"
+  proxy-send-timeout: "180"
+  proxy-read-timeout: "180"
+  worker-processes: "128"
+  max-worker-connections: "4096"
+kind: ConfigMap
+metadata:
+  name: nginx-load-balancer-conf
+  namespace: ${namespace}
+  labels:
+    itsmaService: deployer
+
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: external-lb-config
+  namespace: ${namespace}
+  labels:
+    itsmaService: deployer
+data:
+  host: sm-ingress-svc
+  port: "80"
+
+---
+#below section ldap configmap is referred by IDM, SM, UCMDB
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: ldap-configmap
+  namespace: ${namespace}
+  labels:
+    itsmaService: deployer  
+  annotations:
+    config_service: '[
+      {
+        "key": [
+            "ldap_server_ip","ldap_server_port","ldap_base_dn","ldap_bind_user",
+            "ldap_bind_user_password","ldap_use_ssl","ldap_search_sub",
+            "ldap_user_base_dn","ldap_user_filter","ldap_user_disp_name_attr",
+            "ldap_user_name_attr","ldap_user_email","ldap_user_avatar",
+            "ldap_user_manager_id","ldap_user_manager_id_value","ldap_group_base_dn",
+            "ldap_group_class","ldap_group_base_filter","ldap_group_name_attr",
+            "ldap_group_member_attr","ldap_user_group","saml2_enable",
+            "saml2_idp_metadata_url","ldap_validatecert","ldap_user_firstname","ldap_user_lastname"],
+        "deployment": ["idm"],
+        "validation": []
+      },
+      {
+        "key": [
+            "ldap_server_ip","ldap_server_port","ldap_base_dn","ldap_bind_user",
+            "ldap_bind_user_password","ldap_use_ssl","ldap_search_sub",
+            "ldap_user_disp_name_attr","ldap_user_name_attr","ldap_user_email"],
+        "pre_service": [{"pod":"sm-config-pod","yaml":"sm-post-pod.yaml"}],
+        "deployment": ["sm-rte","sm-rte-emailout","sm-rte-gossip","sm-rte-integration",
+               "sm-rte-integration-cit","sm-rte-irque","sm-rte-report-export",
+               "sm-rte-scheduler"],
+        "validation": []
+      },
+      {
+        "key": [
+            "ldap_server_ip","ldap_server_port","ldap_bind_user","ldap_bind_user_password",
+            "ldap_use_ssl","ldap_search_sub","ldap_user_base_dn","ldap_user_class",
+            "ldap_user_filter","ldap_user_disp_name_attr","ldap_user_name_attr",
+            "ldap_group_base_dn","ldap_group_class","ldap_group_base_filter",
+            "ldap_group_name_attr","ldap_group_member_attr","ldap_admin_group",
+            "ldap_group_description"],
+        "pre_service": [],
+        "deployment": ["ucmdb"],
+        "validation": []
+      }
+    ]'
+
+data:
+  ldap_type: "${ldap_type}" # default value is "openLdap", other can be "activeDirectory" and "otherLdap"
+  RECONFIG_LDAP: "False"
+  ldap_server_ip: "${ldap_server_ip}"
+  ldap_server_port: "${ldap_server_port}"
+  ldap_base_dn: "${ldap_base_dn}"
+  ldap_bind_user: "${ldap_bind_user}"
+  ldap_bind_user_password: '{
+    "itom-itsma-config":"itom_itsma_openldap_root_pwd_secret_key"
+  }'
+  ldap_use_ssl: "${ldap_use_ssl}"
+  ldap_search_sub: "${ldap_search_sub}"
+  ldap_user_base_dn: "${ldap_user_base_dn}"
+  ldap_user_class: "${ldap_user_class}"
+  ldap_user_filter: "${ldap_user_filter}"
+  ldap_user_firstname: "${ldap_user_firstname}"
+  ldap_user_lastname: "${ldap_user_lastname}"
+  ldap_user_disp_name_attr: "${ldap_user_disp_name_attr}"
+  ldap_user_name_attr: "${ldap_user_name_attr}"
+  ldap_user_email: "${ldap_user_email}"
+  ldap_user_phone: "${ldap_user_phone}"
+  ldap_user_avatar: "${ldap_user_avatar}"
+  ldap_user_manager_id: "${ldap_user_manager_id}"
+  ldap_user_manager_id_value: "${ldap_user_manager_id_value}"
+  ldap_user_lastmodified: "${ldap_user_lastmodified}"
+  ldap_group_base_dn: "${ldap_group_base_dn}"
+  ldap_group_class: "${ldap_group_class}"
+  ldap_group_base_filter: "${ldap_group_base_filter}"
+  ldap_group_name_attr: "${ldap_group_name_attr}"
+  ldap_group_member_attr: "${ldap_group_member_attr}"
+  ldap_user_group: "${ldap_user_group}"
+  ldap_admin_group: "${ldap_admin_group}"
+  saml2_enable: "${saml2_enable}"
+  saml2_idp_metadata_url: "${saml2_idp_metadata_url}"
+  ldap_validatecert: "false"
+  ldap_group_description: "${ldap_group_description}"
+
+---
+#below section smtp configmap is referred by SM, UCMDB
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: smtp-configmap
+  namespace: ${namespace}
+  labels:
+    itsmaService: deployer  
+  annotations:
+    config_service: '[
+      {
+        "key": [],
+        "deployment": ["sm-rte-emailout","ucmdb"],
+        "validation": []
+      }
+    ]'
+
+data:
+  email_smtp_server_name: "${email_smtp_server_name}"
+  email_smtp_server_port: "${email_smtp_server_port}"
+  email_smtp_server_tls: "${email_smtp_server_tls}"
+  email_smtp_server_ssl: "${email_smtp_server_ssl}"
+  email_smtp_server_ssl_port: "${email_smtp_server_ssl_port}"
+  email_smtp_server_mail_from: "${email_smtp_server_mail_from}"
+  email_smtp_server_usrname: "${email_smtp_server_usrname}"
+  email_smtp_server_password: '{
+    "itom-itsma-config":"itom_itsma_smtp_server_pwd_secret_key"
+  }'
+
+---
+# below section lwsso configmap is referred by SM, UCMDB, properl and xservices
+# xservices owner: yi.gong@hpe.com
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: lwsso-configmap
+  namespace: ${namespace}
+  labels:
+    itsmaService: deployer  
+  annotations:
+    config_service: '[
+      {
+        "key": ["lwsso_domain","lwsso_init_string"],
+        "deployment": ["sm-chat","itom-xservices-gateway"],
+        "action_item": {
+          "deployment": ["propel-propeltool"]
+        },
+        "validation": []
+      },
+      {
+        "key": ["lwsso_domain","lwsso_init_string","lwsso_enable","lwsso_expirationperiod"],
+        "deployment": ["ucmdb","ucmdb-browser"],
+        "validation": []
+      },
+      {
+        "key": ["lwsso_domain","lwsso_init_string","lwsso_usehttponly","lwsso_securehttpcookie","lwsso_expirationperiod"],
+        "deployment": ["idm","sm-rte","sm-webtier","sm-rte-integration"],
+        "validation": []
+      }
+    ]'
+
+data:
+  lwsso_enable: "true"
+  lwsso_domain: "${lwsso_domain}"
+  lwsso_init_string: '{
+    "itom-itsma-config":"lwsso_init_string_secret_key"
+  }'
+  lwsso_usehttponly: "${lwsso_usehttponly}"
+  lwsso_securehttpcookie: "${lwsso_securehttpcookie}"
+  lwsso_expirationperiod: "${lwsso_expirationperiod}"
+
+---
+#below section external-sm-rte-configmap is referred by xservice, propel
+# xservice owner: yi.gong@hpe.com
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: sm-rte-configmap
+  namespace: ${namespace}
+  labels:
+    itsmaService: deployer  
+  annotations:
+    config_service: '[
+      {
+        "key": ["sm_rte_url"],
+        "deployment": ["propel-sx","propel-survey"]
+      },
+      {
+        "key": ["sm_rte_url","sm_integration_username","sm_integration_password","sm_apps_version","sm_process_designer"],
+        "action_item": {
+          "configmap": [{"configMapName":"sm-rte-configmap","data":{"sm_config_ready":"true"}}],
+          "deployment": ["propel-propeltool"]
+        }
+      },
+      {
+        "key": ["sm_rte_url","sm_integration_username","sm_integration_password","sm_survey_enabled"],
+        "deployment": ["itom-xservices-serviceportal"]
+      },
+      {
+        "key": ["sm_rte_url","sm_integration_username","sm_integration_password","sm_database_type",
+                "sm_database_ip","sm_database_port","sm_database_instance","sm_database_user",
+                "sm_database_password"],
+        "pre_service": [{"action":"OpenFireDBEnable2Chat"}],
+        "deployment": ["sm-chat"],
+        "action_item": {
+          "action": ["ChatEnabled2SM"]
+        }
+      },
+      {
+        "key": ["sm_database_password"],
+        "deployment": ["sm-rte","sm-rte-emailout","sm-rte-gossip","sm-rte-integration","sm-rte-integration-cit","sm-rte-irque","sm-rte-report-export","sm-rte-scheduler"]
+      }
+    ]'
+
+data:
+  sm_config_ready: "${sm_config_ready}"
+  sm_rte_url: "${sm_rte_url}"
+  sm_integration_username: "${sm_integration_username}"
+  sm_integration_password: '{
+    "itom-itsma-config":"sm_integration_password_secret_key"
+  }'
+  sm_database_type: "${sm_database_type}"
+  sm_database_ip: "${sm_database_ip}"
+  sm_database_port: "${sm_database_port}"
+  sm_database_instance: "${sm_database_instance}"
+  sm_database_user: "${sm_database_user}"
+  sm_database_password: '{
+    "itom-itsma-config":"sm_database_password_secret_key"
+  }'
+  sm_apps_version: "${sm_apps_version}"
+  sm_process_designer: "${sm_process_designer}"
+  sm_smarta_enabled: "${sm_smarta_enabled}"
+  sm_smarta_ts: "${sm_smarta_ts}"
+  sm_chat_enabled: "${sm_chat_enabled}"
+  sm_chat_ts: "${sm_chat_ts}"
+  sm_portal_enabled: "${sm_portal_enabled}"
+  sm_portal_ts: "${sm_portal_ts}"
+  sm_survey_enabled: "${sm_survey_enabled}"
+  sm_solr_enabled: "${sm_solr_enabled}"
+
+#---
+#below section ss.properties is defined by Shared service team
+#apiVersion: v1
+#kind: ConfigMap
+#metadata:
+#  name: shared-service-configmap
+#  namespace: ${namespace}
+#data:
+#  ss.properties: |-
+#    FullTextSearch_Server_URL=http://${am_fulltextsearch_server_url}/quicksearch/search
+
+---
+#below section itsma-common-configmap is defined by ITSAM suite
+# chat_config_ready is used by xservices
+# xservices owner: yi.gong@hpe.com
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: itsma-common-configmap
+  namespace: ${namespace}
+  labels:
+    itsmaService: deployer  
+  annotations:
+    config_service: '[
+      {
+        "key": ["chat_config_ready"],
+        "deployment": ["itom-xservices-serviceportal"]
+      }
+    ]'
+data:
+#do not change !!!!!
+  aplms_domain_name: "https://autopass-lm-svc:5814"
+  http_proxy: ""
+  https_proxy: ""
+  time_zone: "${time_zone}"
+  #time_zone: "Asia/Shanghai"
+  itsma.properties: |-
+    Lwsso_Domain=${lwsso_domain}
+    Lwsso_UserNameHeaderName=${lwsso_user}
+    Lwsso_SharedEncryptionKey=${lwsso_init_str}
+    LWSSO_domain=${lwsso_domain}
+    LWSSO_userNameHeaderName=${lwsso_user}
+    LWSSO_initString=${lwsso_init_str}
+  email_smtp_server_name: "${email_smtp_server_name}"
+  email_smtp_server_port: "${email_smtp_server_port}"
+  email_smtp_server_usrname: "${email_smtp_server_usrname}"
+  email_smtp_server_password: "${email_smtp_server_password}"
+  email_smtp_server_tls: "${email_smtp_server_tls}"
+  email_smtp_server_ssl: "${email_smtp_server_ssl}"
+  email_smtp_server_ssl_port: "${email_smtp_server_ssl_port}"
+  email_smtp_server_mail_from: "${email_smtp_server_mail_from}"
+  log_max_file_size: "${log_max_file_size}"
+  log_max_backup_number: "${log_max_backup_number}"
+  SessionTimeout: "1800"
+  ConnectionTimeout: "180"
+  IntegrationSessionTimeout: "1800"
+  IntegrationConnectionTimeout: "300"
+  IntegrationStatelessTimeout: "15"
+  TokenExpirationPeriod: "3600"
+  TokenGlobalTimeout: "86400"
+  itom_service_sm: "${itom-sm}"
+  itom_service_ucmdb: "${itom-cmdb}"
+  itom_service_propel: "${itom-service-portal}"
+  itom_service_chat: "${itom-chat}"
+  itom_service_smartanalytics: "${itom-smartanalytics}"
+  itom-xservices: "${itom-xservices}"
+  itom-xservices-infra: "${itom-xservices-infra}"
+  itom-xruntime: "${itom-xruntime}"
+  itom-xruntime-infra: "${itom-xruntime-infra}"
+  itom_suite_mode: "${itom_suite_mode}"
+  itom_suite_size: "${itom_suite_size}"
+  itom_suite_version: "${itom_suite_version}"
+  # new_install / install_from_backup / running
+  itom_install_phase: "${itom_suite_install_type}"
+  landing_page_url: "http://itom-xservices-ui-svc:8090/saw/ess"
+  suite_logout_url: "https:\\/\\/${domain_name}\\/sma-auth/goodbye.jsp"
+  # Required by sm-chat for the integration with X-Services
+  chat_config_ready: "${chat_config_ready}"
+  deploymentUuid: "${DEPLOYMENT_UUID}"
+  fullServiceList: "${fullServiceList}"
+  installedServiceList: "${installedServiceList}"
+---
+#below section itsma-integration-configmap is defined by ITSAM suite, stores between services integration related infomration. 
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: itsma-integration-configmap
+  namespace: ${namespace}
+  labels:
+    itsmaService: deployer  
+data:
+###CMS information consumedbed by other services.
+#SM consules ucmdb_browser_host, ucmdb_content_root 
+  ucmdb_browser_host: "https://${domain_name}"
+  ucmdb_content_root: "/"
+#---
+#below section am-xxxx-configmap is defined by AM product
+#apiVersion: v1
+#kind: ConfigMap
+#metadata:
+#  name: am-common-configmap
+#  namespace: ${namespace}
+#data:
+#  common.properties: |-
+#    DB_engine=${db_engine}
+#    DB_datasource=${db_datasource}
+#    DB_login=${am_db_login}
+#    DB_password=${am_db_password}
+#    DB_library_path=/app/AssetManager/x64/libaamapi96.so
+#    promptForPwd=false
+
+#---
+#apiVersion: v1
+#kind: ConfigMap
+#metadata:
+#  name: am-websvc-configmap
+#  namespace: ${namespace}
+#data:
+#  websvc.properties: |-
+#    WebService_LoadOnStartup=R961/*
+#
+#---
+#apiVersion: v1
+#kind: ConfigMap
+#metadata:
+#  name: am-webtier-configmap
+#  namespace: ${namespace}
+#data:
+#  webtier.properties: |-
+#    WebService_Version=R961
+#    FullTextSearch_Enabled=true
+#    WebService_EndPoint_SOAP=http://am-websvc-svc:8081/AssetManagerWebService/services
+#    WebService_EndPoint_REST=http://am-websvc-svc:8081/AssetManagerWebService/rest
+#    WebService_EndPoint_RS=http://am-websvc-svc:8081/AssetManagerWebService/rs
+#
+#---
+#apiVersion: v1
+#kind: ConfigMap
+#metadata:
+#  name: am-apm-configmap
+#  namespace: ${namespace}
+#data:
+#  apm.properties: |-
+#    AM_user=${am_user}
+#
+#---
+#apiVersion: v1
+#kind: ConfigMap
+#metadata:
+#  name: am-ess-configmap
+#  namespace: ${namespace}
+#data:
+#  ess.properties: |-
+#    ws_port=8081
+#
+#---
+#apiVersion: v1
+#kind: ConfigMap
+#metadata:
+#  name: am-quicksearch-configmap
+#  namespace: ${namespace}
+#data:
+#  quicksearch.properties: |-
+#    WebService_LoadOnStartup=R961/*
+#
+#---
+##DONOT touch below section, it's AM private
+#apiVersion: v1
+#kind: ConfigMap
+#metadata:
+#  name: am-private-configmap
+#  namespace: ${namespace}
+#data:
+#  private.properties: |-
+#    promptForPwd=false
+#    DB_library_path=/app/AssetManager/x64/libaamapi96.so
+#    Lwsso_EnableLwssoFramework=true
+#    org_owasp_csrfguard_Enabled=false
+#    AssetManager_RecordSearchIndexDir=/app/index
+#    Password_First_Value=bigintcs:006c33-713236-6a6461-346b34-6f6e64-366278-f578fc-7c966a-cd9050-81361b-d20387-AC614F
+#    Password_Second_Value=bigintcs:006c33-713236-6a6461-346b34-6f6e64-36627b-7a8797-84bd9c-30af3b-9101c6-3897a7-59D53C
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: itom-sma-smarta-configuration
+  namespace: ${namespace}
+  labels:
+    itsmaService: deployer
+data:
+  smarta_loglevel: "${smarta_loglevel}"
+
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: database-configmap
+  namespace: "${namespace}"
+  labels:
+    itsmaService: deployer
+  annotations:
+    config_service: '[
+      {
+        "key": ["idm_db_password_key"],
+        "deployment": ["idm","idm-postgresql"]
+      },
+      {
+        "key": ["propel_db_password_key"],
+        "deployment": ["propel-portal","propel-bpm","propel-catalog-ui","propel-bpm-ui","propel-subscription-ui","propel-sx","propel-external-entities-ui","propel-sx-client-ui","propel-postgres","propel-autopass-ui","propel-idm-admin","propel-sx-ui","propel-launchpad","propel-notification","propel-catalog"]
+      },
+      {
+        "key": ["cmdb_db_password_key"],
+        "deployment": ["ucmdb","postgresql-ucmdb"]
+      },
+      {
+        "key": ["xruntime_db_password_key"],
+        "deployment": ["itom-xservices-platform"]
+      }
+    ]'
+
+data:
+  external_db: "${external_db}"
+  pg_case_insensitive: "${pg_case_insensitive}"
+  sm_chat_db_type: "${sm_db_engine}"
+  sm_chat_db_host: "${sm_db_server}"
+  sm_chat_db_port: "${sm_db_port}"
+  sm_chat_db_name_svc: "${sm_db_inst}"
+  sm_chat_dba_username: "${sm_dba_username}"
+  sm_chat_dba_password_key: '{
+    "itom-sm":"${sm_dba_password_key}"
+  }'
+  sm_chat_db_username: "${sm_db_username}"
+  sm_chat_db_password_key: '{
+    "itom-sm":"${sm_db_password_key}"
+  }'
+
+  propel_db_type: "${sp_db_engine}"
+  propel_db_host: "${sp_db_server}"
+  propel_db_port: "${sp_db_port}"
+  propel_dba_username: "${sp_dba_username}"
+  propel_dba_password_key: '{
+    "itom-service-portal":"itom_itsma_dba_password_secret_key"
+  }'
+  propel_db_username: "${sp_db_username}"
+  propel_db_password_key: '{
+    "itom-service-portal":"itom_itsma_db_password_secret_key"
+  }'
+
+  idm_db_type: "${idm_db_engine}"
+  idm_db_host: "${idm_db_server}"
+  idm_db_port: "${idm_db_port}"
+  idm_db_name_svc: "${idm_db_inst}"
+  idm_dba_username: "${idm_dba_username}"
+  idm_dba_password_key: '{
+    "itom-idm":"itom_itsma_dba_password_secret_key"
+  }'
+  idm_db_username: "${idm_db_username}"
+  idm_db_password_key: '{
+    "itom-idm":"itom_itsma_db_password_secret_key"
+  }'
+
+  smarta_db_type: "${smarta_db_engine}"
+  smarta_db_host: "${smarta_db_server}"
+  smarta_db_port: "${smarta_db_port}"
+  smarta_db_name_svc: "${smarta_db_inst}"
+  smarta_dba_username: "${smarta_dba_username}"
+  smarta_dba_password_key: '{
+     "itom-smartanalytics":"itom_itsma_dba_password_secret_key"
+  }'
+  smarta_db_username: "${smarta_db_username}"
+  smarta_db_password_key: '{
+     "itom-smartanalytics":"itom_itsma_db_password_secret_key"
+  }'
+
+  # for xruntime to configure db (keep for awhile)    modified: peihua 2017-07-12
+  xruntime_db_type: "${xruntime_db_engine}"
+  xruntime_db_host: "${xruntime_db_server}"
+  xruntime_db_port: "${xruntime_db_port}"
+  xruntime_dba_username: "${xruntime_dba_username}"
+  xruntime_dba_password_key: '{
+    "itom-xruntime-infra":"itom_itsma_dba_password_secret_key"
+  }'
+  xruntime_db_username: "${xruntime_db_username}"
+  xruntime_db_password_key: '{
+    "itom-xruntime-infra":"itom_itsma_db_password_secret_key"
+  }'
+  # for xservicxe to configure db (saw will use below configure finally)    modified: peihua 2017-07-12
+  # xservices owner: yi.gong@hpe.com
+  xservices_db_type: "${xservices_db_engine}"
+  xservices_db_host: "${xservices_db_server}"
+  xservices_db_port: "${xservices_db_port}"
+  xservices_dba_username: "${xservices_dba_username}"
+  xservices_dba_password_key: '{
+    "itom-xservices-infra":"itom_itsma_dba_password_secret_key"
+  }'
+  xservices_db_username: "${xservices_db_username}"
+  xservices_db_password_key: '{
+    "itom-xservices-infra":"itom_itsma_db_password_secret_key"
+  }'
+
+  cmdb_db_type: "${ucmdb_db_engine}"
+  cmdb_db_host: "${ucmdb_db_server}"
+  cmdb_db_port: "${ucmdb_db_port}"
+  cmdb_db_name_svc: "${ucmdb_db_inst}"
+  cmdb_dba_username: "${ucmdb_dba_username}"
+  cmdb_dba_password_key: '{
+      "itom-cmdb":"itom_itsma_dba_password_secret_key",
+  }'
+  cmdb_db_username: "${ucmdb_db_username}"
+  cmdb_db_password_key:  '{
+      "itom-cmdb":"itom_itsma_db_password_secret_key"
+  }'
+
+  # for backup office to configure db   created: peihua 2017-09-21
+  bo_db_type: "${bo_db_engine}"
+  bo_db_host: "${bo_db_server}"
+  bo_db_port: "${bo_db_port}"
+  bo_db_name_svc: "${bo_db_inst}"
+  bo_dba_username: "${bo_dba_username}"
+  bo_dba_password_key: '{
+      "itom-bo": "itom_itsma_dba_password_secret_key"
+  }'
+  bo_db_username: "${bo_db_username}"
+  bo_db_password_key:  '{
+      "itom-bo": "itom_itsma_db_password_secret_key"
+  }'

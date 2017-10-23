@@ -1,0 +1,31 @@
+[{
+  "product_name": "itom-idm",
+  "k8s_resources": [{
+    "kind": "Deployment",
+    "name": "idm-postgresql"
+  }]
+}, {
+  "product_name": "itom-cmdb",
+  "k8s_resources": [{
+    "kind": "Deployment",
+    "name": "postgresql-ucmdb"
+  }]
+}, {
+  "product_name": "itom-xservices",
+  "k8s_resources": [{
+    "kind": "Deployment",
+    "name": "itom-xservices-postgres"
+  }]
+}, {
+  "product_name": "itom-service-portal",
+  "k8s_resources": [{
+    "kind": "Deployment",
+    "name": "propel-postgresql"
+  }]
+}, {
+  "product_name": "itom-sm",
+  "k8s_resources": [{
+    "kind": "Deployment",
+    "name": "sm-postgres"
+  }]
+}]

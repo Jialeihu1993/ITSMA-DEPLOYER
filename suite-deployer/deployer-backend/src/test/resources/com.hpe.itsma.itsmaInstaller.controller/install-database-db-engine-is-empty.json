@@ -1,0 +1,56 @@
+{
+  "itom_suite_size": "demo",
+  "itom_suite_install_type": "new_install",
+  "itom_suite_mode": "H_MODE",
+  "domain_name": "shc-dev-suite-libin-tian-1.hpeswlab.net",
+  "activated_services": [{
+    "name": "itom-sm",
+    "registry_url": "shc-harbor-dev.hpeswlab.net/itsma",
+    "controller_img_tag": "9.53.20170821031128.upg"
+  }, {
+    "name": "itom-cmdb"
+  }, {
+    "name": "itom-chat"
+  }, {
+    "name": "itom-service-portal"
+  }, {
+    "name": "itom-smartanalytics"
+  }, {
+    "name": "itom-xservices"
+  }, {
+    "name": "itom-xservices-infra"
+  }, {
+    "name": "itom-landing-page"
+  }],
+  "database": [{
+    "product_name": "ucmdb",
+    "internal": false,
+    "db_engine": "",
+    "db_server": "SGDLITVM0405.hpeswlab.net",
+    "db_port": "1521",
+    "db_inst": " lx_DB_GN",
+    "db_login": " lx_cmdb_db1",
+    "db_password": "cmdb_pwd"
+  }, {
+    "product_name": "sm",
+    "internal": false,
+    "db_engine": "",
+    "db_server": "16.155.194.156",
+    "db_port": "1433",
+    "db_inst": "",
+    "db_login": "sa",
+    "db_password": "1Qaz2wsx3edc"
+  },
+    {
+      "product_name": "sp",
+      "internal": false,
+      "db_engine": "",
+      "db_server": "sgdlitvm0417.hpeswlab.net",
+      "db_port": "5432",
+      "db_inst": "",
+      "db_login": "postgres",
+      "db_password": "!Qaz2wsx3edc"
+    }
+  ],
+  "sysadmin_password": "Admin_1234"
+}

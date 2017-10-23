@@ -1,0 +1,50 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: SERVICENAME-deploy-controller-pod
+  namespace: NAMESPACE
+  labels:
+    itsmaService: SERVICENAME
+spec:
+  nodeSelector:
+    Worker: label
+  containers:
+  - name: SERVICENAME-deploy-controller-pod
+    image: REGISTRY_URL/SERVICENAME-deploy-controller:CONTROLLER_TAG
+    imagePullPolicy: Always
+    resources:
+      requests:
+        cpu: "200m"
+        memory: "256Mi"
+      limits:
+        cpu: "1000m"
+        memory: "1024Mi"
+    env:
+      - name: INSTALLER_URL
+        value: SUITE_DEPLOYER_BACKEND_URL
+      - name: MaxTimesFailedStatusAllowed
+        value: "240"
+      - name: IntervalOfCheckStatus
+        value: "30"
+      - name: IntervalOfCheckServiceReady
+        value: "10"
+      - name: InstallType
+        value: INSTALL_TYPE
+    volumeMounts:
+    - name: timezone-config
+      mountPath: /etc/localtime
+    - name: nfs
+      mountPath: /var/log/service-deploy-controller/
+      subPath: logs/services/SERVICENAME/deploy-controller/
+  restartPolicy: Never
+  volumes:
+  - name: nfs
+    persistentVolumeClaim:
+      claimName: global-volume
+  - name: timezone-config
+    hostPath:
+      path: /usr/share/zoneinfo/TIMEZONE
+  securityContext:
+    fsGroup: 1999
+  imagePullSecrets:
+  - name: registrypullsecret

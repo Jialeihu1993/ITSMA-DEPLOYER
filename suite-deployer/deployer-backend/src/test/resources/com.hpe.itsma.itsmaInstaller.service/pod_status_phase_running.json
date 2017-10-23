@@ -1,0 +1,16 @@
+{
+  "kubeInstanceInfoList": [
+    {
+      "type": "Pod",
+      "apiVersion": "v1",
+      "instanceName": "itsma4",
+      "namespace": null,
+      "yamlContent": "apiVersion: v1\nkind: Namespace\nmetadata:\n  name: itsma4\n  labels:\n    name: itsma4\n",
+      "responseBody": "{\"kind\": \"Pod\", \"apiVersion\": \"v1\", \"metadata\": {\"name\": \"sm-idol-nfsfiles\", \"namespace\": \"itsma4\", \"selfLink\": \"/api/v1/namespaces/itsma4/pods/sm-idol-nfsfiles\", \"uid\": \"48871891-c1b1-11e6-a734-0050569701b3\", \"resourceVersion\": \"404390\", \"creationTimestamp\": \"2016-12-14T03:56:25Z\"}, \"spec\": {\"volumes\": [{\"name\": \"idoldata\", \"persistentVolumeClaim\": {\"claimName\": \"itsma4-vol-claim\"} }, {\"name\": \"default-token-hdl53\", \"secret\": {\"secretName\": \"default-token-hdl53\", \"defaultMode\": 420 } } ], \"containers\": [{\"name\": \"sm-idol-nfsfiles\", \"image\": \"shc-nexus-repo.hpeswlab.net:9000/itsma/itom-sma-idol-nfsfiles:fc91259\", \"resources\": {}, \"volumeMounts\": [{\"name\": \"idoldata\", \"mountPath\": \"/con/\", \"subPath\": \"config/idol/\"}, {\"name\": \"idoldata\", \"mountPath\": \"/lic/\", \"subPath\": \"licensekey/idol/\"}, {\"name\": \"idoldata\", \"mountPath\": \"/oob/\", \"subPath\": \"data/idol/OOBData/\"}, {\"name\": \"idoldata\", \"mountPath\": \"/lang/\", \"subPath\": \"data/idol/langfiles/\"}, {\"name\": \"idoldata\", \"mountPath\": \"/module/\", \"subPath\": \"data/idol/modules/\"}, {\"name\": \"default-token-hdl53\", \"readOnly\": true, \"mountPath\": \"/var/run/secrets/kubernetes.io/serviceaccount\"} ], \"terminationMessagePath\": \"/dev/termination-log\", \"imagePullPolicy\": \"IfNotPresent\"} ], \"restartPolicy\": \"Never\", \"terminationGracePeriodSeconds\": 30, \"dnsPolicy\": \"ClusterFirst\", \"serviceAccountName\": \"default\", \"serviceAccount\": \"default\", \"nodeName\": \"16.155.194.39\", \"securityContext\": {}, \"imagePullSecrets\": [{\"name\": \"registrypullsecret\"} ] }, \"status\": {\"phase\": \"Running\", \"conditions\": [{\"type\": \"Initialized\", \"status\": \"True\", \"lastProbeTime\": null, \"lastTransitionTime\": \"2016-12-14T04:05:49Z\"}, {\"type\": \"Ready\", \"status\": \"True\", \"lastProbeTime\": null, \"lastTransitionTime\": \"2016-12-14T04:05:56Z\"}, {\"type\": \"PodScheduled\", \"status\": \"True\", \"lastProbeTime\": null, \"lastTransitionTime\": \"2016-12-14T03:56:25Z\"} ], \"hostIP\": \"16.155.194.39\", \"podIP\": \"172.77.82.11\", \"startTime\": \"2016-12-14T04:05:49Z\", \"containerStatuses\": [{\"name\": \"sm-idol-nfsfiles\", \"state\": {\"running\": {\"startedAt\": \"2016-12-14T04:05:55Z\"} }, \"lastState\": {}, \"ready\": true, \"restartCount\": 0, \"image\": \"shc-nexus-repo.hpeswlab.net:9000/itsma/itom-sma-idol-nfsfiles:fc91259\", \"imageID\": \"docker://sha256:e43147c366a76b2ec67f96a1e42aaf21065b7824d15dbee09b59468d3e23dddf\", \"containerID\": \"docker://71ef343b645f094f40cb325fb43af175153775ad000d95265251e5b842279a2e\"} ] } }",
+      "statusCode": 201
+    }
+  ],
+  "foundInvalidate": false,
+  "invalidateCount": 0,
+  "invalidateContentList": []
+}

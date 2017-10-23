@@ -1,0 +1,41 @@
+.database{
+    .titleItem{
+        background-color: rgba(211, 247, 187, 0.22);
+    }
+
+    .list-group-item{
+        border-top-style: none;
+        border-right-style: none;
+        border-left-style: none;
+        margin-bottom: 0px;
+        border-bottom: 1px solid #f0f0f0;
+        padding-left: 0px;
+    }
+
+    .title{
+            span{
+                display: block;
+                margin:auto;
+                font-size: 18px;
+                font-family: HPEMetricMedium;
+                text-align: center;
+            }
+        }
+        
+    .subTitle{
+        span{
+            display: inline-block;
+            font-size: 16px;
+            font-family: HPEMetricMedium;
+            margin-left: 40px;
+        }
+    }
+
+   
+    .icon{
+        font-size: 30px;
+        position: absolute;
+        top:7px;
+    }
+
+}

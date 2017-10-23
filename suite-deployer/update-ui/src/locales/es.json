@@ -1,0 +1,18 @@
+﻿{
+    "backup.title":"Configuración del conjunto de aplicaciones de copia de seguridad",
+    "Name":"Nombre",
+    "Time":"Tiempo",
+    "backup.database":"Hacer copia de seguridad de la base de datos",
+    "backup.database.instruction1":"Le recomendamos que haga una copia de seguridad de la base de datos en caso de que falle la actualización y tenga que restaurar los datos",
+    "backup.database.instruction2":"Si usa la base de datos interna, puede ir a <volumen NFS de la base de datos ITSMA> y haga una copia de seguridad de la carpeta db.",
+    "backup.database.instruction3":"Si está usando una o varias bases de datos externas, haga una copia de seguridad de las bases de datos siguiendo las instrucciones correspondientes en la documentación de la base de datos específica.",
+    "shutDown.title":"Cerrar conjunto de aplicaciones",
+    "Services":"Servicios",
+    "ShutDownNow":"Cerrar ahora",
+    "Retry":"Volver a intentar",
+    "Services.title":"Actualizar conjunto de aplicaciones",
+    "UpdateNow": "Actualizar ahora",
+    "summaryInfo1":"¡Enhorabuena! ITSMA se ha actualizado correctamente.",
+    "summaryInfo2":"Todos los servicios se han instalado correctamente. Visite la página de destino para comenzar a usar ITSMA ahora mismo.",
+    "summary.title":"Actualizar resumen"
+}

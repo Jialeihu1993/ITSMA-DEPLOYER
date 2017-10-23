@@ -1,0 +1,108 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: itsma17-smarta-pv
+  labels:
+    storetype: nfs
+spec:
+  capacity:
+    storage: 20Gi
+  accessModes:
+    - ReadWriteMany
+  persistentVolumeReclaimPolicy: Retain
+  nfs:
+    path: "/var/vols/itom/itsma/itsma-itsma17"
+    server: "16.155.198.115"
+---
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: smarta-installer
+  namespace: "itsma17"
+spec:
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 20Gi
+  volumeName: itsma17-smarta-pv
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: smarta-installer-svc
+  namespace: "itsma17"
+  labels:
+    app: smarta-installer-svc
+spec:
+  ports:
+  - name: port
+    port: 8080
+    targetPort: 8080
+  selector:
+    app: smarta-installer
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: smarta-installer
+  namespace: "itsma17"
+  labels:
+    app: smarta-installer
+spec:
+  nodeSelector:
+    Label: Worker
+  containers:
+  - name: suite-config
+    image: "localhost:5000/itsma/itom-itsma-smarta-installer:latest"
+    imagePullPolicy: IfNotPresent
+    env:
+    - name: SUITE_INSTALLER_HOST
+      value: "172.78.78.187"
+    - name: SUITE_INSTALLER_PORT
+      value: "8080"
+    - name: NFS_SERVER
+      value: "16.155.198.115"
+    - name: NFS_OUTPUT_PATH
+      value: "/var/vols/itom/itsma/itsma-itsma17"
+    - name: SUITE_NAMESPACE
+      value: "itsma17"
+    - name: RECORD_NUMBER
+      value: "2"
+    - name: CONCURRENT_USER
+      value: "100"
+    - name: IDM_ADMIN_KEY
+      value: "idm_itsma_admin_password"
+    - name: IDM_ADMIN_VALUE
+      value: "jxUp/XAg0wLk/+7C/setiA=="
+    - name: DEPLOYMENT_UUID
+      value: "14607df8-4f18-420b-adc0-6f967569cbd0"
+    - name: NODE_LABEL_KEY
+      value: Label
+    - name: NODE_LABEL_VALUE
+      value: Worker
+    volumeMounts:
+    - name: config
+      mountPath: /output/config
+      subPath: config
+    - name: config
+      mountPath: /langfilesout
+      subPath: data/idol/langfiles
+    - name: config
+      mountPath: /modulesout
+      subPath: data/idol/modules
+    - name: config
+      mountPath: /licensekeyout
+      subPath: license
+    - name: config
+      mountPath: /output/synonym
+      subPath: config/idol/synonym
+    - name: config
+      mountPath: /yamls_output
+      subPath: config/idol/yamls
+  imagePullSecrets:
+  - name: registrypullsecret
+  volumes:
+  - name: config
+    persistentVolumeClaim:
+      claimName: smarta-installer

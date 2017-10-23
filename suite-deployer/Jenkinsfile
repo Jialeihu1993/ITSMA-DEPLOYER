@@ -1,0 +1,123 @@
+#!groovys
+
+gitOrg  = 'https://github.houston.softwaregrp.net/SMA-RnD'
+gitRepo = 'suite-deployer'
+branch  = env.BRANCH_NAME
+currentBuild.displayName = "# ${BUILD_NUMBER}-${gitRepo}-${branch}"
+
+if( branch ==~ /PR-.*/){
+    buildCMD = "mvn -s settings.xml -Pdev -Ddocker.image.tag=${branch} -B -U clean deploy"
+    currentBuild.description = "${env.CHANGE_AUTHOR_DISPLAY_NAME} : <a href=\"${env.CHANGE_URL}\" >${branch}</a>"
+    sonarCMD = "echo 'I will not check code quilty.'"
+}else{
+    buildCMD = "mvn -s settings.xml -Pci -B -U clean deploy"
+    sonarCMD = "mvn -s settings.xml sonar:sonar"
+}
+
+if( gitRepo=='suite-deployer' || gitRepo=='suite-configure'){
+    slackChannel = '#suite-ui'
+}else{
+    slackChannel = '#cicd'
+}
+ 
+def setBuildStatus(String message, String state) {
+  step([
+      $class: "GitHubCommitStatusSetter",
+      reposSource: [$class: "ManuallyEnteredRepositorySource", url: "${gitOrg}/${gitRepo}.git"],
+      contextSource: [$class: "ManuallyEnteredCommitContextSource", context: "${gitRepo}/${branch}"],
+      errorHandlers: [[$class: "ChangingBuildStatusErrorHandler", result: "UNSTABLE"]],
+      statusResultSource: [ $class: "ConditionalStatusResultSource", results: [[$class: "AnyBuildResult", message: message, state: state]] ]
+  ]);
+}
+
+def sendMail(){
+    mail body: "Warnning!!!configmap has been changed by pr ${branch} in ${gitRepo}!! \n ${env.CHANGE_URL}" ,
+    from: 'jenkins_admin@hpe.com',
+    replyTo: 'deyong.tu@hpe.com',
+    subject: "Warnning!!!configmap has been changed by pr ${branch} in ${gitRepo}!!",
+    to: 'llin@hpe.com deyong.tu@hpe.com guili.he@hpe.com yongxue.chi@hpe.com jun.wan@hpe.com'
+}
+
+pipeline {
+//    triggers { pollSCM('H/2 * * * *') }
+    options { 
+        timestamps()
+        ansiColor('xterm')
+    }
+    agent { label 'SUITE-BUILD' }
+    stages {
+        stage('stage #1: check yaml format'){
+            steps {
+                sh '''
+                    chmod +x ./yamlcheck
+                    ./yamlcheck
+                '''
+            }
+        }
+        stage('stage #2: check configmap'){
+            steps {
+                script{
+                    if( branch ==~ /PR-.*/){
+                        echo 'check configmap'
+                        try{
+                            sh '''
+                                chmod +x ./check_configmap.sh
+                                ./check_configmap.sh
+                            '''
+                        }catch (err) {
+                            sendMail()
+                        }finally {
+                            echo "continue to build." 
+                        }
+                    }else{
+                        echo 'skip checking configmap'
+                    }
+                }  
+            }
+        }
+        stage('stage #3: build'){
+            steps {
+                sh "git rev-parse HEAD > .git/current-commit"
+                script{
+                    commitSha = readFile(".git/current-commit").trim()
+                }
+                setBuildStatus("Jenkins Build Start", "PENDING")
+                withMaven(maven: 'M3') {
+                    sh "${buildCMD}"
+                }  
+            }
+        }
+        stage('stage #4: check code'){
+            steps {
+                withSonarQubeEnv('shc-itsma-sonar') {
+                sh "${sonarCMD}"
+                }
+            }
+        }
+        stage('stage #5: deploy'){
+            steps {
+                script{
+                    if( branch ==~ /PR-.*/){
+                        echo 'deploy step is coming soon'
+                    }else{
+                        echo 'deploy step is coming soon'
+                    }
+                }  
+            }
+        }
+    }
+    post { 
+        failure {
+            setBuildStatus("Jenkins Build finish", "FAILURE")
+            slackSend   channel: slackChannel, 
+                        color: 'danger', 
+                        message: "FAILURE:${currentBuild.displayName}: ${BUILD_URL} \n GitHub: https://github.houston.softwaregrp.net/SMA-RnD/${gitRepo}/commit/${commitSha}" 
+        }
+        success {
+            setBuildStatus("Jenkins Build finish", "SUCCESS")
+            slackSend   channel: slackChannel, 
+                        color: 'good', 
+                        message: "SUCCESS:${currentBuild.displayName}: ${BUILD_URL} \n GitHub: https://github.houston.softwaregrp.net/SMA-RnD/${gitRepo}/commit/${commitSha}"
+        }
+    }
+}

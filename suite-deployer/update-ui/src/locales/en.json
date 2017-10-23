@@ -1,0 +1,18 @@
+﻿{
+    "backup.title":"Backup Suite Configuration",
+    "Name":"Name",
+    "Time":"Time",
+    "backup.database":"Backup Database",
+    "backup.database.instruction1":"We recommend you to back up your database in case the update fails and you need to restore your data",
+    "backup.database.instruction2":"If you use the internal database, you can go to <ITSMA database NFS volume>, and back up the db folder.",
+    "backup.database.instruction3":"If you are using one or more external databases, please back up your databases by following the backup instructions in your specific database documentation.",
+    "shutDown.title":"Shut Down Suite",
+    "Services":"Services",
+    "ShutDownNow":"Shut Down Now",
+    "Retry":"Retry",
+    "Services.title":"Update Suite",
+    "UpdateNow": "Update Now",
+    "summaryInfo1":"Congratulations! ITSMA is successfully Updated",
+    "summaryInfo2":"All services were installed successfully. Visit the landing page to start using ITSMA right now!",
+    "summary.title":"Update Summary"
+}

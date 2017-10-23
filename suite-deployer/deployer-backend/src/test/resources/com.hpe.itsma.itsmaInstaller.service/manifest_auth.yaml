@@ -1,0 +1,34 @@
+name: itom-auth
+version: 1.0.1
+owner: auth
+deployDeps:
+deployEntry:
+deployEntities:
+apiSpec: auth-swagger.yaml
+
+profile_parameters:
+  defaultVal:
+    itom_auth_limits_cpu: 400m
+    itom_auth_limits_memory: 2000Mi
+    itom_auth_requests_cpu: 400m
+    itom_auth_requests_memory: 200Mi
+  demo:
+    itom_auth_limits_cpu: 300m
+    itom_auth_limits_memory: 1000Mi
+    itom_auth_requests_cpu: 300m
+    itom_auth_requests_memory: 100Mi
+  extrasmall:
+    itom_auth_limits_cpu: 400m
+    itom_auth_limits_memory: 2000Mi
+    itom_auth_requests_cpu: 400m
+    itom_auth_requests_memory: 200Mi
+  small:
+    itom_auth_limits_cpu: 500m
+    itom_auth_limits_memory: 3000Mi
+    itom_auth_requests_cpu: 500m
+    itom_auth_requests_memory: 400Mi
+  medium:
+    itom_auth_limits_cpu: 600m
+    itom_auth_limits_memory: 4000Mi
+    itom_auth_requests_cpu: 600m
+    itom_auth_requests_memory: 500Mi

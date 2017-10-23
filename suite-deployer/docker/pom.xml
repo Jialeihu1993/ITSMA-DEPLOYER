@@ -1,0 +1,59 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>com.hpe.itsma</groupId>
+        <artifactId>suite-deloyer</artifactId>
+        <version>2017.11-SNAPSHOT</version>
+        <relativePath>../pom.xml</relativePath>
+    </parent>
+    <groupId>com.hpe.itsma.suite</groupId>
+    <artifactId>deployer</artifactId>
+    <packaging>pom</packaging>
+    <version>2017.11-SNAPSHOT</version>
+
+    <properties>
+        <http.proxy>http://web-proxy.corp.hpecorp.net:8080</http.proxy>
+        <https.proxy>http://web-proxy.corp.hpecorp.net:8080</https.proxy>
+        <docker.registry>shc-harbor-dev.hpeswlab.net/itsma</docker.registry>
+        <docker.registry.api>https://shc-harbor-dev.hpeswlab.net/v2/</docker.registry.api>
+    </properties>
+
+    <modules>
+        <module>install</module>
+        <module>update</module>
+    </modules>
+
+    <profiles>
+        <profile>
+            <id>release</id>
+            <properties>
+                <profile.id>ci</profile.id>
+                <docker.image.tag>${build.version}</docker.image.tag>
+            </properties>
+        </profile>
+        <profile>
+            <id>production</id>
+            <properties>
+                <profile.id>ci</profile.id>
+                <docker.image.tag>${build.version}</docker.image.tag>
+            </properties>
+        </profile>
+        <profile>
+            <id>ci</id>
+            <properties>
+                <profile.id>ci</profile.id>
+                <docker.image.tag>${timestamp}</docker.image.tag>
+            </properties>
+        </profile>
+        <profile>
+            <id>dev</id>
+            <properties>
+                <profile.id>ci</profile.id>
+                <docker.image.tag>${user.name}</docker.image.tag>
+            </properties>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+        </profile>
+    </profiles>
+</project>

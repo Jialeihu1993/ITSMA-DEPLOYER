@@ -1,0 +1,88 @@
+/* Base Application Styles */
+$fonts-regular: HPEMetricRegular;
+$layout-min-width: 1280px;
+$white: #ffffff;
+
+a, div, span, td, input, textarea, select {
+  font-family: $fonts-regular;
+  font-size: 16px;
+}
+
+#container {
+  min-width: $layout-min-width;
+}
+
+
+input::-ms-clear { display: none; }
+
+
+body {
+  color: $white;
+  background: #222;
+  font-family: $fonts-regular;
+  margin: 0px;
+  padding: 0px;
+  font-size: 16px;
+  color: #000000;
+  background-color: $white;
+}
+
+
+a {
+  color: $white;
+
+  &:hover, &:active, &:focus {
+    color: #01a982;
+  }
+}
+
+.colFull{
+  padding-right: 0px !important;
+  padding-left: 0px !important;
+   .container-fluid{
+     padding-right: 0px !important;
+     padding-left: 0px !important;
+   }
+}
+
+.colFullLeft {
+  padding-left: 0px !important;
+}
+
+.colFullRight {
+  padding-Right: 0px !important;
+}
+
+.rhr{
+  height: 2px;
+  color: #cccccc;
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
+.noMarginBottom{
+  margin-bottom: 0px;
+}
+
+.pageBorderOuterLeft {
+  margin-left: 15px;
+}
+
+.pageBorderInnerLeft{
+  margin-left: -5px;
+}
+
+div .colFull{
+  padding-right: 0px !important;
+  padding-left: 0px !important;
+}
+
+div .colFullLeft{
+  padding-left: 0px !important;
+}
+
+div .colFullRight{
+  padding-right: 0px !important;
+}
+
+

@@ -1,0 +1,18 @@
+﻿{
+    "backup.title":"Configuration de la suite de sauvegarde",
+    "Name":"Nom",
+    "Time":"Heure",
+    "backup.database":"Sauvegarder la base de données",
+    "backup.database.instruction1":"Nous vous recommandons de sauvegarder votre base de données en cas d’échec de la mise à jour ou si vous avez besoin de restaurer vos données",
+    "backup.database.instruction2":"Si vous utilisez la base de données interne, vous pouvez accéder au <volume NFS de la base de données ITSMA>et sauvegarder le dossier de base de données.",
+    "backup.database.instruction3":"Si vous utilisez une ou plusieurs bases de données externes, sauvegardez vos bases de données en suivant les instructions dans la documentation spécifique de votre base de données.",
+    "shutDown.title":"Fermer la suite",
+    "Services":"Services",
+    "ShutDownNow":"Fermer maintenant",
+    "Retry":"Réessayer",
+    "Services.title":"Mettre à jour la suite",
+    "UpdateNow": "Mettre à jour maintenant",
+    "summaryInfo1":"Félicitations ! ITSMA a été mis à jour avec succès",
+    "summaryInfo2":"Tous les services ont bien été installés. Accédez à la page d’accueil pour commencer à utiliser ITSMA dès maintenant !",
+    "summary.title":"Récapitulatif de la mise à jour"
+}

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="css/hpe-font.css"/>
+    
+    <title>Title</title>
+    <style>
+        #tips{
+            /*text-align: center;*/
+            /*vertical-align: middle;*/
+            width:1px;
+            /*height:200px;*/
+            position:fixed;
+            left:50%;
+            /*right:50%;*/
+            top:40%;
+           /* bottom:50%;*/
+            font-size: 19px;
+            
+        }
+        * {
+            font-family: HPEMetricRegular;
+        }
+    </style>
+</head>
+<body>
+<div id="tips" align="center">
+	<div><img src="img/loading.gif"/></div>
+	<div id="loading-msg" style="width: 300px;margin-left: -120px;margin-top: 10px;"></div>
+</div>
+<!--<div id="tips">loading...</div>-->
+
+<script src="js/jquery.min.js"></script>
+<script src="js/jquery.i18n.properties.js"></script>
+<script>
+	var acceptLanguage = getUrlParam("ACCEPT-LANGUAGE");
+	var language = acceptLanguage || (navigator.browserLanguage?navigator.browserLanguage:navigator.language).replace(/-/g, "_");
+	loadBundles(function(){
+		$("#loading-msg").text("Loading");
+	});
+	function loadBundles(cb) {
+		jQuery.i18n.properties({
+		    name:'Messages', 
+		    path:'locale/', 
+		    mode:'both',
+		    language:language, 
+		    callback: cb
+		});
+	}
+	function getUrlParam(name){
+	     var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
+	     var r = window.location.search.substr(1).match(reg);
+	     if(r!=null)return  unescape(r[2]); return null;
+	}
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,146 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: itom-itsma-backup-svc
+  labels:
+    name: itom-itsma-backup-svc
+  namespace: ${namespace}
+spec:
+  type: NodePort
+  sessionAffinity: ClientIP
+  ports:
+  - name: itom-itsma-backup-backend
+    port: 8081
+    nodePort: 31988
+  selector:
+    name: itom-itsma-backup-pod
+
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: itom-itsma-backup-deployment
+  labels:
+    name: itom-itsma-backup-deployment
+  namespace: ${namespace}
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        name: itom-itsma-backup-pod
+#      annotations:
+#        pod.boostport.com/vault-approle: ${namespace}-${itom-itsma-backup_vault_approle}
+#        pod.boostport.com/vault-init-container: install
+#        pod.beta.kubernetes.io/init-containers: '[
+#          {
+#            "name": "install",
+#            "image": "localhost:5000/kubernetes-vault-init:0.2.1",
+#            "env": [
+#                {
+#                    "name": "VAULT_ROLE_ID",
+#                    "value": "${itom-itsma-backup_vault_approle_id}"
+#                }
+#            ],
+#            "volumeMounts": [
+#                {
+#                    "name": "vault-token",
+#                    "mountPath": "/var/run/secrets/boostport.com"
+#                }
+#            ]
+#          }
+#        ]'
+    spec:
+      nodeSelector:
+        ${node_label_key}: ${node_label_value}
+      volumes:
+      - name: backup-global-volume
+        persistentVolumeClaim:
+          claimName: global-volume
+      - name: backup-db-volume
+        persistentVolumeClaim:
+          claimName: db-volume
+      - name: backup-smartanalytics-volume
+        persistentVolumeClaim:
+          claimName: smartanalytics-volume
+      containers:
+      - name: itom-itsma-backup-pod
+        image: "${docker_image_registry}/itom-itsma-backup:0.0.5"
+        resources:
+          limits:
+            cpu: "0.5"
+            memory: 2048M
+          requests:
+            cpu: "0.3"
+            memory: 512M
+        env:
+        - name: SUITE_TIME_ZONE
+          value: "${time_zone}"
+#        - name: SUITE_INSTALLER_PORT
+#          value: "${SUITE_INSTALLER_PORT}"
+#        - name: NFS_SERVER
+#          value: "${NFS_SERVER}"
+#        - name: NFS_OUTPUT_PATH
+#          value: "${NFS_OUTPUT_PATH}"
+#        - name: SUITE_NAMESPACE
+#          value: "${namespace}"
+#        - name: IDM_ADMIN_KEY
+#          value: "idm_itsma_admin_password"
+#        - name: IDM_ADMIN_VALUE
+#          value: "${ITSMA_ADMIN_PASSWORD}"
+#        - name: DEPLOYMENT_UUID
+#          value: "${DEPLOYMENT_UUID}"
+#        - name: ITOM_ITSMA_OPENLDAP_ROOT_PWD_SECRET_KEY
+#          value: "itom_itsma_openldap_root_pwd_secret_key"
+#        - name: ITOM_ITSMA_SMTP_SERVER_PWD_SECRET_KEY
+#          value: "itom_itsma_smtp_server_pwd_secret_key"
+#        - name: ITOM_ITSMA_SYSADMIN_PASSWORD_SECRET_KEY
+#          value: "itom_itsma_sysadmin_password_secret_key"
+#        - name: ITOM_ITSMA_CERT_TRUSTSTORE_SECRET_KEY
+#          value: "itom_itsma_cert_truststore_secret_key"
+#        - name: LWSSO_INIT_STRING_SECRET_KEY
+#          value: "lwsso_init_string_secret_key"
+#        - name: SM_INTEGRATION_PASSWORD_SECRET_KEY
+#          value: "sm_integration_password_secret_key"
+#        - name: SM_DATABASE_PASSWORD_SECRET_KEY
+#          value: "sm_database_password_secret_key"
+#        - name: ITOM_ITSMA_CHAT_OPENFIRE_ADMIN_PWD_SECRET_KEY
+#          value: "itom_itsma_chat_openfire_admin_pwd_secret_key"
+#        - name: IDM_TOKEN_SIGNINGKEY_SECRET_KEY
+#          value: "idm_token_signingkey_secret_key"
+        ports:
+#        - containerPort: 8080
+#          name: frontend-port
+        - containerPort: 8081
+          name: backend-port
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 8081
+          initialDelaySeconds: 180
+          timeoutSeconds: 10
+          successThreshold: 1
+          failureThreshold: 6
+          periodSeconds: 30
+        readinessProbe:
+          httpGet:
+            path: /health
+            port: 8081
+          initialDelaySeconds: 30
+          timeoutSeconds: 10
+          successThreshold: 2
+        volumeMounts:
+        - mountPath: "/app/backup-service/global-volume"
+          subPath:
+          name: "backup-global-volume"
+#        - mountPath: "/app/backup-service/log"
+#          subPath: logs/itsmabackup-1.0/
+#          name: "backup-global-volume"
+        - mountPath: "/app/backup-service/db-volume"
+          subPath:
+          name: "backup-db-volume"
+        - mountPath: "/app/backup-service/smartanalytics-volume"
+          subPath:
+          name: "backup-smartanalytics-volume"
+      imagePullSecrets:
+      - name: registrypullsecret

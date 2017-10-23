@@ -1,0 +1,101 @@
+.summary{
+    .round{
+        position: absolute;
+        top:35px;
+        left: 49%;
+        background-color: #ffffff;
+        width:70px;
+        height: 70px;
+        border-radius: 35px;
+        box-shadow: 0 0 7px 0 rgba(0, 0, 0, 0.09);
+        .roundIcon{
+            font-size: 37px;
+            color:#00a981;
+            position: absolute;
+            top:16px;
+            left:20px;
+        }
+    }
+
+    .square{
+        position: absolute;
+        top:40px;
+        left: 49%;
+        background-color: #ffffff;
+        width:70px;
+        height: 70px;
+        box-shadow: 0 0 7px 0 rgba(0, 0, 0, 0.09);
+
+        transform:rotate(45deg);
+        -ms-transform:rotate(45deg); 	/* IE 9 */
+        -moz-transform:rotate(45deg); 	/* Firefox */
+        -webkit-transform:rotate(45deg); /* Safari 和 Chrome */
+        -o-transform:rotate(45deg); 	/* Opera */
+
+        .roundIcon{
+            font-size: 50px;
+            color:#cccccc;
+            position: absolute;
+            top:12px;
+            left:18px;
+        }
+    }
+
+    .summaryInfo1{
+        margin-top: 66px;
+        text-align: center;
+        span{
+            font-size: 24px;
+            font-family: HPEMetricSemibold;
+            color:#00a981;
+        }
+    }
+
+    .summaryInfo1error{
+        margin-top: 66px;
+        text-align: center;
+        span{
+            font-size: 24px;
+            font-family: HPEMetricSemibold;
+            color:#ff454f;
+        }
+    }
+
+    .summaryInfo2{
+        margin-top: 20px;
+        text-align: center;
+        span{
+            font-size: 18px;
+            width:640px;
+            margin:auto;
+            display: block;
+
+        }
+    }
+
+
+    .well{
+            background-color: #ffffff;
+            box-shadow: 0 0 7px 0 rgba(0, 0, 0, 0.06);
+            padding: 0px;
+            margin: 0px;
+            position: relative;
+            text-align: center;
+            span{
+                display: inline-block;
+                font-size:18px;
+                font-family: HPEMetricSemibold;
+                color:#2ad2c9;
+            }
+            .summaryIcon{
+                font-size: 30px;
+                position:relative;
+                top:6px;
+               // position: absolute;
+               // top:5px;
+               // right:48px;
+            }
+    }
+    
+
+}

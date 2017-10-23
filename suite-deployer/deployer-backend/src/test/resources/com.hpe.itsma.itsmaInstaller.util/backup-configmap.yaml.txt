@@ -1,0 +1,687 @@
+---
+- apiVersion: "v1"
+  kind: "ConfigMap"
+  metadata:
+    annotations:
+      config_service: "[ { \"key\": [\"auth_log_level\"], \"deployment\": [\"auth\"\
+        ] } ]"
+    creationTimestamp: "2017-08-25T05:14:59Z"
+    finalizers: []
+    name: "auth-config"
+    namespace: "itsma2"
+    ownerReferences: []
+    resourceVersion: "465492"
+    selfLink: "/api/v1/namespaces/itsma2/configmaps/auth-config"
+    uid: "573074fa-8954-11e7-a542-005056974f80"
+  data:
+    auth_log_level: "INFO"
+    idm_endpoint: "https://idm-svc:8443/idm-service"
+- apiVersion: "v1"
+  kind: "ConfigMap"
+  metadata:
+    annotations:
+      config_service: "[{ \"key\": [\"chat_log_level\"], \"deployment\": [\"sm-chat\"\
+        ] }]"
+    creationTimestamp: "2017-08-25T05:16:03Z"
+    finalizers: []
+    name: "chat-configmap"
+    namespace: "itsma2"
+    ownerReferences: []
+    resourceVersion: "466057"
+    selfLink: "/api/v1/namespaces/itsma2/configmaps/chat-configmap"
+    uid: "7d75daa4-8954-11e7-a542-005056974f80"
+  data:
+    chat_debug_startup: ""
+    chat_log_level: "INFO"
+    chat_openfire_domain: "sm-chat"
+    chat_publish_admin_account: "publishadmin"
+    chat_restkey: "openfire_restkey_secret_key"
+- apiVersion: "v1"
+  kind: "ConfigMap"
+  metadata:
+    creationTimestamp: "2017-08-25T05:14:51Z"
+    finalizers: []
+    name: "database-configmap"
+    namespace: "itsma2"
+    ownerReferences: []
+    resourceVersion: "465415"
+    selfLink: "/api/v1/namespaces/itsma2/configmaps/database-configmap"
+    uid: "52bd2ad5-8954-11e7-a542-005056974f80"
+  data:
+    external_db: "FALSE"
+    idm_db_host: "idm-postgresql-svc"
+    idm_db_name_svc: "idm"
+    idm_db_password_key: "{ \"itom-idm\":\"itom_itsma_db_password_secret_key\" }"
+    idm_db_port: "5432"
+    idm_db_type: "postgres"
+    idm_db_username: "idm"
+    idm_dba_password_key: "{ \"itom-idm\":\"itom_itsma_dba_password_secret_key\" }"
+    idm_dba_username: "postgres"
+    propel_db_host: "propel-postgresql-svc"
+    propel_db_password_key: "{ \"itom-service-portal\":\"itom_itsma_db_password_secret_key\"\
+      \ }"
+    propel_db_port: "5432"
+    propel_db_type: "postgres"
+    propel_db_username: "serviceportalbackend"
+    propel_dba_password_key: "{ \"itom-service-portal\":\"itom_itsma_dba_password_secret_key\"\
+      \ }"
+    propel_dba_username: "postgres"
+    sm_chat_db_host: "sm-postgres-svc"
+    sm_chat_db_name_svc: "sm"
+    sm_chat_db_password_key: "{ \"itom-sm\":\"itom_itsma_sm_postgres_secret_key\"\
+      \ }"
+    sm_chat_db_port: "5432"
+    sm_chat_db_type: "postgres"
+    sm_chat_db_username: "sm"
+    sm_chat_dba_password_key: "{ \"itom-sm\":\"postgres_password_key\" }"
+    sm_chat_dba_username: "postgres"
+    smarta_db_host: "smarta-postgres-svc"
+    smarta_db_name_svc: "smartadb"
+    smarta_db_password_key: "{ \"itom-idm\":\"itom_itsma_db_password_secret_key\"\
+      \ }"
+    smarta_db_port: "5432"
+    smarta_db_type: "postgres"
+    smarta_db_username: "smarta"
+    smarta_dba_password_key: "{ \"itom-idm\":\"itom_itsma_dba_password_secret_key\"\
+      \ }"
+    smarta_dba_username: "postgres"
+    xruntime_db_host: "itom-xruntime-postgres-svc"
+    xruntime_db_password_key: "{ \"itom-xruntime-infra\":\"itom_itsma_db_password_secret_key\"\
+      , \"itom-xruntime\":\"itom_itsma_db_password_secret_key\" }"
+    xruntime_db_port: "5432"
+    xruntime_db_type: "postgres"
+    xruntime_dba_password_key: "{ \"itom-xruntime-infra\":\"itom_itsma_dba_password_secret_key\"\
+      , \"itom-xruntime\":\"itom_itsma_dba_password_secret_key\" }"
+    xruntime_dba_username: "postgres"
+    xservices_db_host: "itom-xservices-postgres-svc"
+    xservices_db_password_key: "{ \"itom-xservices-infra\":\"itom_itsma_db_password_secret_key\"\
+      , \"itom-xservices\":\"itom_itsma_db_password_secret_key\" }"
+    xservices_db_port: "5432"
+    xservices_db_type: "postgres"
+    xservices_dba_password_key: "{ \"itom-xservices-infra\":\"itom_itsma_dba_password_secret_key\"\
+      , \"itom-xservices\":\"itom_itsma_dba_password_secret_key\" }"
+    xservices_dba_username: "postgres"
+- apiVersion: "v1"
+  kind: "ConfigMap"
+  metadata:
+    creationTimestamp: "2017-08-25T05:14:51Z"
+    finalizers: []
+    name: "external-lb-config"
+    namespace: "itsma2"
+    ownerReferences: []
+    resourceVersion: "465406"
+    selfLink: "/api/v1/namespaces/itsma2/configmaps/external-lb-config"
+    uid: "52b279ed-8954-11e7-a542-005056974f80"
+  data:
+    host: "sm-ingress-svc"
+    port: "80"
+- apiVersion: "v1"
+  kind: "ConfigMap"
+  metadata:
+    annotations:
+      config_service: "[ { \"key\": [\"idm_log_level\"], \"deployment\": [\"idm\"\
+        ] } ]"
+    creationTimestamp: "2017-08-25T05:15:04Z"
+    finalizers: []
+    name: "idm-config"
+    namespace: "itsma2"
+    ownerReferences: []
+    resourceVersion: "465548"
+    selfLink: "/api/v1/namespaces/itsma2/configmaps/idm-config"
+    uid: "5a2b9ffd-8954-11e7-a542-005056974f80"
+  data:
+    ConnectionTimeout: "180"
+    SessionTimeout: "1800"
+    TokenExpirationPeriod: "3600"
+    TokenGlobalTimeout: "86400"
+    auth_url: "http:\\/\\/auth-svc:8080\\/sma-auth"
+    idm_auth_flow: "database_user,ad"
+    idm_data_upload_dir: "idm/data/idmseeded"
+    idm_external_ip: "127.0.0.1"
+    idm_external_name: "shc-dev-suite-pei-hua-1.hpeswlab.net"
+    idm_ignore_missing_migration: "true"
+    idm_log_level: "CainINFO"
+    idm_logout: "http:\\/\\/auth-svc:8080\\/sma-auth/goodbye.jsp"
+    idm_mobile_token_lifetime: "8064"
+    idm_mount_root: "/var/itsma/upload"
+    idm_returnuri: "http://itsma-landing-page-svc:8080/itsma"
+    idm_seeded_dir: "/var/itsma/upload/seeded"
+    idm_server_cert_pass: ""
+    idm_server_cert_pfx: ""
+    idm_tenant: "CainITSMA"
+    idm_token_signingkey: "idm_token_signingkey_secret_key"
+    idp_ip_domain: ""
+- apiVersion: "v1"
+  kind: "ConfigMap"
+  metadata:
+    creationTimestamp: "2017-08-25T05:15:24Z"
+    finalizers: []
+    name: "itom-itsma-config-configmap"
+    namespace: "itsma2"
+    ownerReferences: []
+    resourceVersion: "465777"
+    selfLink: "/api/v1/namespaces/itsma2/configmaps/itom-itsma-config-configmap"
+    uid: "6663a3ea-8954-11e7-a542-005056974f80"
+  data:
+    idp_ip_domain: ""
+    sma_enable_step: "0"
+    sma_enable_step_ts: "0"
+    sma_migrate_step: "0"
+    sma_migrate_step_ts: "0"
+    xsp_migrate_step: "0"
+    xsp_migrate_step_ts: "0"
+    xsp_solrenable_migrate_step: "0"
+    xsp_solrenable_migrate_step_ts: "0"
+- apiVersion: "v1"
+  kind: "ConfigMap"
+  metadata:
+    creationTimestamp: "2017-08-25T05:14:51Z"
+    finalizers: []
+    name: "itom-sma-smarta-configuration"
+    namespace: "itsma2"
+    ownerReferences: []
+    resourceVersion: "465413"
+    selfLink: "/api/v1/namespaces/itsma2/configmaps/itom-sma-smarta-configuration"
+    uid: "52b9ac76-8954-11e7-a542-005056974f80"
+  data:
+    smarta_loglevel: "INFO"
+- apiVersion: "v1"
+  kind: "ConfigMap"
+  metadata:
+    creationTimestamp: "2017-08-25T05:15:23Z"
+    finalizers: []
+    name: "itom-xservices-infra-config"
+    namespace: "itsma2"
+    ownerReferences: []
+    resourceVersion: "465772"
+    selfLink: "/api/v1/namespaces/itsma2/configmaps/itom-xservices-infra-config"
+    uid: "658dae4e-8954-11e7-a542-005056974f80"
+  data:
+    CHATSVC_ENDPOINT: "https://shc-dev-suite-pei-hua-1.hpeswlab.net/chatservice"
+    DEBUG: "false"
+    IDM_EXTERNAL_HOST: "shc-dev-suite-pei-hua-1.hpeswlab.net"
+    IDOL_ENABLED: "false"
+    JAVA_DEBUG: "false"
+    POSTGRES_USER: "maas_admin"
+    PROPEL_BACKEND: "true"
+    RABBITMQ_DEFAULT_USER: "maasuser"
+    RABBITMQ_ERLANG_COOKIE: "MAAS4SAASCOOKIE"
+    SAW_HOST: "shc-dev-suite-pei-hua-1.hpeswlab.net"
+- apiVersion: "v1"
+  kind: "ConfigMap"
+  metadata:
+    annotations:
+      config_service: "[ { \"key\": [\"chat_config_ready\"], \"deployment\": [\"itom-xservices-serviceportal\"\
+        ] } ]"
+    creationTimestamp: "2017-08-25T05:14:51Z"
+    finalizers: []
+    name: "itsma-common-configmap"
+    namespace: "itsma2"
+    ownerReferences: []
+    resourceVersion: "465411"
+    selfLink: "/api/v1/namespaces/itsma2/configmaps/itsma-common-configmap"
+    uid: "52b7e1b0-8954-11e7-a542-005056974f80"
+  data:
+    ConnectionTimeout: "180"
+    IntegrationConnectionTimeout: "300"
+    IntegrationSessionTimeout: "1800"
+    IntegrationStatelessTimeout: "15"
+    SessionTimeout: "1800"
+    TokenExpirationPeriod: "3600"
+    TokenGlobalTimeout: "86400"
+    aplms_domain_name: "https://autopass-lm-svc:5814"
+    chat_config_ready: "true"
+    email_smtp_server_mail_from: "Cain"
+    email_smtp_server_name: ""
+    email_smtp_server_password: ""
+    email_smtp_server_port: ""
+    email_smtp_server_ssl: "true"
+    email_smtp_server_ssl_port: ""
+    email_smtp_server_tls: "true"
+    email_smtp_server_usrname: ""
+    http_proxy: ""
+    https_proxy: ""
+    itom-service-portal-ui: "true"
+    itom-xruntime: "false"
+    itom-xruntime-infra: "false"
+    itom-xservices: "true"
+    itom-xservices-infra: "true"
+    itom_service_chat: "true"
+    itom_service_propel: "true"
+    itom_service_sm: "true"
+    itom_service_smartanalytics: "true"
+    itom_service_ucmdb: "true"
+    itom_suite_mode: "H_MODE"
+    itsma.properties: "Lwsso_Domain=hpeswlab.net\nLwsso_UserNameHeaderName=SM_USER\n\
+      Lwsso_SharedEncryptionKey=${lwsso_init_str}\nLWSSO_domain=hpeswlab.net\nLWSSO_userNameHeaderName=SM_USER\n\
+      LWSSO_initString=${lwsso_init_str}"
+    landing_page_url: "http://itom-xservices-ui-svc:8090/saw/ess"
+    log_max_backup_number: "Cain10"
+    log_max_file_size: "5"
+    openldap_debug: "0"
+    suite_logout_url: "https:\\/\\/shc-dev-suite-pei-hua-1.hpeswlab.net\\/sma-auth/goodbye.jsp"
+    time_zone: "Asia/Shanghai"
+- apiVersion: "v1"
+  kind: "ConfigMap"
+  metadata:
+    creationTimestamp: "2017-08-25T05:14:51Z"
+    finalizers: []
+    name: "itsma-integration-configmap"
+    namespace: "itsma2"
+    ownerReferences: []
+    resourceVersion: "465412"
+    selfLink: "/api/v1/namespaces/itsma2/configmaps/itsma-integration-configmap"
+    uid: "52b8db56-8954-11e7-a542-005056974f80"
+  data:
+    ucmdb_browser_host: "https://shc-dev-suite-pei-hua-1.hpeswlab.net"
+    ucmdb_content_root: "/"
+- apiVersion: "v1"
+  kind: "ConfigMap"
+  metadata:
+    annotations:
+      config_service: "[ { \"key\": [ \"ldap_server_ip\",\"ldap_server_port\",\"ldap_base_dn\"\
+        ,\"ldap_bind_user\", \"ldap_bind_user_password\",\"ldap_use_ssl\",\"ldap_search_sub\"\
+        , \"ldap_user_base_dn\",\"ldap_user_filter\",\"ldap_user_disp_name_attr\"\
+        , \"ldap_user_name_attr\",\"ldap_user_email\",\"ldap_user_avatar\", \"ldap_user_manager_id\"\
+        ,\"ldap_user_manager_id_value\",\"ldap_group_base_dn\", \"ldap_group_class\"\
+        ,\"ldap_group_base_filter\",\"ldap_group_name_attr\", \"ldap_group_member_attr\"\
+        ,\"ldap_user_group\",\"saml2_enable\", \"saml2_idp_metadata_url\",\"ldap_validatecert\"\
+        ], \"deployment\": [\"idm\"], \"validation\": [] }, { \"key\": [ \"ldap_server_ip\"\
+        ,\"ldap_server_port\",\"ldap_base_dn\",\"ldap_bind_user\", \"ldap_bind_user_password\"\
+        ,\"ldap_use_ssl\",\"ldap_search_sub\", \"ldap_user_disp_name_attr\",\"ldap_user_name_attr\"\
+        ,\"ldap_user_email\"], \"pre_service\": [{\"pod\":\"sm-config-pod\",\"yaml\"\
+        :\"sm-post-pod.yaml\"}], \"deployment\": [\"sm-rte\",\"sm-rte-emailout\",\"\
+        sm-rte-gossip\",\"sm-rte-integration\", \"sm-rte-integration-cit\",\"sm-rte-irque\"\
+        ,\"sm-rte-report-export\", \"sm-rte-scheduler\",\"sm-rte-sync\"], \"validation\"\
+        : [] }, { \"key\": [ \"ldap_server_ip\",\"ldap_server_port\",\"ldap_bind_user\"\
+        ,\"ldap_bind_user_password\", \"ldap_use_ssl\",\"ldap_search_sub\",\"ldap_user_base_dn\"\
+        ,\"ldap_user_class\", \"ldap_user_filter\",\"ldap_user_disp_name_attr\",\"\
+        ldap_user_name_attr\", \"ldap_group_base_dn\",\"ldap_group_class\",\"ldap_group_base_filter\"\
+        , \"ldap_group_name_attr\",\"ldap_group_member_attr\",\"ldap_admin_group\"\
+        , \"ldap_group_description\"], \"pre_service\": [], \"deployment\": [\"ucmdb\"\
+        ], \"validation\": [] } ]"
+    creationTimestamp: "2017-08-25T05:14:51Z"
+    finalizers: []
+    name: "ldap-configmap"
+    namespace: "itsma2"
+    ownerReferences: []
+    resourceVersion: "465407"
+    selfLink: "/api/v1/namespaces/itsma2/configmaps/ldap-configmap"
+    uid: "52b3839e-8954-11e7-a542-005056974f80"
+  data:
+    RECONFIG_LDAP: "False"
+    ldap_admin_group: "cn=administrators,ou=groups,dc=itsma,dc=com"
+    ldap_base_dn: "dc=itsma,dc=com"
+    ldap_bind_user: "cn=admin,dc=itsma,dc=com"
+    ldap_bind_user_password: "{ \"itom-idm\":\"itom_itsma_openldap_root_secret_key\"\
+      , \"itom-openldap\":\"itom_itsma_openldap_root_pwd_secret_key\", \"itom-sm\"\
+      :\"itom_itsma_openldap_root_pwd_secret_key\", \"itom-cmdb\":\"itom_itsma_openldap_root_pwd_secret_key\"\
+      , \"itom-itsma-config\":\"itom_itsma_openldap_root_pwd_secret_key\" }"
+    ldap_group_base_dn: "ou=groups,dc=itsma,dc=com"
+    ldap_group_base_filter: "(objectclass=groupOfUniqueNames)"
+    ldap_group_class: "groupOfUniqueNames"
+    ldap_group_description: "description"
+    ldap_group_member_attr: "uniqueMember"
+    ldap_group_name_attr: "cn"
+    ldap_search_sub: "TRUE"
+    ldap_server_ip: "openldap-svc"
+    ldap_server_port: "389"
+    ldap_type: "openLdap"
+    ldap_use_ssl: "FALSE"
+    ldap_user_avatar: "jpegPhoto"
+    ldap_user_base_dn: "ou=people,dc=itsma,dc=com"
+    ldap_user_class: "inetOrgPerson"
+    ldap_user_disp_name_attr: "cn"
+    ldap_user_email: "mail"
+    ldap_user_filter: "(objectclass=inetOrgPerson)"
+    ldap_user_firstname: "givenName"
+    ldap_user_group: "cn=itpeople,ou=groups,dc=itsma,dc=com"
+    ldap_user_lastmodified: "modifyTimestamp"
+    ldap_user_lastname: "sn"
+    ldap_user_manager_id: "manager"
+    ldap_user_manager_id_value: "dn"
+    ldap_user_name_attr: "uid"
+    ldap_user_phone: "telephoneNumber"
+    ldap_validatecert: "false"
+    saml2_enable: "FALSE"
+    saml2_idp_metadata_url: ""
+- apiVersion: "v1"
+  kind: "ConfigMap"
+  metadata:
+    annotations:
+      config_service: "[ { \"key\": [\"lwsso_domain\",\"lwsso_init_string\"], \"deployment\"\
+        : [\"sm-chat\", \"itom-xservices-gateway\"], \"action_item\": { \"deployment\"\
+        : [\"propel-propeltool\"] }, \"validation\": [] }, { \"key\": [\"lwsso_domain\"\
+        ,\"lwsso_init_string\",\"lwsso_enable\",\"lwsso_expirationperiod\"], \"deployment\"\
+        : [\"ucmdb\", \"ucmdb-browser\"], \"validation\": [] }, { \"key\": [\"lwsso_domain\"\
+        ,\"lwsso_init_string\",\"lwsso_usehttponly\",\"lwsso_securehttpcookie\",\"\
+        lwsso_expirationperiod\"], \"deployment\": [\"idm\",\"sm-rte\",\"sm-webtier\"\
+        ,\"sm-rte-integration\"], \"validation\": [] } ]"
+    creationTimestamp: "2017-08-25T05:14:51Z"
+    finalizers: []
+    name: "lwsso-configmap"
+    namespace: "itsma2"
+    ownerReferences: []
+    resourceVersion: "465409"
+    selfLink: "/api/v1/namespaces/itsma2/configmaps/lwsso-configmap"
+    uid: "52b5939d-8954-11e7-a542-005056974f80"
+  data:
+    lwsso_domain: "hpeswlab.net"
+    lwsso_enable: "true"
+    lwsso_expirationperiod: "60"
+    lwsso_init_string: "{ \"itom-idm\":\"lwsso_init_string_secret_key\", \"itom-cmdb\"\
+      :\"lwsso_init_string_secret_key\", \"itom-sm\":\"lwsso_init_string_secret_key\"\
+      , \"itom-service-portal\":\"lwsso_init_string_secret_key\", \"itom-chat\":\"\
+      lwsso_init_string_secret_key\", \"itom-itsma-config\":\"lwsso_init_string_secret_key\"\
+      , \"itom-xservices-infra\":\"lwsso_init_string_secret_key\" }"
+    lwsso_securehttpcookie: "true"
+    lwsso_usehttponly: "true"
+- apiVersion: "v1"
+  kind: "ConfigMap"
+  metadata:
+    creationTimestamp: "2017-08-25T05:14:51Z"
+    finalizers: []
+    name: "nginx-load-balancer-conf"
+    namespace: "itsma2"
+    ownerReferences: []
+    resourceVersion: "465405"
+    selfLink: "/api/v1/namespaces/itsma2/configmaps/nginx-load-balancer-conf"
+    uid: "52b17f57-8954-11e7-a542-005056974f80"
+  data:
+    enable-vts-status: "true"
+    max-worker-connections: "4096"
+    proxy-body-size: "64m"
+    proxy-connect-timeout: "180"
+    proxy-read-timeout: "180"
+    proxy-send-timeout: "180"
+    server-name-hash-bucket-size: "256"
+    worker-processes: "128"
+- apiVersion: "v1"
+  kind: "ConfigMap"
+  metadata:
+    annotations:
+      config_service: "[ { \"key\": [\"propel_loglevel\"], \"pre_service\": [], \"\
+        deployment\": [\"propel-analytics\",\"propel-autopass\",\"propel-autopass-ui\"\
+        ,\"propel-bpm\",\"propel-bpm-ui\", \"propel-catalog\",\"propel-catalog-ui\"\
+        ,\"propel-diagnostics\",\"propel-diagnostics-ui\", \"propel-external-entities-ui\"\
+        ,\"propel-ganglia-gmetad\",\"propel-ganglia-gmond\",\"propel-ganglia-ui\"\
+        , \"propel-idm-admin\",\"propel-launchpad\",\"propel-notification\",\"propel-portal\"\
+        ,\"propel-postgresql\", \"propel-rabbitmq\",\"propel-search\",\"propel-subscription-ui\"\
+        ,\"propel-survey\", \"propel-survey-ui\",\"propel-sx\",\"propel-sx-client-ui\"\
+        ,\"propel-sx-ui\"], \"rc\": [], \"validation\": [] } ]"
+    creationTimestamp: "2017-08-25T05:15:21Z"
+    finalizers: []
+    labels:
+      config: ""
+    name: "propel-configmap"
+    namespace: "itsma2"
+    ownerReferences: []
+    resourceVersion: "471862"
+    selfLink: "/api/v1/namespaces/itsma2/configmaps/propel-configmap"
+    uid: "64aa63d0-8954-11e7-a542-005056974f80"
+  data:
+    analytics_java_other_options: ""
+    autopass_java_other_options: ""
+    bpm_java_other_options: "-Dfile.encoding=UTF-8"
+    catalog_java_other_options: "-Dfile.encoding=UTF-8"
+    diagnostics_java_other_options: ""
+    log_max_filesize: "10000000"
+    notification_java_other_options: "-Dfile.encoding=UTF-8"
+    propel_loglevel: "INFO"
+    propel_tool_status: "2"
+    rabbit_user: "rabbit_sx"
+    search_java_other_options: "-Dfile.encoding=UTF-8 -Dhystrix.threadpool.default.coreSize=50"
+    session_timeout_duration: "1800"
+    suite_domain_name: "shc-dev-suite-pei-hua-1.hpeswlab.net"
+    survey_java_other_options: ""
+    sx_hystrix_command_default_execution_isolation_thread_timeoutInMilliseconds: "180000"
+    sx_hystrix_threadpool_default_coreSize: "50"
+    sx_hystrix_threadpool_default_maxQueueSize: "100"
+    sx_hystrix_threadpool_default_queueSizeRejectionThreshold: "60"
+    sx_java_other_options: ""
+- apiVersion: "v1"
+  kind: "ConfigMap"
+  metadata:
+    annotations:
+      config_service: "[ { \"key\": [ \"sm_server_loglevel_sqllimit\",\"sm_server_loglevel_debug_db_query\"\
+        , \"sm_server_loglevel_cache_clean_interval\",\"sm_server_loglevel_sql_debug\"\
+        , \"sm_server_loglevel_debug_javascript\",\"sm_server_loglevel_debug_rest\"\
+        , \"sm_server_loglevel_log_debug_level\",\"sm_server_loglevel_debug_jni\"\
+        , \"sm_server_loglevel_log4j_debug\",\"sm_server_loglevel_enable_core_dump\"\
+        , \"sm_server_loglevel_rtm\", \"sm_server_loglevel_query_hash_code\" ], \"\
+        pre_service\": [], \"deployment\": [\"sm-rte\",\"sm-rte-integration\",\"sm-rte-interation-cit\"\
+        ,\"sm-rte-scheduler\",\"sm-rte-irque\",\"sm-rte-emailout\",\"sm-rte-report-export\"\
+        ], \"rc\": [], \"validation\": [] }, { \"key\": [ \"sm_server_loglevel_max_log_size\"\
+        ,\"sm_server_loglevel_number_of_log_files\" ], \"pre_service\": [], \"deployment\"\
+        : [\"sm-webtier\",\"sm-rte\",\"sm-rte-integration\",\"sm-rte-interation-cit\"\
+        ,\"sm-rte-scheduler\",\"sm-rte-irque\",\"sm-rte-emailout\",\"sm-rte-report-export\"\
+        ,\"sm-rte-gossip\"], \"rc\": [], \"validation\": [] }, { \"key\": [ \"sm_server_loglevel_webservices_session_timeout\"\
+        ,\"sm_server_loglevel_conection_timeout\", \"sm_webtier_loglevel_session_timeout\"\
+        \ ], \"pre_service\": [], \"deployment\": [\"sm-rte\",\"sm-rte-integration\"\
+        ,\"sm-rte-interation-cit\",\"sm-webtier\"], \"rc\": [], \"validation\": []\
+        \ }, { \"key\": [ \"sm_server_loglevel_smart_email_timeout\" ], \"pre_service\"\
+        : [], \"deployment\": [\"sm-rte-emailout\"], \"rc\": [], \"validation\": []\
+        \ }, { \"key\": [ \"sm_server_loglevel_debug_http\" ], \"pre_service\": [],\
+        \ \"deployment\": [\"sm-rte\",\"sm-rte-integration\",\"sm-rte-interation-cit\"\
+        ], \"rc\": [], \"validation\": [] }, { \"key\": [ \"sm_server_loglevel_dashboard_export_path\"\
+        \ ], \"pre_service\": [], \"deployment\": [\"sm-rte\",\"sm-rte-report-export\"\
+        ], \"rc\": [], \"validation\": [] }, { \"key\": [ \"sm_webtier_loglevel_view_record_list\"\
+        , \"sm_webtier_loglevel_query_security\",\"sm_webtier_loglevel_js_debug\"\
+        \ ], \"pre_service\": [], \"deployment\": [\"sm-webtier\"], \"rc\": [], \"\
+        validation\": [] } ]"
+    creationTimestamp: "2017-08-25T05:15:17Z"
+    finalizers: []
+    name: "sm-common-configmap"
+    namespace: "itsma2"
+    ownerReferences: []
+    resourceVersion: "465716"
+    selfLink: "/api/v1/namespaces/itsma2/configmaps/sm-common-configmap"
+    uid: "62656b81-8954-11e7-a542-005056974f80"
+  data:
+    RECONFIG_LDAP: "False"
+    RTE_debug_parms: ""
+    WEB_disable_AntiCSRF: "true"
+    enable_webtier_debug: "false"
+    portal_external_url: "https://shc-dev-suite-pei-hua-1.hpeswlab.net"
+    sm_external_url: "https://shc-dev-suite-pei-hua-1.hpeswlab.net"
+    sm_server_loglevel_cache_clean_interval: "3600"
+    sm_server_loglevel_conection_timeout: "180000"
+    sm_server_loglevel_dashboard_export_path: ""
+    sm_server_loglevel_debug_db_query: "5"
+    sm_server_loglevel_debug_http: ""
+    sm_server_loglevel_debug_javascript: ""
+    sm_server_loglevel_debug_jni: ""
+    sm_server_loglevel_debug_rest: ""
+    sm_server_loglevel_enable_core_dump: ""
+    sm_server_loglevel_log4j_debug: ""
+    sm_server_loglevel_log_debug_level: "1"
+    sm_server_loglevel_max_log_size: "20"
+    sm_server_loglevel_number_of_log_files: "10"
+    sm_server_loglevel_query_hash_code: ""
+    sm_server_loglevel_rtm: ""
+    sm_server_loglevel_smart_email_timeout: "45000"
+    sm_server_loglevel_sql_debug: ""
+    sm_server_loglevel_sqllimit: "10"
+    sm_server_loglevel_webservices_session_timeout: "1800"
+    sm_webtier_loglevel_customize_folder: ""
+    sm_webtier_loglevel_js_debug: "false"
+    sm_webtier_loglevel_query_security: "true"
+    sm_webtier_loglevel_session_timeout: "30"
+    sm_webtier_loglevel_view_record_list: "true"
+- apiVersion: "v1"
+  kind: "ConfigMap"
+  metadata:
+    annotations:
+      config_service: "[ { \"key\": [\"sm_rte_url\"], \"deployment\": [\"propel-sx\"\
+        ] }, { \"key\": [\"sm_rte_url\"], \"deployment\": [\"propel-survey\"] }, {\
+        \ \"key\": [\"sm_rte_url\",\"sm_integration_username\",\"sm_integration_password\"\
+        ,\"sm_apps_version\",\"sm_process_designer\"], \"action_item\": { \"configmap\"\
+        : [{\"configMapName\":\"sm-rte-configmap\",\"data\":{\"sm_config_ready\":\"\
+        true\"}}], \"deployment\": [\"propel-propeltool\"] } }, { \"key\": [\"sm_rte_url\"\
+        ,\"sm_integration_username\",\"sm_integration_password\",\"sm_survey_enabled\"\
+        ], \"deployment\": [\"itom-xservices-serviceportal\"] }, { \"key\": [\"sm_rte_url\"\
+        ,\"sm_integration_username\",\"sm_integration_password\",\"sm_database_type\"\
+        , \"sm_database_ip\",\"sm_database_port\",\"sm_database_instance\",\"sm_database_user\"\
+        , \"sm_database_password\"], \"pre_service\": [{\"action\":\"OpenFireDBEnable2Chat\"\
+        }], \"deployment\": [\"sm-chat\"], \"action_item\": { \"action\": [\"ChatEnabled2SM\"\
+        ] } } ]"
+    creationTimestamp: "2017-08-25T05:14:51Z"
+    finalizers: []
+    name: "sm-rte-configmap"
+    namespace: "itsma2"
+    ownerReferences: []
+    resourceVersion: "465410"
+    selfLink: "/api/v1/namespaces/itsma2/configmaps/sm-rte-configmap"
+    uid: "52b6dc1a-8954-11e7-a542-005056974f80"
+  data:
+    sm_apps_version: "201707"
+    sm_chat_enabled: "1"
+    sm_chat_ts: "20170825"
+    sm_config_ready: "false"
+    sm_database_instance: "sm"
+    sm_database_ip: "sm-postgres-svc"
+    sm_database_password: "{ \"itom-idm\":\"sm_database_password_secret_key\", \"\
+      itom-cmdb\":\"sm_database_password_secret_key\", \"itom-service-portal\":\"\
+      sm_database_password_secret_key\", \"itom-chat\":\"sm_database_password_secret_key\"\
+      , \"itom-itsma-config\":\"sm_database_password_secret_key\" }"
+    sm_database_port: "5432"
+    sm_database_type: "postgres"
+    sm_database_user: "sm"
+    sm_integration_password: "{ \"itom-idm\":\"sm_integration_password_secret_key\"\
+      , \"itom-cmdb\":\"sm_integration_password_secret_key\", \"itom-service-portal\"\
+      :\"sm_integration_password_secret_key\", \"itom-chat\":\"sm_integration_password_secret_key\"\
+      , \"itom-itsma-config\":\"sm_integration_password_secret_key\", \"itom-xservices-infra\"\
+      :\"sm_integration_password_secret_key\" }"
+    sm_integration_username: "intgAdmin"
+    sm_portal_enabled: "1"
+    sm_portal_ts: "20170825"
+    sm_process_designer: "1"
+    sm_rte_url: "http://sm-rte-integration-svc:13090"
+    sm_smarta_enabled: "4"
+    sm_smarta_ts: "20170825"
+    sm_solr_enabled: "0"
+    sm_survey_enabled: "1"
+- apiVersion: "v1"
+  kind: "ConfigMap"
+  metadata:
+    creationTimestamp: "2017-08-25T05:27:10Z"
+    finalizers: []
+    name: "smarta-nginx-configmap"
+    namespace: "itsma2"
+    ownerReferences: []
+    resourceVersion: "469530"
+    selfLink: "/api/v1/namespaces/itsma2/configmaps/smarta-nginx-configmap"
+    uid: "0ad6eac1-8956-11e7-a542-005056974f80"
+  data:
+    proxy_connect_timeout: "180s"
+    proxy_read_timeout: "180s"
+    proxy_send_timeout: "180s"
+    ssl_setting: "0"
+    worker_connections: "4096"
+    worker_processes: "128"
+- apiVersion: "v1"
+  kind: "ConfigMap"
+  metadata:
+    annotations:
+      config_service: "[ { \"key\": [], \"deployment\": [\"sm-rte-emailout\",\"ucmdb\"\
+        ], \"validation\": [] } ]"
+    creationTimestamp: "2017-08-25T05:14:51Z"
+    finalizers: []
+    name: "smtp-configmap"
+    namespace: "itsma2"
+    ownerReferences: []
+    resourceVersion: "465408"
+    selfLink: "/api/v1/namespaces/itsma2/configmaps/smtp-configmap"
+    uid: "52b489a5-8954-11e7-a542-005056974f80"
+  data:
+    email_smtp_server_mail_from: ""
+    email_smtp_server_name: ""
+    email_smtp_server_password: "{ \"itom-sm\":\"itom_itsma_smtp_server_pwd_secret_key\"\
+      , \"itom-cmdb\":\"itom_itsma_smtp_server_pwd_secret_key\", \"itom-itsma-config\"\
+      :\"itom_itsma_smtp_server_pwd_secret_key\" }"
+    email_smtp_server_port: ""
+    email_smtp_server_ssl: "true"
+    email_smtp_server_ssl_port: ""
+    email_smtp_server_tls: "true"
+    email_smtp_server_usrname: ""
+- apiVersion: "v1"
+  kind: "ConfigMap"
+  metadata:
+    creationTimestamp: "2017-08-25T05:15:18Z"
+    finalizers: []
+    name: "ucmdb-configmap"
+    namespace: "itsma2"
+    ownerReferences: []
+    resourceVersion: "465718"
+    selfLink: "/api/v1/namespaces/itsma2/configmaps/ucmdb-configmap"
+    uid: "62c0e45b-8954-11e7-a542-005056974f80"
+  data:
+    cmdb_browser_loglevel_log4j: "WARN"
+    cmdb_browser_loglevel_log4j_jvm_stats: "ERROR"
+    cmdb_browser_loglevel_log4j_rpccalls: "INFO"
+    cmdb_browser_loglevel_log4j_statistics: "INFO"
+    cmdb_browser_loglevel_log4j_ucmdb_browser: "WARN"
+    cmdb_browser_loglevel_log4j_ucmdb_browser_aop: "DEBUG"
+    cmdb_browser_loglevel_log4j_ucmdb_browser_search: "WARN"
+    cmdb_package_check_list: "Microsoft_MQ,Citrix_NetScaler,CloudFoundry"
+    cmdb_package_white_list: "ARIS_Integration,Aperture_Vista_Integration,Atrium_Import,AutoDiscoveryContent,Basic_Business,Basic_Classes,DDMInfra,Database_Basic,ECC_Integration,HP_Network_Automation,Host_Resources_Basic,Host_Resources_By_TTY,Host_Resources_By_WMI,Layer2,NNM_Integration,NetAppOCI,Network,Oracle,Remedyforce_Common,Remedyforce_Pull,Remedyforce_Push,SIM_Integration,Storage_Basic,VMWare,http,kpis,XLS_Import,External_source_import,APMPushAdapter,CM1030KpiAdapter,CM1030PolicyAdapter,XSAdapter,ServiceManagerAdapter6-2,ServiceManagerAdapter7-0,ServiceManagerAdapter7-1,ServiceManagerAdapter9-41,ServiceManagerAdapter9-x,ServiceManagerEnhancedAdapter9-41,\
+      \ ServiceManagerEnhancedAdapter9-x,SOMAdatper,AutomationFlowAdapter,SAWPushAdapter,ALMAdapter,AtriumPushAdapter,BsmKpiAdapter,CaCmdbPushAdapter,DDMiAdapter,enterprise-view-adapter,SCCMAdapter,ServiceNowGenericAdapter,TrouxIntegration,XMLExportAdapter,XSAdapter,Arxview_Integration,HP_OneView_Integration,ServiceNow_Integration,CiscoWorksLMS_Integration,SE_Integration,SANscreen_Integration,ServiceNow_Pull_Integration,DiscoveryModules"
+    cmdb_package_white_list_enabled: "true"
+    cmdb_server_loglevel_api: "ERROR"
+    cmdb_server_loglevel_cla: "INFO"
+    cmdb_server_loglevel_cmdb: "CainERROR"
+    cmdb_server_loglevel_cmdb_multiple: "INFO"
+    cmdb_server_loglevel_downgrade: "INFO"
+    cmdb_server_loglevel_fcmdb: "INFO"
+    cmdb_server_loglevel_fcmdb_gdba: "ERROR"
+    cmdb_server_loglevel_fcmdb_push: "ERROR"
+    cmdb_server_loglevel_framework: "ERROR"
+    cmdb_server_loglevel_framework_urmloglevel: "WARN"
+    cmdb_server_loglevel_logstash_statistics_datain: "ERROR"
+    cmdb_server_loglevel_logstash_statistics_history: "ERROR"
+    cmdb_server_loglevel_logstash_statistics_search: "ERROR"
+    cmdb_server_loglevel_logstash_statistics_search_tql: "ERROR"
+    cmdb_server_loglevel_mam: "INFO"
+    cmdb_server_loglevel_mam_monitoring: "INFO"
+    cmdb_server_loglevel_mam_web: "ERROR"
+    cmdb_server_loglevel_notification: "INFO"
+    cmdb_server_loglevel_quota: "INFO"
+    cmdb_server_loglevel_reconciliation: "ERROR"
+    cmdb_server_loglevel_search: "INFO"
+    cmdb_server_loglevel_security: "INFO"
+    cmdb_server_loglevel_security_authorization: "INFO"
+    cmdb_server_loglevel_security_cm: "INFO"
+    cmdb_server_loglevel_security_lwsso: "ERROR"
+    cmdb_server_loglevel_security_wink: "ERROR"
+    cmdb_server_loglevel_soaapi: "ERROR"
+    cmdb_server_loglevel_tqlscheduler: "INFO"
+    cmdb_server_loglevel_ui_server: "ERROR"
+    cmdb_server_loglevel_uiserver_spring: "ERROR"
+    cmdb_ud_loglevel_discovery_agents: "INFO"
+    cmdb_ud_loglevel_discovery_dal: "INFO"
+    cmdb_ud_loglevel_discovery_framework: "INFO"
+    cmdb_ud_loglevel_discovery_library: "INFO"
+    cmdb_ud_loglevel_discovery_resultprocess: "INFO"
+    cmdb_ud_loglevel_discovery_workflow: "INFO"
+    itsma_ssl_certificate_password_secret_key: "changeit"
+    sm_integration_user_password_vault_key: "itom_itsma_sm_integration_user_password_secret_key"
+    ucmdb_admin_password_vault_key: "admin_password_secret_key"
+    ucmdb_db_host: "postgresql-ucmdb-svc"
+    ucmdb_db_port: "5432"
+    ucmdb_db_schema: "ucmdb"
+    ucmdb_db_type: "Postgresql"
+    ucmdb_db_user: "postgres"
+    ucmdb_deploy_data: "TRUE"
+    ucmdb_framing_host: "http://shc-dev-suite-pei-hua-1.hpeswlab.net"
+    ucmdb_integration_password_vault_key: "integration_password_secret_key"
+    ucmdb_oracle_db_schemapwd_vault_key: "itom_itsma_db_password_secret_key"
+    ucmdb_oracle_db_sid: "ucmdb"
+    ucmdb_probe_max_mem: "8192"
+    ucmdb_probe_min_mem: "512"
+    ucmdb_probe_pg_probe_pwd_vault_key: "ucmdb_probe_pg_probe_pwd"
+    ucmdb_probe_pg_root_pwd_vault_key: "ucmdb_probe_pg_root_pwd"
+    ucmdb_server_master_key: "s?LH9Df%Y#Ms5J!mM#%PSuTYkWYR_#sy"
+    ucmdb_server_max_memory: "8192"
+    ucmdb_sysadmin_password_vault_key: "itom_itsma_sysadmin_password_secret_key"
+    ucmdb_ui_syspwd_vault_key: "ucmdb_ui_syspwd"
+

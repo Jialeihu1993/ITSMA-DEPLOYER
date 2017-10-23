@@ -1,0 +1,126 @@
+.RollbackList{
+    //margin-left: 32px;
+    //margin-top:25px;
+    .titleItem{
+        background-color: #fafafa;
+    }
+    .list-group-item{
+        border-top-style: none;
+        border-right-style: none;
+        border-left-style: none;
+        margin-bottom: 0px;
+        border-bottom: 1px solid #f0f0f0;
+        padding-left: 0px;
+        .indicator{
+            display: inline-block;
+            position:absolute;
+            top:12px;
+            right: 30px;
+            font-size: 22px;
+            color:#00a981;
+        }
+
+        .restore-success{
+            z-index:1000;
+            color:#f0f0f0;
+        }
+
+        .indicator-error{
+            color:red;
+        }
+
+        .indicator-pending{
+            color:#cccccc;
+        }
+
+        .indicator-finished{
+            color:#333333;
+           //color:#767676;
+        }
+
+        .content-indicator-pending{
+            color:#333333;
+        }
+
+        .title{
+            span{
+                font-size:18px;
+                font-family: HPEMetricMedium;
+                color: #333333;
+            }
+        }
+
+        .timeTag{
+          display: inline-block;
+          position: absolute;
+          left:50%;
+          font-size: 16px;
+          //font-family: HPEMetricMedium;
+          line-height: 24px; 
+          z-index: 999;
+        }
+        .content{
+            display: inline-block;
+            position: relative;
+            font-size: 16px;
+           // font-family: HPEMetricMedium;
+            line-height: 24px;
+            margin-left: 30px; 
+            z-index: 999;
+        }
+
+        
+    }
+
+    .well {
+        margin-bottom: 0px;
+        background-color: #ffe7e7;
+        border-style: none;
+        padding: 0px;
+        padding-left:35px;
+        padding-right: 35px;
+        padding-top:5px;
+        padding-bottom: 5px;
+        font-size: 16px;
+        font-family: HPEMetricRegular;
+        span{
+            padding-left:10px;
+            font-size: 18px;
+            font-family: HPEMetricMedium;
+            color:#2ad2c9;
+        }
+    }
+
+    .progress{
+        height: 45px;
+        padding:0px;
+        background-color: #f0f0f0;
+        margin-bottom: 0px;
+        position: absolute;
+        top:0px;
+        left: 0px;
+        width:100%;
+        border-style: none;
+        .progress-bar-success{
+            background-color: #2ad2c9;
+        }
+    }
+}
+
+.list-group{
+        margin-bottom: 0px;
+}
+
+.arrow-up {
+    display: block;
+    margin-left: 120px;
+    width: 0; 
+    height: 0; 
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    
+    border-bottom: 10px solid #ffe7e7;
+  }
+
+
+

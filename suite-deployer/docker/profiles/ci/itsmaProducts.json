@@ -1,0 +1,502 @@
+{
+  "itsmaServices": [
+    {
+      "name": "itom-auth",
+      "active": true,
+      "mode": "infra",
+      "version": "1.1.4",
+      "vault": {
+        "active": true,
+        "readonlyroles": "itom-itsma-config",
+        "secrets": [
+        ]
+      }
+    },
+    {
+      "name": "itom-idm",
+      "active": true,
+      "mode": "infra",
+      "version": "1.2.4",
+      "vault": {
+        "active": true,
+        "readonlyroles": "itom-itsma-config,itom-openldap",
+        "secrets": [
+          {
+            "secretKey": "idm_keystore_password_secret_key",
+            "secretValue": "password"
+          },
+          {
+            "secretKey": "itom_itsma_dba_password_secret_key",
+            "secretValue": "postgres"
+          },
+          {
+            "secretKey": "itom_itsma_db_password_secret_key",
+            "secretValue": "idm"
+          }
+        ]
+      }
+    },
+    {
+      "name": "itom-openldap",
+      "active": true,
+      "mode": "infra",
+      "version": "1.0.2",
+      "vault": {
+        "active": true,
+        "secrets": [
+          {
+            "secretKey": "itom_itsma_openldap_root_secret_key",
+            "secretValue": "{SSHA}3FdiPydhfHeW6kEORg7JDL05zUMmLDyn"
+          },
+          {
+            "secretKey": "itom_itsma_openldap_user_secret_key",
+            "secretValue": "{SSHA}zMceT7PIb7Vt0vFz0s9Z57vaNfRZaofZ"
+          },
+          {
+            "secretKey": "itom_itsma_openldap_root_pwd_secret_key",
+            "secretValue": "secret"
+          }
+        ]
+      }
+    },
+    {
+      "name": "itom-ingress",
+      "active": true,
+      "mode": "infra",
+      "version": "1.0.0.015"
+    },
+    {
+      "name": "itom-autopass",
+      "active": true,
+      "version": "1.0.0.011",
+      "mode": "infra",
+      "vault": {
+        "active": true,
+        "secrets": [
+          {
+            "secretKey": "postgres_password_key",
+            "secretValue": "postgres"
+          },
+          {
+            "secretKey": "core_idm_signing_key",
+            "secretValue": "signingkey"
+          }
+        ]
+      }
+    },
+    {
+      "name": "itom-landing-page",
+      "active": true,
+      "mode": "hmode",
+      "version": "1.0.0.004"
+    },
+    {
+      "name": "itom-sm",
+      "active": true,
+      "mode": "hmode",
+      "version": "9.52.2006-rc.2",
+      "vault": {
+        "active": true,
+        "readonlyroles": "itom-itsma-config,itom-openldap",
+        "secrets": [
+          {
+            "secretKey": "postgres_password_key",
+            "secretValue": "postgres"
+          },
+          {
+            "secretKey": "itom_itsma_sm_postgres_secret_key",
+            "secretValue": "sm"
+          },
+          {
+            "secretKey": "integration_pass_secret_key",
+            "secretValue": "Admin_1234"
+          },
+          {
+            "secretKey": "chatsrv_restkey_secret_key",
+            "secretValue": "7dR2VgHTNFT9tW8W"
+          },
+          {
+            "secretKey": "itom_itsma_ucmdb_integration_user_password_secret_key",
+            "secretValue": "Admin_1234"
+          },
+          {
+            "secretKey": "itom_itsma_multi_ucmdb_integration_user_password_secret_key",
+            "secretValue": "Admin_1234"
+          },
+          {
+            "secretKey": "itom_itsma_sm_integration_user_password_secret_key",
+            "secretValue": "Admin_1234"
+          },
+          {
+            "secretKey": "itom_itsma_db_password_secret_key",
+            "secretValue": "servicemanagement"
+          },
+          {
+            "secretKey": "itom_itsma_dba_password_secret_key",
+            "secretValue": "huang714669"
+          }
+        ]
+      }
+    },
+    {
+      "name": "itom-smartanalytics",
+      "active": true,
+      "mode": "hmode, xmode",
+      "version": "1.0.3-20171011-b8",
+      "vault": {
+        "active": true,
+        "readonlyroles": "itom-itsma-config",
+        "secrets": [
+          {
+            "secretKey": "idol_secret_key",
+            "secretValue": "NDh8jn0eqxtBwTIV5RtLeCHHdp37wsToAQsosOQnJi2gViY8en6SYNZhvemn5d2/Ug4h"
+          },
+          {
+            "secretKey": "itom_itsma_dba_password_secret_key",
+            "secretValue": "postgres"
+          },
+          {
+            "secretKey": "itom_itsma_db_password_secret_key",
+            "secretValue": "smarta"
+          }
+        ]
+      }
+    },
+    {
+      "name": "itom-cmdb",
+      "active": true,
+      "mode": "hmode, xmode",
+      "version": "10.33.1044",
+      "vault": {
+        "active": true,
+        "readonlyroles": "itom-itsma-config,itom-openldap",
+        "secrets": [
+          {
+            "secretKey": "itom_itsma_dba_password_secret_key",
+            "secretValue": "postgres"
+          },
+          {
+            "secretKey": "itom_itsma_db_password_secret_key",
+            "secretValue": "postgresPass"
+          },
+          {
+            "secretKey": "ucmdb_probe_pg_probe_pwd",
+            "secretValue": "admin"
+          },
+          {
+            "secretKey": "ucmdb_probe_pg_root_pwd",
+            "secretValue": "admin"
+          },
+          {
+            "secretKey": "admin_password_secret_key",
+            "secretValue": "Admin_1234"
+          },
+          {
+            "secretKey": "integration_password_secret_key",
+            "secretValue": "Admin_1234"
+          },
+          {
+            "secretKey": "ucmdb_ui_syspwd",
+            "secretValue": "UISysadmin"
+          },
+          {
+            "secretKey": "ucmdb_oracle_db_schemapwd",
+            "secretValue": "postgresPass"
+          }
+        ]
+      }
+    },
+    {
+      "name": "itom-service-portal",
+      "active": true,
+      "mode": "hmode",
+      "version": "2.20.5-rc.023",
+      "vault": {
+        "active": true,
+        "readonlyroles": "itom-itsma-config,itom-openldap,itom-smartanalytics",
+        "secrets": [
+          {
+            "secretKey": "propel_analytics_pwd_secret_key",
+            "secretValue": "changeit"
+          },
+          {
+            "secretKey": "propel_bpmdb_pwd_secret_key",
+            "secretValue": "propel2015"
+          },
+          {
+            "secretKey": "propel_catalog_pwd_secret_key",
+            "secretValue": "changeit"
+          },
+          {
+            "secretKey": "propel_dashboarddb_pwd_secret_key",
+            "secretValue": "changeit"
+          },
+          {
+            "secretKey": "propel_notificationdb_pwd_secret_key",
+            "secretValue": "changeit"
+          },
+          {
+            "secretKey": "propel_jumpstart_pwd_secret_key",
+            "secretValue": "propel"
+          },
+          {
+            "secretKey": "propel_sxdb_pwd_secret_key",
+            "secretValue": "propel2014"
+          },
+          {
+            "secretKey": "postgres_password_key",
+            "secretValue": "postgres"
+          },
+          {
+            "secretKey": "postgres_pwd_secret_key",
+            "secretValue": "postgres"
+          },
+          {
+            "secretKey": "rabbit_pass_secret_key",
+            "secretValue": "propel2014"
+          },
+          {
+            "secretKey": "propel_notification_pwd_secret_key",
+            "secretValue": "changeit"
+          },
+          {
+            "secretKey": "propel_diagnostics_transport_pwd_secret_key",
+            "secretValue": "diagnosticsTransportUser"
+          },
+          {
+            "secretKey": "idm_transport_user_password_secret_key",
+            "secretValue": "idmTransportUser"
+          },
+          {
+            "secretKey": "idm_admin_password_secret_key",
+            "secretValue": "propel"
+          },
+          {
+            "secretKey": "sx_catalog_transport_user_password_secret_key",
+            "secretValue": "sxCatalogTransportUser"
+          },
+          {
+            "secretKey": "search_transport_user_password_secret_key",
+            "secretValue": "searchTransportUser"
+          },
+          {
+            "secretKey": "itom_itsma_db_password_secret_key",
+            "secretValue": "propeldbUse_1erpassword"
+          },
+          {
+            "secretKey": "itom_itsma_dba_password_secret_key",
+            "secretValue": "propeldbauSe_3rpassword"
+          }
+        ]
+      }
+    },
+    {
+      "name": "itom-itsma-config",
+      "active": true,
+      "mode": "hmode",
+      "version": "1.1.14",
+      "vault": {
+        "active": true,
+        "readwriteroles": "itom-idm,itom-openldap,itom-sm,itom-smartanalytics,itom-cmdb,itom-service-portal,itom-xservices-infra,itom-xservices,itom-xruntime-infra,itom-xruntime,itom-bo,itom-chat",
+        "secrets": [
+          {
+            "secretKey": "itom_itsma_openldap_root_pwd_secret_key",
+            "secretValue": "secret"
+          },
+          {
+            "secretKey": "itom_itsma_smtp_server_pwd_secret_key",
+            "secretValue": "password"
+          },
+          {
+            "secretKey": "itom_itsma_sysadmin_password_secret_key",
+            "secretValue": "password"
+          },
+          {
+            "secretKey": "itom_itsma_cert_truststore_secret_key",
+            "secretValue": "1qaz!QAZ"
+          },
+          {
+            "secretKey": "lwsso_init_string_secret_key",
+            "secretValue": "rqa9mkdmfkvdvienfj4usldo9205mvid"
+          },
+          {
+            "secretKey": "sm_integration_password_secret_key",
+            "secretValue": "Admin_1234"
+          },
+          {
+            "secretKey": "sm_database_password_secret_key",
+            "secretValue": "password"
+          },
+          {
+            "secretKey": "idm_token_signingkey_secret_key",
+            "secretValue": "idmtokensignningkey32bitadvanced"
+          },
+          {
+            "secretKey": "integration_pass_secret_key",
+            "secretValue": "Admin_1234"
+          }
+        ]
+      }
+    },
+    {
+      "name": "itom-xservices-infra",
+      "active": true,
+      "mode": "hmode",
+      "version": "1.0.0-1303",
+      "vault": {
+        "active": true,
+        "readonlyroles": "itom-itsma-config",
+        "secrets": [
+          {
+            "secretKey": "itom_itsma_dba_password_secret_key",
+            "secretValue": "postgres"
+          },
+          {
+            "secretKey": "itom_itsma_db_password_secret_key",
+            "secretValue": "maas_admin_123"
+          },
+          {
+            "secretKey": "rabbit_pass_secret_key",
+            "secretValue": "maasuserpwd"
+          },
+          {
+            "secretKey": "itom_itsma_xmpp_password_secret_key",
+            "secretValue": "123456"
+          },
+          {
+            "secretKey": "xservices_cache_password_secret_key",
+            "secretValue": "123456"
+          }
+        ]
+      }
+    },
+    {
+      "name": "itom-xservices",
+      "active": true,
+      "mode": "hmode",
+      "version": "1.0.0-1303",
+      "vault": {
+        "active": true,
+        "readonlyroles": "itom-itsma-config,itom-xservices-infra",
+        "secrets": [
+        ]
+      }
+    },
+    {
+      "name": "itom-xruntime-infra",
+      "active": true,
+      "mode": "xmode",
+      "version": "1.0.0-1274-708",
+      "vault": {
+        "active": true,
+        "readonlyroles": "itom-itsma-config,itom-bo",
+        "secrets": [
+          {
+            "secretKey": "itom_itsma_dba_password_secret_key",
+            "secretValue": "postgres"
+          },
+          {
+            "secretKey": "itom_itsma_db_password_secret_key",
+            "secretValue": "maas_admin_123"
+          },
+          {
+            "secretKey": "rabbit_pass_secret_key",
+            "secretValue": "maasuserpwd"
+          },
+          {
+            "secretKey": "itom_itsma_xmpp_password_secret_key",
+            "secretValue": "123456"
+          },
+          {
+            "secretKey": "xservices_cache_password_secret_key",
+            "secretValue": "123456"
+          }
+        ]
+      }
+    },
+    {
+      "name": "itom-xruntime",
+      "active": true,
+      "mode": "xmode",
+      "version": "1.0.0-1274-708",
+      "vault": {
+        "active": true,
+        "readonlyroles": "itom-itsma-config,itom-xruntime-infra",
+        "secrets": [
+        ]
+      }
+    },
+    {
+      "name": "itom-bo",
+      "active": true,
+      "mode": "xmode",
+      "version": "0.0.9",
+      "vault": {
+        "active": true,
+        "readonlyroles": "itom-itsma-config,itom-xruntime-infra",
+        "secrets": [
+          {
+            "secretKey": "itom_itsma_boadmin_password_secret_key",
+            "secretValue": "password"
+          },
+          {
+            "secretKey": "itom_itsma_dba_password_secret_key",
+            "secretValue": "postgres"
+          },
+          {
+            "secretKey": "itom_itsma_db_password_secret_key",
+            "secretValue": "bo_db_user"
+          }
+        ]
+      }
+    },
+    {
+      "name": "itom-chat",
+      "active": true,
+      "version": "1.1.0-20171011-b1",
+      "mode": "hmode",
+      "vault": {
+        "active": true,
+        "readonlyroles": "itom-itsma-config,itom-sm,itom-openldap",
+        "secrets": [
+          {
+            "secretKey": "pubsub_pass_secret_key",
+            "secretValue": "admin123"
+          },
+          {
+            "secretKey": "itom_itsma_chat_openfire_admin_pwd_secret_key",
+            "secretValue": "password"
+          },
+          {
+            "secretKey": "openfire_restkey_secret_key",
+            "secretValue": "7dR2VgHTNFT9tW8W"
+          },
+          {
+            "secretKey": "openfire_encrypt_key_secret_key",
+            "secretValue": "1Qaz2wsx"
+          },
+          {
+            "secretKey": "openfire_nm_auth_password_secret_key",
+            "secretValue": "1qaz2wsx3edc4rfv"
+          }
+        ]
+      }
+    },
+    {
+      "name": "itom-automation",
+      "active": true,
+      "mode": "hmode, xmode",
+      "version": "1.0.0-a1",
+      "vault": {
+        "active": true,
+        "readonlyroles": "itom-itsma-config",
+        "secrets": [
+          {
+            "secretKey": "idm_token_signingkey_secret_key",
+            "secretValue": "idmtokensignningkey32bitadvanced"
+          }
+        ]
+      }
+    }
+  ]
+}

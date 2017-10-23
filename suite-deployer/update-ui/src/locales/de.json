@@ -1,0 +1,18 @@
+﻿{
+    "backup.title":"Backup Suite-Konfiguration",
+    "Name":"Name",
+    "Time":"Zeit",
+    "backup.database":"Datenbank sichern",
+    "backup.database.instruction1":"Wir empfehlen, die Datenbank zu sichern, für den Fall, dass das Update fehlschlägt, und Sie Ihre Daten wieder herstellen müssen",
+    "backup.database.instruction2":"Wenn Sie die interne Datenbank verwenden, wechseln Sie zu <NTFS-Laufwerk der ITSMA-Datenbank> und sichern Sie den Ordner `db´.",
+    "backup.database.instruction3":"Wenn Sie eine oder mehrere externe Datenbanken verwenden, sichern Sie diese Datenbanken anhand der in der Dokumentation zu der Datenbank beschriebenen Verfahren zur Datensicherung.",
+    "shutDown.title":"Suite herunterfahren",
+    "Services":"Dienste",
+    "ShutDownNow":"Jetzt herunterfahren",
+    "Retry":"Wiederholen",
+    "Services.title":"Suite aktualisieren",
+    "UpdateNow": "Jetzt aktualisieren",
+    "summaryInfo1":"Herzlichen Glückwunsch! ITSMA wurde erfolgreich aktualisiert",
+    "summaryInfo2":"Alle Dienste wurden erfolgreich installiert. Wechseln Sie zur Startseite, um ITSMA jetzt zu verwenden!",
+    "summary.title":"Zusammenfassung der Aktualisierung"
+}

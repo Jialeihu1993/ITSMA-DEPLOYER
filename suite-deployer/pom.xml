@@ -1,0 +1,107 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>1.4.3.RELEASE</version>
+    </parent>
+    <groupId>com.hpe.itsma</groupId>
+    <artifactId>suite-deloyer</artifactId>
+    <version>2017.11-SNAPSHOT</version>
+    <packaging>pom</packaging>
+    <description>suite install controller</description>
+
+    <properties>
+        <deploy.url>http://shc-nexus-repo.hpeswlab.net:8080/repository/itsma-snapshots</deploy.url>
+        <build.version>${project.version}</build.version>
+        <dockerhub.namespace>hpeswitomsandbox</dockerhub.namespace>
+        <sonar.scm.provider>git</sonar.scm.provider>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
+
+    <modules>
+        <module>update-ui</module>
+        <module>deployer-ui</module>
+        <module>deployer-backend</module>
+        <module>docker</module>
+    </modules>
+
+    <profiles>
+        <profile>
+            <id>release</id>
+            <properties>
+                <deploy.url>http://shc-nexus-repo.hpeswlab.net:8080/repository/itsma-releases</deploy.url>
+                <spring.active.profile>release</spring.active.profile>
+            </properties>
+        </profile>
+        <profile>
+            <id>production</id>
+            <properties>
+                <deploy.url>http://shc-nexus-repo.hpeswlab.net:8080/repository/itsma-releases</deploy.url>
+                <spring.active.profile>prod</spring.active.profile>
+            </properties>
+        </profile>
+        <profile>
+            <id>aws</id>
+            <properties>
+                <spring.active.profile>aws</spring.active.profile>
+            </properties>
+        </profile>
+        <profile>
+            <id>ci</id>
+            <properties>
+                <spring.active.profile>dev</spring.active.profile>
+            </properties>
+        </profile>
+        <profile>
+            <id>dev</id>
+            <properties>
+                <spring.active.profile>dev</spring.active.profile>
+            </properties>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+        </profile>
+    </profiles>
+
+    <distributionManagement>
+        <repository>
+            <id>itsma-deploy</id>
+            <url>${deploy.url}</url>
+        </repository>
+    </distributionManagement>
+
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-release-plugin</artifactId>
+                <version>2.5.3</version>
+            </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>buildnumber-maven-plugin</artifactId>
+                <version>1.4</version>
+                <configuration>
+                    <timestampFormat>yyMMdd</timestampFormat>
+                </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>create-timestamp</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <inherited>false</inherited>
+            </plugin>
+        </plugins>
+    </build>
+
+    <scm>
+        <connection>scm:git:git@github.houston.softwaregrp.net:SMA-RnD/suite-deployer.git</connection>
+        <developerConnection>scm:git:git@github.houston.softwaregrp.net:SMA-RnD/suite-deployer.git</developerConnection>
+        <url>https://github.houston.softwaregrp.net/SMA-RnD/suite-deployer</url>
+        <tag>HEAD</tag>
+    </scm>
+</project>

@@ -1,0 +1,452 @@
+{
+  "swagger" : "2.0",
+  "info" : {
+    "version" : "v1.0",
+    "title" : "Itsma suite deployer Restful API",
+    "termsOfService" : "http://www.github.com/kongchen/swagger-maven-plugin",
+    "contact" : {
+      "name" : "danny tian",
+      "email" : "libin.tian@hpe.com"
+    }
+  },
+  "paths" : {
+    "/itsma/deployer/status" : {
+      "get" : {
+        "summary" : "Endpoint for getting the status of suite deployer",
+        "description" : "",
+        "operationId" : "getDeployerStatus",
+        "produces" : [ "application/json" ],
+        "responses" : {
+          "200" : {
+            "description" : "OK.",
+            "schema" : {
+              "$ref" : "#/definitions/DeployerStatus"
+            }
+          },
+          "404" : {
+            "description" : "Not found"
+          },
+          "500" : {
+            "description" : "Server internal error"
+          }
+        }
+      }
+    },
+    "/itsma/install" : {
+      "get" : {
+        "summary" : "Endpoint for checking the Itsma suite installation status",
+        "description" : "The installation status means all services' status in Itsma suite, the installation will complete as success when all services are in 'Success' status, the installation will complete as failed if any service is in 'Failed' status.",
+        "operationId" : "getInstallStatus",
+        "produces" : [ "application/json" ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "type" : "string"
+            }
+          }
+        }
+      },
+      "post" : {
+        "summary" : "Endpoint for installing itsma suite",
+        "description" : "The install endpoint will start the Itsma suite installation process, and return immediately. The client then can check the status of the installation by another api. Note! This endpoint can only be called once.",
+        "operationId" : "install",
+        "consumes" : [ "application/json" ],
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "body",
+          "description" : "Installation payload",
+          "required" : true,
+          "schema" : {
+            "type" : "object",
+            "additionalProperties" : {
+              "type" : "object"
+            }
+          }
+        } ],
+        "responses" : {
+          "201" : {
+            "description" : "Installation started"
+          },
+          "400" : {
+            "description" : "Bad request"
+          },
+          "404" : {
+            "description" : "Not found"
+          },
+          "500" : {
+            "description" : "Server internal error"
+          }
+        }
+      }
+    },
+    "/itsma/itsma_services" : {
+      "delete" : {
+        "summary" : "Endpoint for shutting down all activitived Itsma services",
+        "description" : "",
+        "operationId" : "shutdownSuite",
+        "responses" : {
+          "202" : {
+            "description" : "All Itsma services are marked for deletion."
+          },
+          "404" : {
+            "description" : "Not found"
+          },
+          "500" : {
+            "description" : "Server internal error"
+          }
+        }
+      }
+    },
+    "/itsma/itsma_services/{itsmaServiceName}" : {
+      "get" : {
+        "summary" : "Endpoint for getting the status of specified Itsma service",
+        "description" : "",
+        "operationId" : "getItsmaServiceStatus",
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "",
+          "in" : "path",
+          "description" : "Itsma service name",
+          "required" : true,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : ""
+          }
+        }
+      },
+      "put" : {
+        "summary" : "Endpoint for updating the status of specified Itsma service",
+        "description" : "",
+        "operationId" : "updateItsmaServiceStatus",
+        "consumes" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "",
+          "in" : "path",
+          "description" : "Itsma service name",
+          "required" : true,
+          "type" : "string"
+        }, {
+          "in" : "body",
+          "name" : "body",
+          "description" : "The itsma service's status is json format",
+          "required" : true,
+          "schema" : {
+            "$ref" : "#/definitions/ItsmaServiceStatus"
+          }
+        } ],
+        "responses" : {
+          "default" : {
+            "description" : "successful operation"
+          }
+        }
+      },
+      "delete" : {
+        "summary" : "Endpoint for shutting down the given Itsma services",
+        "description" : "",
+        "operationId" : "shutdownItsmaService",
+        "parameters" : [ {
+          "name" : "",
+          "in" : "path",
+          "description" : "Itsma service name",
+          "required" : true,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "202" : {
+            "description" : "The given Itsma service is marked for deletion."
+          },
+          "404" : {
+            "description" : "Not found"
+          },
+          "500" : {
+            "description" : "Server internal error"
+          }
+        }
+      }
+    },
+    "/itsma/itsma_services/{itsmaServiceName}/kube_resources" : {
+      "post" : {
+        "summary" : "Endpoint for creating k8s resource",
+        "description" : "Create various resources of kubernetes. e.g. namespace, pv, secret, service, pod, deployment",
+        "operationId" : "createKubeResourceWithPayload",
+        "parameters" : [ {
+          "name" : "",
+          "in" : "path",
+          "description" : "Itsma service name",
+          "required" : true,
+          "type" : "string"
+        }, {
+          "name" : "",
+          "in" : "header",
+          "description" : "Name of the file that the resource will be saved in",
+          "required" : true,
+          "type" : "string"
+        }, {
+          "in" : "body",
+          "name" : "body",
+          "description" : "The resource content in yaml format",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "201" : {
+            "description" : "Resource created."
+          },
+          "400" : {
+            "description" : "Bad request"
+          },
+          "404" : {
+            "description" : "Not found"
+          },
+          "500" : {
+            "description" : "Server internal error"
+          }
+        }
+      }
+    },
+    "/itsma/itsma_services/{itsmaServiceName}/manifest" : {
+      "post" : {
+        "summary" : "Endpoint for receiving manifest.yaml",
+        "description" : "This endpoint must be the first one to be invoked by the client, deployer decides the Itsma service's status only when it knows who the service is and if the service depends on others, if no, then the Itsma service will be in Ready status. If yes, and the service it depends on is not in Success status, then the current service will be in Wait status, or it will be in Ready status.",
+        "operationId" : "UploadServiceManifest",
+        "consumes" : [ "text/plain" ],
+        "parameters" : [ {
+          "name" : "",
+          "in" : "path",
+          "description" : "Itsma service name",
+          "required" : true,
+          "type" : "string"
+        }, {
+          "in" : "body",
+          "name" : "body",
+          "description" : "The content of manifest.yaml",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "201" : {
+            "description" : "manifest.yaml created."
+          },
+          "400" : {
+            "description" : "Bad request"
+          },
+          "404" : {
+            "description" : "Not found"
+          },
+          "500" : {
+            "description" : "Server internal error"
+          }
+        }
+      }
+    },
+    "/itsma/kube_pods/{podName}" : {
+      "get" : {
+        "summary" : "Endpoint for getting the status of specified k8s pod",
+        "description" : "",
+        "operationId" : "getPodStatusByName",
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "",
+          "in" : "path",
+          "description" : "k8s pod name",
+          "required" : true,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/KubeResourceStatus"
+            }
+          }
+        }
+      }
+    },
+    "/itsma/kube_services/{serviceName}" : {
+      "get" : {
+        "summary" : "Endpoint for getting the status of specified k8s service",
+        "description" : "",
+        "operationId" : "getServiceStatusByName",
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "",
+          "in" : "path",
+          "description" : "k8s service name",
+          "required" : true,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/KubeResourceStatus"
+            }
+          }
+        }
+      }
+    },
+    "/itsma/update" : {
+      "post" : {
+        "summary" : "Endpoint for update itsma suite",
+        "description" : "",
+        "operationId" : "update",
+        "responses" : {
+          "201" : {
+            "description" : "Installation started"
+          },
+          "400" : {
+            "description" : "Bad request"
+          },
+          "404" : {
+            "description" : "Not found"
+          },
+          "500" : {
+            "description" : "Server internal error"
+          }
+        }
+      }
+    },
+    "/itsma/update/version" : {
+      "get" : {
+        "summary" : "Endpoint for getting the suite version will be updated to",
+        "description" : "",
+        "operationId" : "versionUpdateTo",
+        "responses" : {
+          "200" : {
+            "description" : "suite version",
+            "schema" : {
+              "$ref" : "#/definitions/SuiteVersion"
+            }
+          },
+          "400" : {
+            "description" : "Bad request"
+          },
+          "404" : {
+            "description" : "Not found"
+          },
+          "500" : {
+            "description" : "Server internal error"
+          }
+        }
+      }
+    },
+    "/itsma/version" : {
+      "get" : {
+        "summary" : "Endpoint for getting current suite version",
+        "description" : "",
+        "operationId" : "version",
+        "responses" : {
+          "200" : {
+            "description" : "suite version",
+            "schema" : {
+              "$ref" : "#/definitions/SuiteVersion"
+            }
+          },
+          "400" : {
+            "description" : "Bad request"
+          },
+          "404" : {
+            "description" : "Not found"
+          },
+          "500" : {
+            "description" : "Server internal error"
+          }
+        }
+      }
+    }
+  },
+  "definitions" : {
+    "DeployerStatus" : {
+      "type" : "object",
+      "properties" : {
+        "phase" : {
+          "$ref" : "#/definitions/Phase"
+        },
+        "itsmaServiceStatuses" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/ItsmaServiceStatus"
+          }
+        }
+      }
+    },
+    "ItsmaServiceStatus" : {
+      "type" : "object",
+      "properties" : {
+        "name" : {
+          "type" : "string"
+        },
+        "status" : {
+          "type" : "string"
+        }
+      }
+    },
+    "KubeResourceStatus" : {
+      "type" : "object",
+      "properties" : {
+        "kind" : {
+          "type" : "string"
+        },
+        "name" : {
+          "type" : "string"
+        },
+        "status" : {
+          "type" : "string"
+        },
+        "self" : {
+          "type" : "string"
+        },
+        "ready" : {
+          "type" : "boolean"
+        }
+      }
+    },
+    "Phase" : {
+      "type" : "object",
+      "properties" : {
+        "name" : {
+          "type" : "string",
+          "enum" : [ "IDLE", "RUNNING", "INSTALLING", "UPDATING", "SHUTTINGDOWN", "RESTORING" ]
+        },
+        "detail" : {
+          "type" : "string"
+        }
+      }
+    },
+    "Service" : {
+      "type" : "object",
+      "properties" : {
+        "name" : {
+          "type" : "string"
+        },
+        "version" : {
+          "type" : "string"
+        }
+      }
+    },
+    "SuiteVersion" : {
+      "type" : "object",
+      "properties" : {
+        "suiteVersion" : {
+          "type" : "string"
+        },
+        "suiteMode" : {
+          "type" : "string"
+        },
+        "services" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/Service"
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,31 @@
+# itsma config ui contents of properties file
+[node]
+protocol = http
+server = 0.0.0.0
+port = 8080
+https_port = 8443
+base = /upgrade
+
+[browser]
+urlBase = /upgrade
+
+# 30 minutes
+session_max_age = 30
+is_debug = false
+session_secret = keyboard cat
+enable_csrf = false
+# LWSSO enabled
+enable_lwsso = false
+
+[rest]
+protocol = http
+server = localhost
+port = 8081
+base = /
+
+# 6 minutes
+proxy_timeout = 360000
+
+# Logging level. Valid levels are: error, warn, info, verbose, debug, silly.
+[logging]
+level = info

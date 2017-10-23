@@ -1,0 +1,243 @@
+#center {
+	overflow:hidden;
+	zoom:1;
+	height:100%;
+}
+#nav {
+	background-color: #dddddd;
+    height: 100%;
+    width: 330px;
+    float: left;	
+    padding-left: 70px;
+}
+#nav-title {
+    background-color: transparent; 
+	height: 190px;
+	/*border-bottom:  solid #01A982;*/
+	width: 400px;
+}
+#nav-hr {
+    height: 2px;
+    background-color: #01A982;
+	/*margin-left: 70px;*/
+	width: 260px;
+}
+#nav-logo {
+    width:250px;
+    /*margin-left: 70px;*/
+    margin-top: 30px; 
+}
+	
+.menu-li{
+	list-style:none;
+	line-height: 30px;
+}
+#section {
+    line-height:25px;
+	background-color:white;
+	width:100%;
+	height:100%;
+	float:left;
+	/*padding-top: 50px;*/
+}
+#section_main {
+    height:98%;
+    width:100%;
+    float:left;
+	/*overflow-y: auto;*/
+}
+#footer {
+	position: fixed;
+	background-color:transparent;
+	color:white;
+	width: 100%;
+	height:60px;
+	bottom: 0px;
+	left: 0px;
+    overflow:hidden;
+}
+.footer-button {
+    height: 30px;
+    width:  100px;
+    font-size: 16px;
+    outline: none;
+    cursor: pointer;  
+    font-family: HPEMetricBold;  
+    display: none;
+}
+.leftDiv{
+	float: left;
+	text-align: center;
+	width: 332px;
+	padding: 0px 45px 0px 45px;
+}
+.rightDiv{   
+    /* margin-left: 422px; */
+    text-align: left;
+    padding: 0px 20px 0px 20px;
+   /* height: 200px;*/
+    overflow: auto;
+}
+.intro-title{
+	width: 332px;
+    line-height: 50px;
+    font-size: 37px;
+    font-family: HPEMetricBold;
+    margin: 70px 0px 0px 0px;
+    padding-bottom: 15px;
+    border-bottom: solid 8px #01A982;
+}
+.intro-content{
+    width: 332px;
+    line-height: 20px;
+    margin: 10px 0px 0px 0px;
+}
+.welcome-frame{
+    width: 332px;
+    line-height: 20px;
+    margin: 10px 0px 0px 0px;
+    border: none;
+    overflow: hidden;
+}
+.text-selected{
+	font-family: HPEMetricSemibold;
+}
+.maskRadio{
+  	display: none;
+}
+.maskRadio ~ .maskRadioImg{
+    width:15px;
+    height:15px;
+    display: inline-block;
+
+    vertical-align: middle;
+    line-height: 20px;
+    
+    background: no-repeat;
+    background-image:url(../img/radio-nocheck.png);
+}
+.maskRadio:checked ~ .maskRadioImg{
+    background: no-repeat;
+    background-image:url(../img/radio-check.png);
+}
+.maskRadio:checked ~ .maskRadioText{
+   font-family: HPEMetricSemibold;
+}
+
+.maskCheckbox{
+  	display: none;
+}
+.maskCheckbox[disabled="disabled"]:checked ~ .maskCheckboxImg{
+	background: no-repeat;
+	background-image:url(../img/checkbox-check-disable.png);
+}
+.maskCheckbox[disabled="disabled"]:not(:checked) ~ .maskCheckboxImg{
+    background: no-repeat;
+    background-image:url(../img/checkbox-nocheck-disable.png);
+}
+.maskCheckbox:checked  ~ .maskCheckboxImg{
+    background: no-repeat;
+    background-image:url(../img/checkbox-check.png);
+}
+.maskCheckbox ~ .maskCheckboxImg{
+    width:15px;
+    height:15px;
+    display: inline-block;
+    vertical-align: text-bottom;
+    line-height: 20px;
+    background: no-repeat;
+    background-image:url(../img/checkbox-nocheck.png);
+}
+.maskCheckbox:checked ~ .maskCheckboxText{
+   font-family: HPEMetricSemibold;
+}
+.show-feature-icon{
+	/*position: fixed;*/
+	outline: none;
+    border: none;
+    /* float: right; */
+    /*margin: 7px 10px 3px 0px;*/
+	width:15px;
+    height:15px;
+    display: inline-block;
+    vertical-align: middle;
+    line-height: 20px;
+    background: no-repeat;
+    background-image:url(../img/show-features.png);
+}
+.middle-line{
+	width: 5%;
+	height: 1px;
+	float:right;
+	display: none;
+	background-color: #CCCCCC;
+	margin-top: 13px;
+}
+#middle-vtc{
+	width:1px;
+	display:none;
+	height:95%;
+	background-color:#CCCCCC;
+}
+.capDescDiv{
+    display: block;
+    color: #AFACA8;
+    line-height: 16px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    font-size: 16px;
+    /* height: 30px; */
+    white-space: nowrap;
+}
+.fesDescDiv{
+    display: block;
+    color: #AFACA8;
+    line-height: 16px;
+    /* text-overflow: ellipsis; */
+    /* overflow: hidden; */
+    font-size: 16px;
+    /* height: 30px; */
+    /* white-space: pre-wrap; */
+    width: 85%;
+    overflow-wrap: break-word;
+}
+.version-item{
+	display: table;
+}
+
+
+.nfs-other-div{
+	display: none;
+    width: 350px;
+    margin-left: 25px;
+}
+.nfs-default-div{
+	display: none;
+    width: 350px;
+    margin-left: 25px;
+}
+.storage-msg-label{
+	display: block;
+}
+.storage-msg-text{
+	/*float: right;*/
+	width: 250px;
+	margin-top: 4px;
+}
+#other-nfs:checked ~ .nfs-other-div{
+	display: block;
+}
+#default-nfs:checked ~ .nfs-default-div{
+	display: block;
+}
+#storage-check-btn{
+	width: 100px;
+    height: 30px;
+    border: none;
+    color: white;
+    background-color: #01A982;
+    font-family: HPEMetricBold;
+    font-size: 16px;
+    outline: none;
+    cursor: pointer;
+}

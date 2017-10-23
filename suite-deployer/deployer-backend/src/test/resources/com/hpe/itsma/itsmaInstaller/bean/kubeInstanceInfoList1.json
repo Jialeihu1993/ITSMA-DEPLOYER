@@ -1,0 +1,31 @@
+{
+
+  "kubeInstanceInfoList": [
+
+    {
+
+      "type": "pods",
+
+      "apiVersion": "v1",
+
+      "instanceName": "itom-idm-deploy-controller-pod",
+
+      "namespace": "itsma60",
+
+      "yamlContent": null,
+
+      "responseBody": "{\"kind\":\"Pod\",\"apiVersion\":\"v1\",\"metadata\":{\"name\":\"itom-idm-deploy-controller-pod\",\"namespace\":\"itsma60\",\"selfLink\":\"/api/v1/namespaces/itsma60/pods/itom-idm-deploy-controller-pod\",\"uid\":\"2ae898e1-3ea2-11e7-b53d-005056972b00\",\"resourceVersion\":\"1433442\",\"creationTimestamp\":\"2017-05-22T03:53:08Z\"},\"spec\":{\"volumes\":[{\"name\":\"nfs\",\"persistentVolumeClaim\":{\"claimName\":\"itsma60-vol-claim\"}},{\"name\":\"default-token-84r0r\",\"secret\":{\"secretName\":\"default-token-84r0r\",\"defaultMode\":420}}],\"containers\":[{\"name\":\"itom-idm-deploy-controller-pod\",\"image\":\"shc-harbor-dev.hpeswlab.net/itsma/itom-idm-deploy-controller:testPostYaml\",\"env\":[{\"name\":\"INSTALLER_URL\",\"value\":\"http://suite-conf-svc-itsma.core.svc.cluster.local:8081/itsma\"}],\"resources\":{},\"volumeMounts\":[{\"name\":\"nfs\",\"mountPath\":\"/var/log/service-deploy-controller/\",\"subPath\":\"logs/services/itom-idm/deploy-controller/\"},{\"name\":\"default-token-84r0r\",\"readOnly\":true,\"mountPath\":\"/var/run/secrets/kubernetes.io/serviceaccount\"}],\"terminationMessagePath\":\"/dev/termination-log\",\"imagePullPolicy\":\"IfNotPresent\"}],\"restartPolicy\":\"OnFailure\",\"terminationGracePeriodSeconds\":30,\"dnsPolicy\":\"ClusterFirst\",\"nodeSelector\":{\"Worker\":\"label\"},\"serviceAccountName\":\"default\",\"serviceAccount\":\"default\",\"nodeName\":\"16.155.195.50\",\"securityContext\":{\"fsGroup\":1999},\"imagePullSecrets\":[{\"name\":\"registrypullsecret\"}]},\"status\":{\"phase\":\"Pending\",\"conditions\":[{\"type\":\"Initialized\",\"status\":\"True\",\"lastProbeTime\":null,\"lastTransitionTime\":\"2017-05-22T03:53:10Z\"},{\"type\":\"Ready\",\"status\":\"False\",\"lastProbeTime\":null,\"lastTransitionTime\":\"2017-05-22T03:53:10Z\",\"reason\":\"ContainersNotReady\",\"message\":\"containers with unready status: [itom-idm-deploy-controller-pod]\"},{\"type\":\"PodScheduled\",\"status\":\"True\",\"lastProbeTime\":null,\"lastTransitionTime\":\"2017-05-22T03:53:08Z\"}],\"hostIP\":\"16.155.195.50\",\"startTime\":\"2017-05-22T03:53:10Z\",\"containerStatuses\":[{\"name\":\"itom-idm-deploy-controller-pod\",\"state\":{\"waiting\":{\"reason\":\"ContainerCreating\"}},\"lastState\":{},\"ready\":false,\"restartCount\":0,\"image\":\"shc-harbor-dev.hpeswlab.net/itsma/itom-idm-deploy-controller:testPostYaml\",\"imageID\":\"\"}]}}",
+
+      "statusCode": 200
+
+    }
+
+  ],
+
+  "foundInvalidate": false,
+
+  "invalidateCount": 0,
+
+  "invalidateContentList": []
+
+}

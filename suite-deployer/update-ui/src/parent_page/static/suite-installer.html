@@ -1,0 +1,2340 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="x-ua-compatible" content="IE=Edge">
+    <meta http-equiv="cache-control" content="no-cache">
+    <link rel="stylesheet" type="text/css" href="css/installer.css">
+    <link rel="stylesheet" href="css/hpe-font.css"/>
+    <link rel="stylesheet" href="css/jquery-ui.min.css"/>
+    <link rel="stylesheet" href="css/sweetalert.css"/>
+
+    <script src="js/jquery.min.js"></script>
+    <script src="js/handlebars-v4.0.5.js"></script>
+    <script src="js/jquery-ui.min.js" ></script>
+    <script src="js/jquery.i18n.properties.js"></script>
+    <script src="js/sweetalert.min.js"></script>
+    <script src="js/initCapabilities.js"></script>
+    <script src="js/js.cookie.js"></script>
+    <script src="js/fakedata.js"></script>
+    <style>
+        body, html {
+            width: 100%;
+            height: 100%;
+            min-width: 980px;
+            /*min-height: 550px;*/
+            margin: 0px;
+            overflow: hidden;
+        }
+
+        * {
+            font-family: HPEMetricRegular;
+        }
+        .s-btn {
+            border: solid 2px #808285;
+            width: 110px;
+            height: 110px;
+            background-color: white;
+            outline: none;
+            margin-right: 20px;
+            margin-bottom: 10px;
+            color: black;
+            font-size: 16px;
+            cursor: pointer;
+            box-shadow: 2px 2px 3px #B7B7B7;
+            font-family: HPEMetricSemibold;
+            vertical-align: middle;
+        }
+        #next_btn{
+           margin-right: 30px;
+           float: right;
+           background-color: #01A982;
+           border: none;
+           color: white;
+        }
+        #back_btn {
+           margin-right: 30px;
+           float: right;
+           border: solid 2px #01A982;
+           background-color: white;
+           color: black;
+        }
+        #cancel_btn {
+           margin-left: 30px;
+           float: left;
+           border: solid 2px #767676;
+           background-color: white;
+          /* display: none;*/
+        }
+        #next_btn[disabled="disabled"] {
+           color: white;
+           background-color: #CCCCCC;
+        }
+        #back_btn[disabled="disabled"] {
+           color: #767676;
+           background-color: #CCCCCC;
+        }
+        #cancel_btn[disabled="disabled"] {
+           color: white;
+           background-color: #CCCCCC;
+        }
+        .btn-ui {
+            border: 1px solid #01A982;
+            width: 100px;
+            height: 26px;
+            background-color: #01a982;
+            outline: none;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+            /*float: right;*/
+        }
+        /*.s-btn-ui{
+            border: 1px solid #01A982;
+            width: 100px;
+            height: 26px;
+            background-color: #01a982;
+            outline: none;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+            float: right;
+        }*/
+        .flag-div{
+        	width: 12px;
+		    height: 10px;
+		    display: inline-block;
+		    margin-left: 5px;
+        }
+        .val-success{
+        	background: no-repeat;
+        	background-image:url(img/Validate_success.png);
+        }
+        .val-fail{
+        	background: no-repeat;
+        	background-image:url(img/Validate_fail.png);
+        }
+
+
+        .radio-item{
+        	display: inline-block;
+    		line-height: 30px;
+    		margin-right: 20px;
+        }
+        .radio-btn{
+
+        }
+        .radio-font{
+        	vertical-align: middle;
+        	font-size: 16px;
+        }
+        .size-item{
+        	display: inline-block;
+    		line-height: 30px;
+    		margin-right: 20px;
+        }
+
+        #setsDiv{
+        	/*padding-bottom: 20px;*/
+    		/*border-top: solid 1px #CCCCCC;*/
+        }
+
+        .fset-item{
+	  		/*display: inline-block;*/
+	  		/*line-height: 30px;*/
+	  		/*margin: 5px 5px 5px 5px;
+	  		padding: 5px 8px 5px 8px;*/
+
+	  	}
+	  	.fset-checkbox{
+	  		/*display: inline;*/
+	  		vertical-align: middle;
+	  		width: 17px;
+	    	height: 17px;
+	  	}
+	  	.fset-font{
+	  		width:81%;
+	  		display: inline-block;
+	  		vertical-align: middle;
+		    text-overflow: ellipsis;
+		    overflow: hidden;
+	  	}
+	  	.feature-item{
+	  		/*border-left: solid 2px black;*/
+	  		/*display: block;*/
+	  		/*line-height: 30px;*/
+	  		/*margin: 5px 5px 5px 5px;
+	  		padding: 5px 8px 5px 8px;*/
+
+	  		overflow-wrap: break-word;
+
+	  	}
+	  	.feature-checkbox{
+	  		/*display: inline;*/
+	  		vertical-align: middle;
+	  		width: 17px;
+	    	height: 17px;
+	  	}
+	  	.feature-font{
+	  		display: inline;
+	  		vertical-align: middle;
+	  	}
+
+	  	.ui-progressbar {
+            position: relative;
+        }
+        .progress-label {
+            position: absolute;
+            /*color: white;*/
+            left: 46%;
+            font-size: 10px;
+            font-weight: bold;
+            line-height: 10px;
+        }
+        .ui-progressbar-value{
+            background-color: #01A982;
+        }
+        .p-light{
+        	line-height: 10px;
+        }
+    </style>
+</head>
+
+<body id="body" style="display: none;">
+<div id="center">
+    <div id="section">
+        <div id="section_main" align="center">
+
+        </div>
+    </div>
+</div>
+<div id="footer">
+    <button id="next_btn" style="" class="footer-button"></button>
+    <button id="back_btn" style="" class="footer-button"></button>
+    <button id="cancel_btn" style="" class="footer-button"></button>
+</div>
+
+<script id="ChooseLicenseTemplate" type="text/x-handlebars-template" >
+	<div class="leftDiv">
+	    <div class="intro-title" align="left" style="">{{CHOOSELICENSE_TITLE}}</div>
+	    <div class="intro-content" align="left"  >
+	    	<!--<p>
+		       {{CHOOSELICENSE_CONTENT1}}
+		    </p>
+		    <p>
+		       {{CHOOSELICENSE_CONTENT2}}
+		    </p>
+		    <p>
+		       {{CHOOSELICENSE_CONTENT3}}
+		    </p>-->
+
+	    </div>
+	</div>
+	<div class='rightDiv'>
+		<div class="" align="left" style="margin: 70px 30px 0px 0px;">
+			<!--<div style="">
+				<span id="yesChooseSpan" style="display: inline-block;height: 30px;">
+					<input type='radio' id="yesRadio" value="yes" class="lcsChooseRadio maskRadio"  name='lcsChooseRadio' />
+					<label class="maskRadioImg" for="yesRadio"></label>
+					<label class="maskRadioText" for="yesRadio" style="vertical-align: middle;">{{CHOOSELICENSE_YES_CHOOSE}}</label>
+				</span>
+				<div style="margin-left: 30px"><span id="portalDesc"></span></div>
+				<div style="margin-left: 30px">{{CHOOSELICENSE_P2}}
+				{{#each lockDetail}}
+					<font style="margin-left: 5px;color:#01A982;">{{value}}</font>
+				{{/each}}
+				</div>
+			</div>-->
+			<!--<div>
+				<span id="noChooseSpan" style="display: inline-block;height: 30px;">
+					<input type='radio' id="noRadio" value="no" class="lcsChooseRadio maskRadio"  name='lcsChooseRadio' />
+					<label class="maskRadioImg" for="noRadio"></label>
+					<label class="maskRadioText" for="noRadio" style="vertical-align: middle;">{{CHOOSELICENSE_NO_CHOOSE}}</label>
+				</span>
+				<div style="width: 85%; margin-left: 30px">{{CHOOSELICENSE_P3}}</div>
+			</div>-->
+			<div style="margin-top: 10%;">
+				<div>
+					<input type="checkbox" id="licenseCheck" class="maskCheckbox" name="" value="" >
+					<label for="licenseCheck" class="maskCheckboxImg"></label>&nbsp;
+					<span id="licenseDesc" ></span>
+				</div>
+
+				<div>
+					<input type="checkbox" id="privacyCheck" class="maskCheckbox" name="" value="" >
+					<label for="privacyCheck" class="maskCheckboxImg"></label>&nbsp;
+					<span id="privacyDesc" ></span>
+				</div>
+			</div>
+		</div>
+	</div>
+</script>
+<script id="ChooseSuiteTemplate" type="text/x-handlebars-template" >
+	<div class="leftDiv">
+	    <div class="intro-title" align="left" style="">{{CHOOSESUITE_TITLE}}</div>
+		<div class="intro-content" align="left"  ></div>
+	</div>
+    <div class='rightDiv'>
+    	<div class="" align="left" style="margin: 70px 30px 0px 0px;">
+	        <div id='suiteDiv'>
+	        	{{#each suitelist}}
+					<button class='s-btn suite-item' suitename='{{suite}}'>{{display_name}}</button>
+				{{/each}}
+	        </div>
+	        <div id='versionDiv' style="display:none">
+	        	<div id='version-title' style="border-bottom: solid 1px #CCCCCC;line-height: 30px;font-size: 25px;font-family: HPEMetricSemibold;margin-top: 20px;">{{CHOOSESUITE_VERSION_TITLE}}</div>
+	        	{{#each suitelist}}
+	        		<div class="suitemap suitemap-{{suite}}" style="display: none;">
+	        		{{#each versions}}
+	        			{{#if version}}
+	        				<div class="version-item">
+		    					<input type="radio" id="suitever-{{../suite}}-{{@index}}" class="version-radio maskRadio"  name="suiteVersion"  value="{{version}}"/>
+		    					<label class="maskRadioImg" for="suitever-{{../suite}}-{{@index}}"></label>&nbsp;
+		    					<label class="maskRadioText" for="suitever-{{../suite}}-{{@index}}"  style="vertical-align: middle;">{{version}}</font>
+	        				</div>
+	        			{{/if}}
+					{{/each}}
+					</div>
+				{{/each}}
+	        </div>
+        </div>
+    </div>
+</script>
+<script id="InputLicenseTemplate" type="text/x-handlebars-template" >
+	<div style='width:90%;text-align:left;'>
+		<h1 style='color: #01A982;'>{{INPUTLICENSE_TITLE}}</h1>
+		<div id="selectLcsDiv">
+			<p>{{INPUTLICENSE_CONTENT}}</p>
+			<br/>
+			<div >
+				<p>{{INPUTLICENSE_SELECT_LICENSE}}</p>
+				<select style="width: 60%;" id="lcsSelect" name="lcsSelect" >
+					{{#each lcsData}}
+						<option value='{{featureID}}'>{{featureDescription}}-version:{{featureVersion}}</option>
+					{{/each}}
+				</select>
+			</div>
+			<div style="margin-top: 20px;">
+
+				<form id="addLcsform" name="addLcsform" enctype="multipart/form-data"  method="post">
+					<input type="file" style="display:none"  id="file"  name="file" />
+				</form>
+				<span style="display:inline-block;">{{INPUTLICENSE_ADD_LICENSE}}&nbsp;</span><input type="text" readonly="readonly" name="lcsTitle" id="lcsTitle" style="height: 20px;"/>
+				<input type="button" id="selLcsBtn" value="{{INPUTLICENSE_BROWSE_BUTTON}}"  style="margin-left: 8px;vertical-align: middle;" class="btn-ui" />
+				<button type="button" id="addLcsBtn" style="vertical-align: middle;" class="btn-ui">{{INPUTLICENSE_ADD_BUTTON}}</button>
+			</div>
+		</div>
+	</div>
+</script>
+
+<script id="NFSSetupTemplate" type="text/x-handlebars-template" >
+	<div class="leftDiv">
+	    <div class="intro-title" align="left" style="">{{NFSSETUP_TITLE}}</div>
+		<div class="intro-content" align="left">{{NFSSETUP_CONTENT}}</div>
+	</div>
+  	<div class='rightDiv'>
+		<div class='' align='left' style='margin: 70px 30px 0px 0px;'>
+	        <div id='headerDiv' style='' >
+		        <div title='' style='line-height: 35px;font-size: 25px;font-family: HPEMetricSemibold;border-bottom: solid 1px #CCCCCC;'>{{NFSSETUP_LABEL1}}</div>
+
+		        <div id="storageTypeDiv">
+		        	{{#each storages}}
+						<span style='display: block;line-height: 30px;'>
+	    					<input id='storage-{{id}}' type='radio' value="{{id}}" name='storage-type' class='maskRadio' />
+	    					<label for='storage-{{id}}' class='maskRadioImg' ></label>&nbsp;
+	    					<label for='storage-{{id}}' class='radio-font maskRadioText'>{{desc}}</label>
+	    				</span>
+					{{/each}}
+
+		        </div>
+	      	</div>
+	      	<br/>
+        	<span style='margin-left: 40px;font-size:20px;font-family: HPEMetricSemibold;'>{{NFSSETUP_LABEL2}}</span>
+
+	        <div id="storageConfigDiv"  style='margin-left: 40px;border-top: solid 1px #CCCCCC;' >
+	        	<div id="nfs-storage-config-div" class="storage-config-div" style="display: none;height:150px">
+		       		<span style='display: block;line-height: 30px;'>
+						<input id='default-nfs' type='radio' name='nfs-config' value="default" class='maskRadio' />
+						<label for='default-nfs' class='maskRadioImg' ></label>&nbsp;
+						<label for='default-nfs' class='radio-font maskRadioText'>{{NFSSETUP_DEFAULT_NFS_DESC}} &nbsp;<span id="defaultNFSAddr"></span></label>
+						<input type="text" id="nfs-default-ip" disabled="disabled" style="display: none;"/>
+						<div class="nfs-default-div"><span class="storage-msg-label">{{NFSSETUP_NFSSERVER_FOLDER}}</span> <input type="text" id="nfs-default-dir" class="storage-msg-text"/></div>
+					</span>
+					<span style='display: block;line-height: 30px;'>
+						<input id='other-nfs' type='radio'  name='nfs-config' value="other" class='maskRadio' />
+						<label for='other-nfs' class='maskRadioImg' ></label>&nbsp;
+						<label for='other-nfs' class='radio-font maskRadioText'>{{NFSSETUP_OTHER_NFS_DESC}}</label>
+						<div class="nfs-other-div"><span class="storage-msg-label">{{NFSSETUP_NFSSERVER_IP}}</span> <input type="text" id="nfs-other-ip" class="storage-msg-text" /></div>
+						<div class="nfs-other-div"><span class="storage-msg-label">{{NFSSETUP_NFSSERVER_FOLDER}} </span><input type="text" id="nfs-other-dir" class="storage-msg-text"/></div>
+					</span>
+				</div>
+
+				<!--<div id="smb-storage-config-div" class="storage-config-div" style="display: none;">
+		       		<span style='display: block;line-height: 30px;'>
+						<input id='default-smb' type='radio' checked="checked"  name='smb-config' class='maskRadio' />
+						<label for='default-smb' class='maskRadioImg' ></label>&nbsp;
+						<label for='default-smb' class='radio-font maskRadioText'>Use system default smb server</label>
+					</span>
+					<span style='display: block;line-height: 30px;'>
+						<input id='other-smb' type='radio'  name='smb-config' class='maskRadio' />
+						<label for='other-smb' class='maskRadioImg' ></label>&nbsp;
+						<label for='other-smb' class='radio-font maskRadioText'>Use other smb server</label>
+						<div class="smb-other-div">Server hostname/IP: <input type="text" id="smb-other-ip" class="smb-other-text" /></div>
+						<div class="smb-other-div">Exported share: <input type="text" id="smb-other-dir" class="smb-other-text"/></div>
+					</span>
+				</div>-->
+				<!--<button type="button" id="storage-check-btn" >{{NFSSETUP_STORAGE_CHECK_BUTTON}}</button>
+				<span id="checkResult" style="margin-left: 10px;" ></span>-->
+	       	</div>
+
+        </div>
+    </div>
+</script>
+
+<script id="SynchronizeTemplate" type="text/x-handlebars-template" >
+	<div style='width:90%;text-align:left;'>
+	   <h1 style='color: #01A982;'>{{SYNCHRONIZE_TITLE}}</h1>
+	   <p>{{SYNCHRONIZE_CONTENT}}</p>
+	   <p class="p-light">{{SYNCHRONIZE_IMAGES}}</p>
+	   <div style="height:150px;overflow-y: auto;border: solid 1px #CCCCCC;padding-left: 10px;">
+	   		{{#each images}}
+	   			<p class="p-light">{{image}}</p>
+			{{/each}}
+	   </div>
+	   <div style="height:35px;">
+		   	<!--<font style="vertical-align: middle;">{{SYNCHRONIZE_CONTENT2}}</font>-->
+		  	<font style="vertical-align: middle;">{{SYNCHRONIZE_NOTICE}}</font>
+	   </div>
+
+	   <!--<div style="height:35px;">
+		   	<li style="vertical-align: middle;">{{SYNCHRONIZE_SYNC_PATH}}</li>
+	   </div>
+	   <div id="syncDiv" style="height: 75px;">
+	   		<button type="button" id="syncBtn" class="btn-ui">{{SYNCHRONIZE_SYNC_BUTTON}}</button>
+		   	<div id="progressbar" style="height: 10px;margin-top: 10px;">
+			    <div id="progress-label" class="progress-label"></div>
+			</div>
+			<div>{{SYNCHRONIZE_SUCCESS}}:&nbsp;<span id="syncSuccessNum" style="color: green;">0</span>&nbsp;&nbsp;&nbsp;{{SYNCHRONIZE_FAIL}}:&nbsp;<span id="syncFailureNum" style="color: red;">0</span></div>
+	   </div>
+
+	   <div style="height:35px;">
+		    <li>{{SYNCHRONIZE_UPLOAD_PATH}}</li>
+	   </div>
+
+	   <div style="height:35px">{{SYNCHRONIZE_UPLOAD_HINT}}</div>
+	   <div id="uploadDiv" style="height: 70px;">
+	   		<div style="">
+	   			<form id="upform" name="upform" enctype="multipart/form-data" action="/reg/image/uploadImage" method="post">
+					<input type="file" style="display:none"  id="upFile"  name="upFile[]" multiple="multiple"/>
+				</form>
+				<span style="display:inline-block;"><font color="red">*</font>File:&nbsp;</span><input type="text" readonly="readonly" name="fileTitle" id="fileTitle" style="height: 20px;"/>
+				<input type="button" id="upFileBtn" value="{{SYNCHRONIZE_BROWSE_BUTTON}}"  style="margin-left: 8px;vertical-align: middle;" class="btn-ui" />
+				<button type="button" id="uploadBtn" style="vertical-align: middle;" class="btn-ui">{{SYNCHRONIZE_UPLOAD_BUTTON}}</button>
+	   		</div>
+
+	   		<div id="progressbar2" style="height: 10px;margin-top: 10px;">
+			    <div id="progress-label2" class="progress-label"></div>
+			</div>
+
+			<div>{{SYNCHRONIZE_SUCCESS}}:&nbsp;<span style="color: green;" id="uploadSuccessNum">0</span>&nbsp;&nbsp;&nbsp;{{SYNCHRONIZE_FAIL}}:&nbsp;<span id="uploadFailureNum" style="color: red;">0</span></div>
+	   </div>-->
+
+	</div>
+</script>
+
+<script type="text/javascript">
+
+	//etcd need
+    var initStep = "Start";
+    var lockDetail = null;
+    var userChoose = "no";
+    var selectedLicense;
+
+	var currentCap;
+ 	var suiteI18N;
+	var currentSuite={
+	"suite": "itsma",
+	"display_name": "ITSMA",
+	"gid": "1999",
+	"uid": "1999",
+	"versions": [{
+		"version": "2015.11",
+		"features": "/itsma_suitefeatures.2016.12.json",
+		"image": "shc-nexus-repo.hpeswlab.net:9000/itsma/itsma-installer:latest",
+		"license_id": [
+			"23134",
+			"23132"
+		]
+	}, {
+		"version": "2015.12",
+		"features": "/itsma_suitefeatures.2016.12.json",
+		"image": "shc-nexus-repo.hpeswlab.net:9000/itsma/itsma-installer:latest",
+		"license_id": [
+			"23134",
+			"23132"
+		]
+	}]
+};
+
+	var licenseCheck = true;
+	var privacyCheck = false;
+
+	//Config
+	var suiteReady = false;
+	var currentLabel;
+	var currentNamespace;
+	var currentVersion ={
+		"version": "2015.11",
+		"features": "/itsma_suitefeatures.2016.12.json",
+		"image": "shc-nexus-repo.hpeswlab.net:9000/itsma/itsma-installer:latest",
+		"license_id": [
+			"23134",
+			"23132"
+		]
+	};
+
+	var deploymentId;
+	//etcd need
+	var storageModel = {
+		storageType:"nfs",
+		storageConfig:{
+			type:"default",
+			addr:"asda",
+			folder:"asdasdas",
+		},
+	};
+	var defaultNFSIP = "asdasdas";
+
+	var csrfToken;
+	var authorization = getUrlParam("X-AUTH-TOKEN");
+	var acceptLanguage = getUrlParam("ACCEPT-LANGUAGE");
+//	var authorization = Cookies.get("xtoken");
+	var lastimeRequest = new Date().getTime();
+
+	var suitelist;
+//	var instancelist;
+
+	var onNextHandler;
+	var onBackHandler;
+	var onCancelHandler;
+
+
+
+    var iframeUrl = "";
+//  var $mainFrame = null;
+
+    var timer;
+	var timer2;
+
+	var checktimer;
+
+//	var currentEdition;
+
+	var frontPath = location.pathname.substring(0,location.pathname.indexOf("/",1));
+
+	var language = acceptLanguage || (navigator.browserLanguage?navigator.browserLanguage:navigator.language).replace(/-/g, "_");
+
+
+	var refreshToken = window.parent.requestRefreshToken;
+
+
+//	var curSuiteName="";
+
+	function checkLogout(res){
+		//Logout
+		if(res.status=="401"){
+			try{
+	        	window.parent.requestLogout()
+        	}catch(e){
+        		console.log(e);
+        	}
+		}
+	}
+
+	function $http(options) {
+	    options.count = 0;
+	    sendNext(options);
+	}
+
+	function  sendNext(options){
+	    options.count++;
+	    if(!window.parent.isRefreshingToken || options.count > 30){
+	        if ( (new Date().getTime() - lastimeRequest) >= 10*60*1000 ) {	// 10 min
+	        	try{
+	        		refreshToken()	// refresh token
+	        	}catch(e){
+	        		console.log(e);
+	        	}
+	        }
+	        lastimeRequest = new Date().getTime();
+	        $.ajax(options);
+
+	        return;
+	    }
+	    setTimeout(function () {
+	        sendNext(options);
+	    }, 500);
+	}
+
+	function loadBundles(cb) {
+		jQuery.i18n.properties({
+		    name:'Messages',
+		    path:'locale/',
+		    mode:'both',
+		    language:language,
+		    callback: cb
+		});
+	}
+
+	$(document).ready(function(){
+			requestCsrfToken(function(data){
+				requestEtcdStatus(function(status){
+					if(status && status.initStep && status.initStep!=null){
+						initStep = status.initStep;
+
+					    userChoose = status.userChoose;
+					    selectedLicense = status.selectedLicense;
+
+						currentCap = status.currentCap;
+						suiteI18N = status.suiteI18N;
+						currentSuite = status.currentSuite;
+
+						licenseCheck = status.licenseCheck;
+						privacyCheck = status.privacyCheck;
+
+						//Config
+						currentLabel = null;
+						currentNamespace = null;
+						currentVersion = status.currentVersion;
+
+						deploymentId = status.deploymentId;
+					}else{
+						initStep = "Start";
+					}
+
+					//step "SuitePod" spacially
+				 	if(initStep == "SuitePod"){
+				 		loadBundles(function(){
+		        			$("#next_btn").text(FOOTER_NEXT_BUTTON);
+			        		$("#next_btn").attr("disabled","disabled");
+		        		});
+
+			            iframeUrl = 'loading.html?X-AUTH-TOKEN='+authorization;
+
+						var iframeTpl = '<iframe id="mainFrame" name="mainFrame" width="100%"  ' +
+			                        'frameborder="0" style="display: block;" webkitallowfullscreen="" mozallowfullscreen="" allowfullscreen=""></iframe>';
+
+			            $("#section_main").children().remove();
+
+			            $(iframeTpl).appendTo("#section_main").prop('src', iframeUrl);
+
+			            if(currentCap && currentCap!=null){
+			            	requestCsrfToken(function(){
+			            		postFeature(deploymentId,currentCap,function(){
+					            	requestIframeUrl(deploymentId,currentSuite.suite,currentNamespace ,currentLabel,currentVersion, function (url) {
+						                iframeUrl = window.document.location.origin + url;
+						                checkIframeOK(iframeUrl, {delay:2000, allTimes:300*1000, beginTime:new Date().getTime()}, function(){
+//						                    $mainFrame = $("#mainFrame");
+//						                    $mainFrame.css('height', $('body').height() -90 );
+						                    $("#mainFrame").prop('src', iframeUrl);
+						                });
+						            });
+					            });
+			            	});
+
+			            }else{
+			            	requestCsrfToken(function(){
+			            		requestIframeUrl(deploymentId,currentSuite.suite,currentNamespace ,currentLabel,currentVersion, function (url) {
+					                iframeUrl = window.document.location.origin + url;
+					                checkIframeOK(iframeUrl, {delay:2000, allTimes:300*1000, beginTime:new Date().getTime()}, function(){
+//					                    $mainFrame = $("#mainFrame");
+//					                    $mainFrame.css('height', $('body').height() -90 );
+					                    $("#mainFrame").prop('src', iframeUrl);
+					                });
+					            });
+			            	});
+			            }
+				 	}else{
+				 		deploymentId = undefined;
+				 		if(initStep == "ChooseLicense"){
+					 		initStep = "Start";
+					 	}
+				 		backStep();
+		        		nextStep();
+				 	}
+		        	$(body).show();
+				});
+			});
+	        loadBundles(function(){
+	        	$("#back_btn").text(FOOTER_BACK_BUTTON);
+	        	$("#next_btn").text(FOOTER_NEXT_BUTTON);
+	        	$("#cancel_btn").text(FOOTER_CANCEL_BUTTON);
+	        });
+	});
+    var loadChooseLicense = function () {
+    	initStep = "ChooseLicense";
+    	swal.close();
+        $("#section_main").children().remove();
+       	$("#back_btn").hide();
+       	$("#next_btn").show();
+       	$("#cancel_btn").hide();
+     	$("#next_btn").attr("disabled","disabled");
+     	$("#next_btn").text(FOOTER_NEXT_BUTTON);
+
+
+    	var myTemplate = Handlebars.compile($("#ChooseLicenseTemplate").html());
+    	$('#section_main').html(myTemplate({
+    		"lockDetail":lockDetail,
+    		CHOOSELICENSE_TITLE:CHOOSELICENSE_TITLE,
+    		CHOOSELICENSE_CONTENT1:CHOOSELICENSE_CONTENT1,
+			CHOOSELICENSE_CONTENT2:CHOOSELICENSE_CONTENT2,
+			CHOOSELICENSE_CONTENT3:CHOOSELICENSE_CONTENT3,
+			CHOOSELICENSE_YES_CHOOSE:CHOOSELICENSE_YES_CHOOSE,
+			CHOOSELICENSE_NO_CHOOSE:CHOOSELICENSE_NO_CHOOSE,
+//				CHOOSELICENSE_P1:jQuery.i18n.prop('CHOOSELICENSE_P1','PORTAL_DESC'),
+			CHOOSELICENSE_P2:CHOOSELICENSE_P2,
+			CHOOSELICENSE_P3:CHOOSELICENSE_P3,
+//				CHOOSELICENSE_P4:jQuery.i18n.prop('CHOOSELICENSE_P4','LICENSE_DESC'),
+//				CHOOSELICENSE_P5:jQuery.i18n.prop('CHOOSELICENSE_P5','PRIVACY_DESC'),
+
+    	}));
+    	$("#portalDesc").html(jQuery.i18n.prop('CHOOSELICENSE_P1','PORTAL_DESC').replace('PORTAL_DESC','<a href="https://www.hpe.com/software/entitlements" target="_blank" style="color:#01A982;">'+ jQuery.i18n.prop('CHOOSELICENSE_HPESW_PORTAL') +'</a>'));
+    	$("#licenseDesc").html(jQuery.i18n.prop('CHOOSELICENSE_P4','LICENSE_DESC').replace('LICENSE_DESC','<a href="http://www.hpe.com/software/SWLicensing" target="_blank" style="color:#01A982;">'+ jQuery.i18n.prop('CHOOSELICENSE_HPE_LICENSE') +'</a>'));
+    	$("#privacyDesc").html(jQuery.i18n.prop('CHOOSELICENSE_P5','PRIVACY_DESC').replace('PRIVACY_DESC','<a href="http://www8.hp.com/us/en/hpe/privacy/privacy.html" target="_blank" style="color:#01A982;">'+ jQuery.i18n.prop('CHOOSELICENSE_HPE_PRIVACY') +'</a>'));
+
+        resizeComponent();
+		$(".lcsChooseRadio").click(function(){
+    		userChoose = $(this).val();
+    		trobleCheck();
+    	});
+
+		trobleCheck();
+
+        $("#licenseCheck").click(function() {
+        	licenseCheck = $(this)[0].checked;
+        	trobleCheck();
+        })
+        $("#privacyCheck").click(function() {
+        	privacyCheck = $(this)[0].checked;
+        })
+
+        //init useragreement option
+
+        if(licenseCheck){
+			$("#licenseCheck")[0].checked = true;
+		}
+        if(privacyCheck){
+			$("#privacyCheck")[0].checked = true;
+		}
+
+//  	if(userChoose == "yes"){
+//  		$("#yesRadio")[0].click();
+//  	}else if(userChoose == "no"){
+//  		$("#noRadio")[0].click();
+//  	}
+
+    	function trobleCheck(){
+			if(licenseCheck && userChoose){
+				$("#next_btn").removeAttr("disabled");
+			}else{
+				$("#next_btn").attr("disabled","disabled");
+			}
+		}
+    }
+
+    var loadChooseSuite = function () {
+    	initStep = "ChooseSuite";
+        $("#section_main").children().remove();
+        $("#back_btn").show();
+        $("#cancel_btn").show();
+
+    	var suitesTemplate = Handlebars.compile($("#ChooseSuiteTemplate").html());
+    	$('#section_main').html(suitesTemplate({
+    		'suitelist':suitelist,
+    		CHOOSESUITE_TITLE:CHOOSESUITE_TITLE,
+    		CHOOSESUITE_VERSION_TITLE:CHOOSESUITE_VERSION_TITLE,
+    	}));
+
+        resizeComponent();
+        // currentSuite = undefined;
+        // currentVersion = null;
+        //init status
+        $(".version-radio").each(function(){
+    		$(this)[0].checked = false;
+    	});
+
+    	//click event
+    	$(".version-radio").click(function(){
+        	var radioval = $(this).val();
+        	suitelist.forEach(function (su) {
+                if(currentSuite.suite == su.suite){
+                	currentSuite.versions.forEach(function (ve) {
+                		if(ve.version == radioval){
+                			currentVersion = ve;
+                		}
+                	});
+                }
+            });
+        });
+
+    	//switch suite
+		$('.suite-item').click(function () {
+			$('.suite-item').css({
+                'background-color': 'white',
+            });
+            $(this).css({
+                'background-color': '#01a982',
+            });
+            var currentSuiteName =  $(this).attr('suitename');
+            suitelist.forEach(function (su) {
+                if(currentSuiteName == su.suite){
+                	currentSuite = su;
+                	$(".version-radio").each(function(){
+                		$(this)[0].checked = false;
+                	});
+                	$("#versionDiv").show();
+                	$(".suitemap").hide();
+                	$(".suitemap-"+currentSuite.suite).show();
+                	$(".suitemap-"+currentSuite.suite).children(".version-item").children(".version-radio:first")[0].click();
+                }
+            });
+        });
+
+		if(currentSuite && currentSuite.suite !=null){
+			$('.suite-item[suitename = "'+currentSuite.suite+'"]').click();
+		}
+		console.log(currentSuite);
+		console.log(currentVersion);
+    }
+    var loadInputLicense = function (lcsData) {
+    	initStep = "InputLicense";
+//  	SelectOrUpload = "Select";
+        $("#section_main").children().remove();
+        $("#back_btn").show();
+        $("#cancel_btn").show();
+        requestExtLicense(function(data){
+
+        	var inputLicenseTemplate = Handlebars.compile($("#InputLicenseTemplate").html());
+        	$('#section_main').html(inputLicenseTemplate({
+        		'lcsData':data,
+        		INPUTLICENSE_TITLE:INPUTLICENSE_TITLE,
+				INPUTLICENSE_CONTENT:INPUTLICENSE_CONTENT,
+				INPUTLICENSE_SELECT_LICENSE:INPUTLICENSE_SELECT_LICENSE,
+				INPUTLICENSE_ADD_LICENSE:INPUTLICENSE_ADD_LICENSE,
+				INPUTLICENSE_BROWSE_BUTTON:INPUTLICENSE_BROWSE_BUTTON,
+				INPUTLICENSE_ADD_BUTTON:INPUTLICENSE_ADD_BUTTON,
+        	}));
+
+
+	        if(selectedLicense && selectedLicense != null){
+	        	$("#lcsSelect").val(selectedLicense);
+	        }else{
+	        	selectedLicense = $("#lcsSelect").val();
+	        }
+
+	        $("#lcsSelect").change(function(){
+	        	selectedLicense = $(this).val();
+	        });
+
+	        $("#file").change(function(){
+				var upfiles = document.addLcsform["file"].files;
+				if(upfiles.length>0){
+					document.getElementById("lcsTitle").value = upfiles[0].name;
+
+				}
+		    });
+			$("#selLcsBtn").click(function(){
+				$("#file")[0].click();
+		    });
+        	$("#addLcsBtn").click(function(){
+        		console.log($("#file").val())
+        		if($("#file").val()!=null && $("#file").val()!=""){
+        			var formData = new FormData(document.getElementById("addLcsform"));
+        			requestCsrfToken(function(){
+        				$http({
+				              url: frontPath +  '/urest/v1.1/license-manager/license',
+				              type: 'post',
+
+				              data:formData,
+				              headers:{
+				              	'X-AUTH-TOKEN': authorization,
+				              	'X-CSRF-TOKEN': csrfToken,
+				              },
+				              contentType:false,
+				              processData:false,
+				              success: function (data) {
+				              	if(data.status != "SUCCESS"){
+			        				sweetAlert({
+									  title: "",
+									  text: ALERT_MESSAGE_ADD_LICENSE_FAIL,
+									  allowOutsideClick: true,
+									});
+				              	}else{
+				              		loadInputLicense();
+				              	}
+
+				              },
+				              error: function (res) {
+				              	checkLogout(res);
+		        				sweetAlert({
+								  title: "",
+								  text: ALERT_MESSAGE_ADD_LICENSE_FAIL,
+								  allowOutsideClick: true,
+								});
+				                console.log(res);
+				                checkLogout(res);
+				              }
+				        });
+        			})
+        		}else{
+    				sweetAlert({
+					  title: "",
+					  text: ALERT_MESSAGE_CHOOSE_LICENSE,
+					  allowOutsideClick: true,
+					});
+        		}
+		    });
+
+        });
+    }
+    var loadShowFeatures = function () {
+    	initStep = "ShowFeatures";
+    	$("#section_main").children().remove();
+//  	$("#next_btn").attr("disabled","disabled");
+
+//  	currentCap = capObj.suiteFeature;
+    	if(currentCap && currentCap != null){
+    		initCapabilities(suiteI18N);
+    	}else{
+    		loadBundles(function(){
+    			$("#section_main").append(
+			        "<h3>"+SHOWFEATURES_CONTENT2+"</h3>"
+			    );
+    		});
+    	}
+    	resizeComponent();
+    }
+	var loadNFSSetup = function () {
+    	//存入etcd
+//		console.log(currentSuite);
+
+		initStep = "NFSSetup";
+		$("#section_main").children().remove();
+
+
+		//support L10N?
+		var storages = [{
+			id:"nfs",
+			desc:"Network File System",
+		},
+//			{
+//				id:"smb",
+//				desc:"Server Message Block",
+//			}
+		];
+
+		var nfsTemplate = Handlebars.compile($("#NFSSetupTemplate").html());
+        $('#section_main').html(nfsTemplate({
+        	'storages':storages,
+        	NFSSETUP_TITLE:NFSSETUP_TITLE,
+        	NFSSETUP_CONTENT:NFSSETUP_CONTENT,
+			NFSSETUP_LABEL1:NFSSETUP_LABEL1,
+			NFSSETUP_LABEL2:NFSSETUP_LABEL2,
+			NFSSETUP_DEFAULT_NFS_DESC:NFSSETUP_DEFAULT_NFS_DESC,
+			NFSSETUP_OTHER_NFS_DESC:NFSSETUP_OTHER_NFS_DESC,
+			NFSSETUP_NFSSERVER_IP:NFSSETUP_NFSSERVER_IP,
+			NFSSETUP_NFSSERVER_FOLDER:NFSSETUP_NFSSERVER_FOLDER,
+			NFSSETUP_STORAGE_CHECK_BUTTON:NFSSETUP_STORAGE_CHECK_BUTTON,
+        }));
+
+		resizeComponent();
+		//click storage type event
+		$("input[name='storage-type']").click(function(){
+			var confVal = $(this).val();
+			$(".storage-config-div").hide();
+			$("#"+confVal+"-storage-config-div").show();
+
+		});
+
+		//init select nfs
+		if(storageModel.storageType){
+			$("#storage-"+storageModel.storageType)[0].click();
+			switch (storageModel.storageType){
+				case "nfs":
+					if(!defaultNFSIP || defaultNFSIP == null || defaultNFSIP.trim() == ""){
+						$("#defaultNFSAddr").text(NFSSETUP_STORAGE_DEFAULTNFS_NOTFIND);
+						$("#defaultNFSAddr").css("color","red");
+						$("#nfs-default-ip").val(null);
+					}else{
+						$("#defaultNFSAddr").text(defaultNFSIP);
+						$("#defaultNFSAddr").css("color","#01A982");
+						$("#nfs-default-ip").val(defaultNFSIP);
+					}
+
+
+					if(storageModel.storageConfig){
+						$("#"+storageModel.storageConfig.type+"-nfs")[0].click();
+						$("#nfs-"+storageModel.storageConfig.type+"-dir").val(storageModel.storageConfig.folder);
+						if(storageModel.storageConfig.type == "default"){
+							$("#nfs-"+storageModel.storageConfig.type+"-ip").val(defaultNFSIP);
+						}else{
+							$("#nfs-"+storageModel.storageConfig.type+"-ip").val(storageModel.storageConfig.addr);
+						}
+					}
+
+					break;
+				default:
+					break;
+			}
+		}
+    }
+	var loadSynchronize = function () {
+
+		initStep = "Synchronize";
+		$("#section_main").children().remove();
+
+		//清除计时器
+		if(checktimer){
+			clearTimeout(checktimer);
+		}
+		//设置为未加载页面
+		suiteReady = false;
+
+
+    	var syncTemplate = Handlebars.compile($("#SynchronizeTemplate").html());
+    	$('#section_main').html(syncTemplate({
+    		"images": currentCap.images,
+    		SYNCHRONIZE_TITLE:SYNCHRONIZE_TITLE,
+			SYNCHRONIZE_CONTENT:SYNCHRONIZE_CONTENT,
+			SYNCHRONIZE_CONTENT2:SYNCHRONIZE_CONTENT2,
+			SYNCHRONIZE_NOTICE:SYNCHRONIZE_NOTICE,
+			SYNCHRONIZE_IMAGES:SYNCHRONIZE_IMAGES,
+			SYNCHRONIZE_SYNC_PATH:SYNCHRONIZE_SYNC_PATH,
+			SYNCHRONIZE_UPLOAD_PATH:SYNCHRONIZE_UPLOAD_PATH,
+			SYNCHRONIZE_UPLOAD_HINT:SYNCHRONIZE_UPLOAD_HINT,
+			SYNCHRONIZE_SUCCESS:SYNCHRONIZE_SUCCESS,
+			SYNCHRONIZE_FAIL:SYNCHRONIZE_FAIL,
+			SYNCHRONIZE_SYNC_BUTTON:SYNCHRONIZE_SYNC_BUTTON,
+			SYNCHRONIZE_BROWSE_BUTTON:SYNCHRONIZE_BROWSE_BUTTON,
+			SYNCHRONIZE_UPLOAD_BUTTON:SYNCHRONIZE_UPLOAD_BUTTON,
+    	}));
+
+        //----------------------progressbar1-------------------
+        var progressbar = $("#progressbar");
+        var progressLabel = $("#progress-label");
+
+        progressbar.progressbar({
+            value: true,
+            change: function() {
+                progressLabel.text( progressbar.progressbar( "value" ) + "%" );
+            },
+            complete: function() {
+                progressLabel.text( "Complete!" );
+            }
+        });
+//		getSyncProgress();
+		$("#syncBtn").click(function(){
+			console.log(window.parent);
+			console.log(window.parent['X-CSRF-TOKEN']);
+
+//			clearTimeout(timer);
+//			timer = setTimeout(getSyncProgress, 3000);
+//			progressbar.progressbar( "value", 0);
+//			progressLabel.text( jQuery.i18n.prop(PROGRESS_LOADING) );
+//			$("#syncSuccessNum").text(0);
+//			$("#syncFailureNum").text(0);
+
+			 $http({
+                url: '/reg/image/SyncProgress',
+                type: 'GET',
+                headers:{'Authorization': authorization,
+                		'x-csrf-token':window.parent['X-CSRF-TOKEN'],
+                },
+                cache:false,
+                success: function (res) {
+                    if(res.status==1){
+
+        				sweetAlert({
+						  title: "",
+						  text: ALERT_MESSAGE_TASK_INPROGRESS,
+						  allowOutsideClick: true,
+						});
+
+                        clearTimeout(timer);
+						timer = setTimeout(getSyncProgress, 3000);
+                    }else if(res.status==0){
+                        var imagesMap = {};
+                        currentCap.images.forEach(function(e){
+                        	var it = e.image;
+                        	var itTag = it.substring(it.lastIndexOf(":")+1,it.length);
+                        	var itName = it.substring(0,it.lastIndexOf(":"));
+                        	imagesMap[itName] = [itTag];
+                        });
+                        console.log(imagesMap);
+
+                        var myform = new FormData();
+						myform.append("imageList", JSON.stringify(imagesMap));
+
+						clearTimeout(timer);
+						timer = setTimeout(getSyncProgress, 3000);
+						progressbar.progressbar( "value", 0);
+						progressLabel.text( jQuery.i18n.prop(PROGRESS_LOADING) );
+						$("#syncSuccessNum").text(0);
+						$("#syncFailureNum").text(0);
+                    	$http({
+			                url: '/reg/image/syncImages',
+			                type: 'POST',
+			                headers:{'Authorization': authorization},
+			                data: myform,
+
+			                processData:false,
+			                contentType:false,
+
+			                success: function (res) {
+//									clearTimeout(timer);
+//									timer = setTimeout(getSyncProgress, 3000);
+			                },
+			                error: function (res) {
+			                	console.log("-------------network error--------------")
+                				console.log(res)
+			                    progressLabel.text(jQuery.i18n.prop(PROGRESS_ERROR));
+			                    checkLogout(res);
+			                }
+			            });
+                    }else{
+                    	console("other return value");
+                    }
+                },
+                error: function (res) {
+                	console.log("-------------network error--------------")
+                	console.log(res)
+                    progressLabel.text(jQuery.i18n.prop(PROGRESS_ERROR));
+                    checkLogout(res);
+                }
+            });
+
+		});
+		function getSyncProgress() {
+            $http({
+                url: '/reg/image/SyncProgress',
+//                url: '1.json',
+                type: 'GET',
+                headers:{'Authorization': authorization},
+                cache:false,
+                success: function (res) {
+                	console.log(res);
+					$("#syncSuccessNum").text(res.successNum);
+					$("#syncFailureNum").text(res.failureNum);
+                    if(res.status==1){
+                    	if(res.currentIndex < 0){
+                    		progressbar.progressbar( "value", 0);
+                    	}else{
+                    		var rate = (res.currentIndex*5+res.currentStep)/(res.totalIndex*5);
+                        	progressbar.progressbar( "value",  parseInt(rate*10000)/100  );
+						}
+//                      clearTimeout(timer);
+                        timer = setTimeout(getSyncProgress, 3000);
+                    }else if(res.status==0){
+                    	clearTimeout(timer);
+                        progressbar.progressbar( "value", 100);
+                    }else{
+                    	console("other return value");
+                    }
+                },
+                error: function (res) {
+                	progressLabel.text(jQuery.i18n.prop(PROGRESS_ERROR));
+                	checkLogout(res);
+                }
+            });
+        }
+ 		//----------------------progressbar1-------------------
+
+		//--------------progressbar2-------------------------
+        var progressbar2 = $("#progressbar2");
+        var progressLabel2 = $("#progress-label2");
+
+        progressbar2.progressbar({
+            value: true,
+            change: function() {
+                progressLabel2.text( progressbar2.progressbar( "value" ) + "%" );
+            },
+            complete: function() {
+                progressLabel2.text( "Complete!" );
+            }
+        });
+
+        $("#upFile").change(function(){
+			var upfiles = document.upform["upFile[]"].files;
+			var path = "";
+			for(var i=0;i<upfiles.length;i++){
+				if(i < upfiles.length-1){
+					path = path + upfiles[i].name+",";
+				}else{
+					path = path + upfiles[i].name;
+				}
+			}
+			document.getElementById("fileTitle").value = path;
+	    });
+
+		$("#upFileBtn").click(function(){
+			$("#upFile")[0].click();
+	    });
+
+	    $("#uploadBtn").click(function(){
+			var upfiles = document.upform["upFile[]"].files;
+
+			if(upfiles.length>0){
+
+//				clearTimeout(timer2);
+//				timer2 = setTimeout(getUploadProgress, 3000);
+
+
+//				$("#uploadSuccessNum").text(0);
+//				$("#uploadFailureNum").text(0);
+
+				 $http({
+	                url: '/reg/image/UploadProgress',
+	                type: 'GET',
+	                headers:{'Authorization': authorization},
+	                cache:false,
+	                success: function (res) {
+
+	                    if(res.status == 1){
+	                    	loadBundles(function(){
+		        				sweetAlert({
+								  title: "",
+								  text: ALERT_MESSAGE_TASK_INPROGRESS,
+								  allowOutsideClick: true,
+								});
+		        			});
+	                      	clearTimeout(timer2);
+							timer2 = setTimeout(getUploadProgress, 3000);
+	                    }else if(res.status == 0){
+	                    	var formData = new FormData(document.getElementById("upform"));
+	                    	$http({
+				                url: '/reg/image/ChangeUploadStatus/2',
+				                type: 'GET',
+				                headers:{'Authorization': authorization},
+				                success: function (res) {
+				                	progressbar2.progressbar( "value", 0);
+									progressLabel2.text( jQuery.i18n.prop(PROGRESS_LOADING) );
+									$("#uploadSuccessNum").text(0);
+									$("#uploadFailureNum").text(0);
+									clearTimeout(timer2);
+									timer2 = setTimeout(getUploadProgress, 3000);
+			                    	$http({
+						                url: '/reg/image/uploadImage',
+						                type: 'POST',
+						                headers:{'Authorization': authorization},
+						                data: formData,
+						                processData:false,
+						                contentType:false,
+						                error: function (res) {
+						                	console.log("uploadImage error:reset status to 0");
+			                				console.log(res)
+						                    progressLabel2.text(jQuery.i18n.prop(PROGRESS_ERROR));
+						                    $http({
+								                url: '/reg/image/ChangeUploadStatus/0',
+								                type: 'GET',
+								                headers:{'Authorization': authorization},
+								                error:function (res) {
+								                	console.log("reset status error:");
+			                						console.log(res);
+			                						checkLogout(res);
+								                },
+								            });
+						                }
+						            });
+
+				                },
+				                error: function (res) {
+				                	console.log("ChangeUploadStatus:request maybe timeout");
+	                				console.log(res)
+	                				checkLogout(res);
+				                }
+				            });
+	                    }else{
+	                    	console.log("Other return value.");
+	                    }
+	                },
+	                error: function (res) {
+	                	console.log("testUploadProgress:token maybe lost.");
+	                	console.log(res)
+	                    progressLabel2.text(jQuery.i18n.prop(PROGRESS_ERROR));
+	                    checkLogout(res);
+	                }
+	            });
+			}else{
+				loadBundles(function(){
+    				sweetAlert({
+					  title: "",
+					  text: ALERT_MESSAGE_CHOOSE_TARFILE,
+					  allowOutsideClick: true,
+					});
+    			});
+			}
+	    });
+	    function getUploadProgress() {
+            $http({
+                url: '/reg/image/UploadProgress',
+                type: 'GET',
+                headers:{'Authorization': authorization},
+                cache:false,
+                success: function (res) {
+//              	console.log(res);
+					$("#uploadSuccessNum").text(res.successNum);
+					$("#uploadFailureNum").text(res.failureNum);
+                    if(res.status==1 || res.status==2){
+                    	if(res.currentIndex < 0){
+                    		progressbar2.progressbar( "value", 0);
+                    	}else{
+                    		console.log(res.totalIndex);
+                    		if(res.totalIndex==0){
+                    			progressbar2.progressbar( "value", 0);
+                    		}else{
+                    			var rate = (res.currentIndex*6+res.currentStep)/(res.totalIndex*6);
+                        		progressbar2.progressbar( "value",  parseInt(rate*10000)/100  );
+                    		}
+						}
+                        timer2 = setTimeout(getUploadProgress, 3000);
+                    }else if(res.status==0){
+                    	clearTimeout(timer2);
+                        progressbar2.progressbar( "value", 100);
+                    }else{
+                    	console.log("Other return value.")
+                    }
+                },
+                error: function (res) {
+                	console.log("getUploadProgress:token maybe lost.");
+                	console.log(res)
+                	progressLabel2.text(jQuery.i18n.prop(PROGRESS_ERROR));
+                	checkLogout(res);
+                }
+            });
+        }
+        //--------------progressbar2-------------------------
+    }
+
+//  nextStep();
+
+    $("#next_btn").click(nextStep);
+
+    function nextStep() {
+        if (initStep == "Start") {
+        	swal({
+			  title: "<img src='img/loading.gif' />",
+			  text: PROGRESS_LOADING,
+			  showConfirmButton: false,
+			  html: true,
+			});
+        	requestMutiConfig(function(mutipleConfig){
+        		//allow mutiple
+        		if(mutipleConfig.multiSuite=="1"){
+        			requestSuiteInfo(function(){
+//				    	requestLockId(function(){
+				    		requestUserAgreement(function(){
+				    			initStep = "ChooseLicense";
+				        		saveStep(initStep,function(){
+				        			loadChooseLicense();
+				        		});
+				    		});
+//			        	});
+					});
+        		}else{
+        			requestInstances(function(instancelist){
+		        		if(instancelist.length>0){
+		        			sweetAlert({
+							  title: "",
+							  text: ALERT_MESSAGE_ONESUITE_HINT,
+							  allowOutsideClick: true,
+							});
+		        		}else{
+		        			requestSuiteInfo(function(){
+//						    	requestLockId(function(){
+						    		requestUserAgreement(function(){
+						    			initStep = "ChooseLicense";
+						        		saveStep(initStep,function(){
+						        			loadChooseLicense();
+						        		});
+						    		});
+//					        	});
+							});
+		        		}
+		        	});
+        		}
+        	});
+
+        }
+        //sep
+        else if (initStep == "ChooseLicense") {
+//      	console.log($('input[name="lcsChooseRadio"]:checked').val());
+        	if($('input[name="lcsChooseRadio"]:checked').val()){
+        		userChoose = $('input[name="lcsChooseRadio"]:checked').val();
+        	}
+
+    		if(licenseCheck){
+    			if(userChoose == "yes"){
+        			//SuiteList has loaded on first step
+        			requestCsrfToken(function(){
+        				postUserAgreement(function(){
+							initStep = "InputLicense";
+	    					saveStep(initStep,function(){
+	        					loadInputLicense();
+	        				});
+						});
+        			});
+	        	}
+	        	else if(userChoose == "no"){
+        			//SuiteList has loaded on first step
+        			requestCsrfToken(function(){
+        				postUserAgreement(function(){
+							initStep = "ChooseSuite";
+	        				saveStep(initStep,function(){
+		        				loadChooseSuite();
+		        			});
+						});
+        			});
+	        	}
+	        	else{
+	        		loadBundles(function(){
+	    				sweetAlert({
+						  title: "",
+						  text: ALERT_MESSAGE_CHOOSE_HAS_LICENSE,
+						  allowOutsideClick: true,
+						});
+	    			});
+	        	}
+    		}else{
+    			loadBundles(function(){
+    				sweetAlert({
+					  title: "",
+					  text: ALERT_MESSAGE_PRIVACYCHECK_LICENSECHECK,
+					  allowOutsideClick: true,
+					});
+    			});
+    		}
+        }
+        //road 1
+        else if (initStep == "InputLicense") {
+			if($("#lcsSelect").val()){
+				selectedLicense = $("#lcsSelect").val();
+			}
+
+			if(selectedLicense && selectedLicense != null){
+				requestSuiteInfo(function(suites){
+					currentSuite = undefined;
+					currentVersion = null;
+
+					suitelist.forEach(function (suite) {
+		        		suite.versions.forEach(function (version) {
+		        			if(version.license_id && version.license_id!=null){
+		        				version.license_id.forEach(function (editionId) {
+			        				if(editionId == selectedLicense){
+			        					currentSuite = suite;
+			        					currentVersion = version;
+			        				}
+			        			});
+		        			}
+		        		});
+			        });
+					if(currentSuite && currentSuite.suite !=null){
+						requestCapabilities(selectedLicense,currentSuite.suite,currentVersion, function(data){
+							initStep = "ShowFeatures";
+							saveStep(initStep,function(){
+								loadShowFeatures(data);
+								//init edition
+//								$(".radio-btn[id='"+currentCap.initial_edition_selected+"']")[0].click();
+		        			});
+						});
+					}else{
+						loadBundles(function(){
+		    				sweetAlert({
+							  title: "",
+							  text: ALERT_MESSAGE_NOCORRESPOND_SUITE,
+							  allowOutsideClick: true,
+							});
+		    			});
+					}
+				});
+			}
+			else{
+				loadBundles(function(){
+    				sweetAlert({
+					  title: "",
+					  text: ALERT_MESSAGE_LICENSE_EMPTY,
+					  allowOutsideClick: true,
+					});
+    			});
+			}
+        }
+        //road 2
+        else if (initStep == "ChooseSuite") {
+        	if(!currentSuite || currentSuite.suite == null){
+        		loadBundles(function(){
+    				sweetAlert({
+					  title: "",
+					  text: ALERT_MESSAGE_CHOOSE_SUITE,
+					  allowOutsideClick: true,
+					});
+    			});
+        		return;
+        	}
+        	if(!currentVersion || currentVersion == null){
+				loadBundles(function(){
+    				sweetAlert({
+					  title: "",
+					  text: ALERT_MESSAGE_CHOOSE_VERSION,
+					  allowOutsideClick: true,
+					});
+    			});
+        		return;
+        	}
+
+    		requestCapabilities(null,currentSuite.suite,currentVersion, function(data){
+    			initStep = "ShowFeatures";
+    			saveStep(initStep,function(){
+    				loadShowFeatures(data);
+    				//init edition
+//					$(".radio-btn[id='"+currentCap.initial_edition_selected+"']")[0].click();
+		        });
+			});
+
+        }
+        else if (initStep == "ShowFeatures") {
+    		var passport = false;
+    		currentCap.editions.forEach(function(e){
+    			if(e.selected){
+    				passport = true;
+    			}
+    		});
+    		if(passport){
+    			initStep = "NFSSetup";
+    			saveStep(initStep,function(){
+    				requestDefaultNFSIP(function(){
+						loadNFSSetup();
+					});
+		        });
+    		}else{
+    			loadBundles(function(){
+    				sweetAlert({
+					  title: "",
+					  text: ALERT_MESSAGE_CHOOSE_EDITION,
+					  allowOutsideClick: true,
+					});
+    			});
+    		}
+        }
+        else if (initStep == "NFSSetup") {
+        	storageModel.storageType = $("input[name='storage-type']").val();
+
+        	switch (storageModel.storageType){
+        		case "nfs":
+        			storageModel.storageConfig.type = $("input[name='nfs-config']:checked").val();
+        			storageModel.storageConfig.folder = $("#nfs-"+storageModel.storageConfig.type+"-dir").val();
+        			storageModel.storageConfig.addr = $("#nfs-"+storageModel.storageConfig.type+"-ip").val();
+        			if(storageModel.storageConfig.folder
+        			&& storageModel.storageConfig.folder.trim() != ""
+        			&& storageModel.storageConfig.addr
+        			&& storageModel.storageConfig.addr.trim() != ""
+        			){
+        				requestCsrfToken(function(){
+		            		requestNFSCheck(function(res,status){
+								if(status == "success"){
+									if(res.validNfs){
+										sweetAlert.close();
+										startDeployment();
+									}else{
+										sweetAlert({
+										  title: "",
+										  text: ALERT_MESSAGE_STORAGE_CHECK_FAIL,
+										  allowOutsideClick: true,
+										});
+									}
+								}else{
+									console.log(res);
+									sweetAlert({
+									  title: "",
+									  text: ALERT_MESSAGE_STORAGE_CHECK_ERROR,
+									  allowOutsideClick: true,
+									});
+								}
+							});
+		            	});
+		        	}else{
+	    				sweetAlert({
+						  title: "",
+						  text: ALERT_MESSAGE_STORAGE_FOLDER,
+						  allowOutsideClick: true,
+						});
+		        	}
+        			break;
+        		default:
+        			break;
+        	}
+
+        }
+        else if (initStep == "SuitePod") {
+        	//refresh
+        	if(!suiteReady){
+//      		initStep = "NFSSetup";
+//      		nextStep();
+				startDeployment();
+        	}else{
+        		if(onNextHandler){
+        			var ret = onNextHandler();
+		            if(!ret){
+		//              $(this).attr('disabled', true);
+		            }else{
+//		            	loadChooseLicense();
+//		            	loadBundles(function(){
+//		            		$("#cancel_btn").hide();
+//			        		$("#next_btn").text(FOOTER_NEXT_BUTTON).removeAttr("disabled");
+//		        		});
+		            }
+        		}else{
+        			console.log("Next button is not registered by this suite.");
+        		}
+        	}
+        }
+    }
+    function startDeployment(){
+    	//go to SuitePod
+        initStep = "SuitePod";
+    	saveStep(initStep,function(){
+    		loadBundles(function(){
+    			$("#next_btn").text(FOOTER_NEXT_BUTTON);
+        		$("#next_btn").attr("disabled","disabled");
+    		});
+
+            //iframeUrl = 'loading.html?X-AUTH-TOKEN='+authorization+'&ACCEPT-LANGUAGE='+language;
+            // iframeUrl = 'http://localhost:8080/suiteConfig/itsma';
+            // You may need to disable cross-domain attacks
+			//iframeUrl = 'http://localhost:8002/suiteConfig/upgrade';
+			//for devmock
+			iframeUrl = 'http://localhost:8002/upgrade';
+
+            suiteReady = true;
+
+			var iframeTpl = '<iframe id="mainFrame" name="mainFrame" width="100%" ' +
+                        'frameborder="0" style="display: block;" webkitallowfullscreen="" mozallowfullscreen="" allowfullscreen=""></iframe>';
+
+            $("#section_main").children().remove();
+
+            $(iframeTpl).appendTo("#section_main").prop('src', iframeUrl);
+            resizeComponent();
+//          console.log(currentSuite.suite);
+//          console.log(currentNamespace);
+            if(currentCap && currentCap!=null){
+            	requestCsrfToken(function(){
+            		requestDeploymentId(function(depid){
+	            		deploymentId = depid;
+	          			postFeature(deploymentId,currentCap,function(){
+			            	requestIframeUrl(deploymentId,currentSuite.suite,currentNamespace ,currentLabel,currentVersion, function (url) {
+				                iframeUrl = window.document.location.origin + url;
+		//		                iframeUrl = window.document.location.origin + "/aaa";
+				                checkIframeOK(iframeUrl, {delay:2000, allTimes:300*1000, beginTime:new Date().getTime()}, function(){
+//				                    $mainFrame = $("#mainFrame");
+//				                    $mainFrame.css('height', $('body').height() -90 );
+				                    $("#mainFrame").prop('src', iframeUrl);
+				                });
+				            });
+			            });
+	            	});
+            	});
+
+            }else{
+            	requestCsrfToken(function(){
+	            	requestDeploymentId(function(depid){
+	            		deploymentId = depid;
+	            		requestIframeUrl(deploymentId,currentSuite.suite,currentNamespace ,currentLabel,currentVersion, function (url) {
+			                iframeUrl = window.document.location.origin + url;
+		//	                iframeUrl = window.document.location.origin + "/aaa";
+			                checkIframeOK(iframeUrl, {delay:2000, allTimes:300*1000, beginTime:new Date().getTime()}, function(){
+//			                    $mainFrame = $("#mainFrame");
+//			                    $mainFrame.css('height', $('body').height() -90 );
+			                    $("#mainFrame").prop('src', iframeUrl);
+			                });
+			            });
+	            	});
+            	});
+            }
+        });
+    }
+    function backStep(){
+        //road 1
+        if (initStep == "InputLicense") {
+        	loadChooseLicense();
+        }
+        //road 2
+        else if (initStep == "ChooseSuite") {
+        	loadChooseLicense();
+        	$("#next_btn").removeAttr("disabled");
+        }
+        else if (initStep == "ShowFeatures") {
+            if(userChoose == "yes"){
+				loadInputLicense();
+            }
+            else if(userChoose == "no"){
+            	loadChooseSuite();
+            }
+        }
+        else if (initStep == "NFSSetup") {
+        	loadShowFeatures(currentCap);
+        }
+//      else if (initStep == "Synchronize") {
+//			loadNFSSetup();
+//      }
+        else if (initStep == "SuitePod") {
+        	if(!suiteReady){
+        		loadBundles(function(){
+	        		$("#next_btn").text(FOOTER_NEXT_BUTTON).removeAttr("disabled");
+        		});
+        		//skip Synchronize
+//      		loadSynchronize();
+        		loadNFSSetup();
+        	}else{
+        		if(onBackHandler){
+        			var ret = onBackHandler();
+		            if(!ret){
+
+		            }else{
+		            	requestMutiConfig(function(mutipleConfig){
+			        		//allow mutiple
+			        		if(mutipleConfig.multiSuite=="1"){
+			        			loadBundles(function(){
+					        		$("#next_btn").text(FOOTER_NEXT_BUTTON).removeAttr("disabled");
+				        		});
+				        		//skip Synchronize
+		//		            	loadSynchronize();
+				            	loadNFSSetup();
+			        		}else{
+			        			requestInstances(function(instancelist){
+					        		if(instancelist.length>0){
+					        			sweetAlert({
+										  title: "",
+										  text: ALERT_MESSAGE_ONESUITE_HINT,
+										  allowOutsideClick: true,
+										});
+					        		}else{
+					        			loadBundles(function(){
+							        		$("#next_btn").text(FOOTER_NEXT_BUTTON).removeAttr("disabled");
+						        		});
+						        		//skip Synchronize
+				//		            	loadSynchronize();
+						            	loadNFSSetup();
+					        		}
+					        	});
+			        		}
+			        	});
+		            }
+        		}else{
+        			console.log("Back button is not registered by this suite.");
+        		}
+
+        	}
+        }
+    }
+    $("#back_btn").click(backStep);
+    $("#cancel_btn").click(function(){
+    	if(onCancelHandler){
+    		var ret = onCancelHandler();
+    	}else{
+    		console.log("Cancel button is not registered by this suite.");
+    	}
+		loadBundles(function(){
+			sweetAlert({
+			  title: "",
+			  text: ALERT_MESSAGE_CANCEL_CONFIRM,
+			  allowOutsideClick: false,
+			  showCancelButton: true,
+			  cancelButtonText:ALERT_MESSAGE_CANCEL_NO,
+			  confirmButtonText: ALERT_MESSAGE_CANCEL_YES,
+			  closeOnConfirm: false
+			},
+			function(){
+				if(deploymentId && deploymentId!=null){
+					//uninstall instance
+					requestCsrfToken(function(){
+						$http({
+				            url: frontPath + '/urest/v1.1/deployment/'+deploymentId+'/k8s-instance',
+				            type: 'post',
+				            data: JSON.stringify({"action":"delete"}),
+				            contentType: 'application/json',
+				            headers:{
+						              	'X-AUTH-TOKEN': authorization,
+						              	'X-CSRF-TOKEN': csrfToken,
+						              },
+				            success: function (data) {
+				            	initStep = "Start";
+					    		nextStep();
+							  	sweetAlert({
+								  title: "",
+								  text: ALERT_MESSAGE_CANCEL_SUCCESS,
+								  allowOutsideClick: true,
+								});
+				            },
+				            error: function (res) {
+				                initStep = "Start";
+					    		nextStep();
+					    		sweetAlert.close();
+//				                sweetAlert({
+//								  title: "",
+//								  text: ALERT_MESSAGE_CANCEL_ERROR,
+//								  allowOutsideClick: true,
+//								});
+								checkLogout(res);
+				            }
+				        });
+			        });
+		       	}else{
+		       		initStep = "Start";
+		    		nextStep();
+		    		sweetAlert.close();
+		       	}
+			});
+    	});
+    });
+
+
+    window.onload = function () {
+        resizeComponent();
+    }
+    window.onresize = function () {
+        resizeComponent();
+//      $("#mainFrame").height($('body').height() -70);
+//      $mainFrame && $mainFrame.css('height', $('body').height() -90 );
+    }
+	function resizeComponent(){
+		$(".rightDiv").height($("body").height()-70);
+		$("#mainFrame").height($('body').height() -70);
+	}
+	//show cap
+    function showObj() {
+		console.log(currentCap);
+    }
+
+    function requestIframeUrl(deploymentId,suiteName,namespace,label,version, cb) {
+
+    	var paramMap = {
+		  "labelKey": null,
+		  "labelValue": null,
+		  "namespace": null,
+		  "suite": suiteName,
+		  "version": version.version,
+		  "nfsOutputPath":storageModel.storageConfig.folder,
+		  "nfsIp":storageModel.storageConfig.addr,
+		}
+    	console.log(paramMap);
+
+        $http({
+            url: frontPath + '/urest/v1.1/deployment/'+deploymentId+'/suite-configuration',
+            type: 'post',
+            cache:false,
+            data: JSON.stringify(paramMap),
+            contentType:"application/json",
+            headers:{
+		              	'X-AUTH-TOKEN': authorization,
+		              	'X-CSRF-TOKEN': csrfToken,
+		              },
+            success: function (data) {
+            	console.log(data);
+                cb('/suiteConfig/' + suiteName + '/configuration.html');
+            },
+            error: function (res) {
+                console.log(res);
+                checkLogout(res);
+            }
+        });
+    }
+
+	//TODO
+	//----------------------exp-------------------------
+    //返回所有suite instances
+    function requestInstances(cb) {
+//    $http({
+//        url: frontPath + '/urest/v1.1/deployment?deploymentStatus=SUITE_INSTALL&deploymentStatus=INSTALL_FINISHED',
+//        type: 'get',
+//        headers:{'X-AUTH-TOKEN': authorization},
+//        success: function (data) {
+//            cb(data);
+//        },
+//        error: function (res) {
+//          console.log(res);
+//			checkLogout(res);
+//        }
+//    });
+
+       var data = fakeInstances11;
+       cb(data);
+    }
+    function requestSuiteInfo(cb) {
+//        $http({
+//            url: frontPath + '/urest/v1.1/suites',
+//            type: 'get',
+//            headers:{'X-AUTH-TOKEN': authorization},
+//            success: function (data) {
+//				  suitelist = data.suiteInfoList;
+//				  if(suitelist){
+//				  	//version reverse if backend not do it
+//			        suitelist.forEach(function (su) {
+//			            if(su.versions){
+//			            	su.versions.reverse();
+//			            }
+//			        });
+//                	cb(suitelist);
+//				  }else{
+//				  	console.log("can not find suiteinfo list.");
+//				  	$("#back_btn").hide();
+//        			$("#next_btn").hide();
+//        			loadBundles(function(){
+//	    				sweetAlert({
+//						  title: "",
+//						  text: ALERT_MESSAGE_IMPORT_SRTIMAGE,
+//						  allowOutsideClick: true,
+//						});
+//	    			});
+//				  }
+//            },
+//            error: function (res) {
+//            	console.log(res);
+//            		if(res.status == "404"){
+//            			$("#back_btn").hide();
+//            			$("#next_btn").hide();
+//            			loadBundles(function(){
+//		    				sweetAlert({
+//							  title: "",
+//							  text: ALERT_MESSAGE_IMPORT_SRTIMAGE,
+//							  allowOutsideClick: true,
+//							});
+//		    			});
+//            		}
+//                	console && console.log(res.statusText);
+//					checkLogout(res);
+//            }
+//        });
+
+        var data = fakeSuites;
+        data.forEach(function (su) {
+            if(su.versions){
+            	su.versions.reverse();
+            }
+        });
+        suitelist = data;
+        cb(suitelist);
+
+    }
+
+	function requestCapabilities(editionId,suite,version, cb) {
+//		var shortLocale = language.substring(0,2);
+//		var reqUrl = frontPath + '/urest/v1.1/suite-feature/'+suite+'/'+version.version+version.features+'?lang-suffix='+shortLocale;
+//		if(editionId && editionId != null){
+//			reqUrl = reqUrl + "&editionId="+editionId
+//		}
+//        $http({
+//        	  url: reqUrl,
+//            type: 'get',
+//            headers:{'X-AUTH-TOKEN': authorization},
+//            success: function (data) {
+//              currentCap = data.suiteFeature;
+//      		suiteI18N = data.i18nMessage;
+//      		cb();
+//            },
+//            error: function (res) {
+//              	console.log(res);
+//            		if(res.status == "404"){
+//            			loadBundles(function(){
+//		    				sweetAlert({
+//							  title: "",
+//							  text: ALERT_MESSAGE_FEATUREJSON_NOTEXIST,
+//							  allowOutsideClick: true,
+//							});
+//		    			});
+//            		}
+//					checkLogout(res);
+//            }
+//        });
+        var data = fakei18nConfigJson;
+        currentCap = data.suiteFeature;
+        suiteI18N = data.i18nMessage;
+        cb();
+    }
+	function requestExtLicense(cb) {
+//        $http({
+//            url: frontPath + '/urest/v1.1/license-manager/license',
+//            type: 'get',
+//            headers:{'X-AUTH-TOKEN': authorization},
+//            success: function (data) {
+//                cb(data.feature);
+//            },
+//            error: function (res) {
+//            	  cb([]);
+//                console.log(res);
+//                checkLogout(res);
+//            }
+//        });
+        var data = fakeLicense.feature;
+        cb(data);
+    }
+	function requestDeploymentId(cb) {
+//        $http({
+//            url: frontPath + '/urest/v1.1/deployment',
+//            type: 'post',
+//            headers:{
+//		              	'X-AUTH-TOKEN': authorization,
+//		              	'X-CSRF-TOKEN': csrfToken,
+//		              },
+//            success: function (data) {
+//              cb(data.uuid);
+//            },
+//            error: function (res) {
+//              console.log(res);
+//              checkLogout(res);
+//            }
+//        });
+			  var dep={
+			  	"uuid": "new11111111111111111111",
+			  	"status": "NEW",
+			  	"updatedTime": 1481076566393
+			  };
+          	cb(dep.uuid);
+    }
+	function requestCsrfToken(cb) {
+//       $http({
+//          url: frontPath + '/urest/v1.1/csrf-token',
+//          type: 'get',
+//          cache:false,
+//          headers:{'X-AUTH-TOKEN': authorization},
+//          success: function (data) {
+//          	csrfToken = data.csrfToken;
+//      		cb(csrfToken);
+//          },
+//          error: function (res) {
+//              console.log(res);
+//              checkLogout(res);
+//          }
+//      });
+        var data = {
+		    "csrfToken": "sauyfdgsdfgsdjkdsgfdg"
+		  };
+		csrfToken = data.csrfToken;
+        cb(csrfToken);
+   }
+	function requestDefaultNFSIP(cb) {
+
+//       $http({
+//          url: frontPath + '/urest/v1.1/nfs/default',
+//          type: 'get',
+//          cache:false,
+//          headers:{'X-AUTH-TOKEN': authorization},
+//          success: function (data) {
+//          	defaultNFSIP = data.nfsIp;
+//          	cb();
+//          },
+//          error: function (res,status) {
+//          	cb();
+//              console.log(res);
+//              checkLogout(res);
+//          }
+//      });
+        var data = { "nfsIp": "16.186.77.77", "nfsOutputPath": null };
+        defaultNFSIP = data.nfsIp;
+        cb();
+   }
+	function requestNFSCheck(cb) {
+		swal({
+		  title: "<img src='img/loading.gif' />",
+		  text: "&nbsp&nbsp&nbsp"+ALERT_MESSAGE_STORAGE_CHECK_LOADING+"&nbsp&nbsp&nbsp",
+		  showConfirmButton: false,
+		  html: true,
+		});
+
+//      var paramMap = {
+//		  "nfsIp": storageModel.storageConfig.addr,
+//		  "nfsOutputPath": storageModel.storageConfig.folder,
+//		}
+//      $http({
+//          url: frontPath + '/urest/v1.1/nfs',
+//          type: 'post',
+//          cache:false,
+//          data: JSON.stringify(paramMap),
+//          contentType:"application/json",
+//          headers:{
+//		              	'X-AUTH-TOKEN': authorization,
+//		              	'X-CSRF-TOKEN': csrfToken,
+//		              },
+//          success : function(res,status){
+//          	cb(res,status);
+//			},
+//          error : function(res,status){
+//          	cb(res,status);
+//          	checkLogout(res);
+//			}
+//      });
+
+        // setTimeout(function(){
+        // 	var data = {
+	       //  	validNfs:true
+	       //  };
+	       //  cb(data,"success");
+        // },5000);
+        var data = {
+	        	validNfs:true
+	        };
+
+
+        cb(data,"success");
+
+   }
+	function postUserAgreement(cb) {
+//		var paramMap = {
+//		  "eula": licenseCheck,
+//		  "call_home": privacyCheck,
+//		}
+//      $http({
+//            url: frontPath + '/urest/v1.1/license-manager/userAgreement',
+//            type: 'post',
+//            data: JSON.stringify(paramMap),
+//            contentType:'application/json',
+//            headers:{
+//		              	'X-AUTH-TOKEN': authorization,
+//		              	'X-CSRF-TOKEN': csrfToken,
+//		              },
+//            success: function (data) {
+//                cb();
+//            },
+//            error: function (res) {
+//                console && console.log( res.statusText);
+//                checkLogout(res);
+//            }
+//      });
+		cb();
+    }
+	//----------------------exp-------------------------
+	function requestMutiConfig(cb) {
+         $http({
+            url: frontPath + '/urest/v1.1/multi-suite',
+            type: 'get',
+            cache:false,
+            headers:{'X-AUTH-TOKEN': authorization},
+            success: function (data) {
+            	cb(data);
+            },
+            error: function (res,status) {
+            	cb({});
+                console.log(res);
+                checkLogout(res);
+            }
+        });
+//      cb({"multiSuite": "1"});
+
+   }
+	function requestUserAgreement(cb) {
+          $http({
+              url: frontPath + '/urest/v1.1/license-manager/userAgreement',
+              type: 'get',
+              headers:{'X-AUTH-TOKEN': authorization},
+              success: function (data) {
+              	if(data.value && data.value.agreementName){
+		        	for(var i=0;i<data.value.agreementName.length;i++){
+		        		if(data.value.agreementName[i].type == "EULA"){
+		        			switch (data.value.agreementName[i].value){
+		        				case "true":
+		        					licenseCheck = true;
+		        					break;
+		        				case "false":
+		        					licenseCheck = false;
+		        					break;
+		        				default:
+		        					break;
+		        			}
+		        		}
+		        		if(data.value.agreementName[i].type == "CALL_HOME"){
+		        			switch (data.value.agreementName[i].value){
+		        				case "true":
+		        					privacyCheck = true;
+		        					break;
+		        				case "false":
+		        					privacyCheck = false;
+		        					break;
+		        				default:
+		        					break;
+		        			}
+		        		}
+		        	}
+		        }
+		        cb();
+              },
+              error: function (res) {
+              	  cb();
+                  checkLogout(res);
+              }
+          });
+    }
+	function postFeature(deploymentId,cap,cb) {
+        $http({
+              url: frontPath + '/urest/v1.1/deployment/'+deploymentId+'/feature',
+              type: 'post',
+              data: JSON.stringify(cap),
+              contentType:'application/json',
+              headers:{
+		              	'X-AUTH-TOKEN': authorization,
+		              	'X-CSRF-TOKEN': csrfToken,
+		              },
+              success: function (data) {
+                  cb();
+              },
+              error: function (res) {
+                  console && console.log( res.statusText);
+                  checkLogout(res);
+              }
+        });
+    }
+	//no use
+	function requestLockId(cb) {
+          $http({
+              url: frontPath + '/urest/v1.1/license-manager/lock',
+              type: 'get',
+              headers:{'X-AUTH-TOKEN': authorization},
+              success: function (data) {
+              	lockDetail = data.lock.lockDetail
+                cb();
+              },
+              error: function (res) {
+				cb();
+                console.log(res);
+                checkLogout(res);
+              }
+          });
+
+//      lockDetail = fakeLockId.lock.lockDetail;
+//      cb();
+    }
+    function checkIframeOK(iframeUrl, condition, cb) {
+        var reTime = new Date().getTime() - condition.beginTime;
+        console && console.log('checkIframeUrl cost: ' + reTime/1000);
+        if(reTime >= condition.allTimes){
+            console && console.log('checkIframeUrl end.');
+            loadBundles(function(){
+            	$("#next_btn").text(FOOTER_REFRESH_BUTTON);
+            	$("#next_btn").removeAttr("disabled");
+            });
+            return cb();
+        }
+        console && console.log('try checkIframeUrl...');
+        $http({
+            url: iframeUrl,
+            type: 'get',
+            cache: false,
+            headers:{'X-AUTH-TOKEN': authorization},
+            success: function (data) {
+            	loadBundles(function(){
+	            	$("#next_btn").text(FOOTER_NEXT_BUTTON);
+            		$("#next_btn").removeAttr("disabled");
+	            });
+
+            	suiteReady = true;
+                cb();
+            },
+            error: function (res) {
+               checktimer = setTimeout(function () {
+                   checkIframeOK(iframeUrl, condition, cb);
+               }, condition.delay);
+            }
+        });
+    }
+
+    function goExternalSite(){
+    	window.open("http://autopass.hpeswlab.net/apsc");
+    }
+    function saveStep(step,cb){
+//  	$http({
+//        url: frontPath + '/urest/v1.1/cookie',
+//        type: 'post',
+//        headers:{'X-AUTH-TOKEN': authorization},
+//        success: function (data) {
+//          cb();
+//        },
+//        error: function (res) {
+//          console.log(res);
+//			checkLogout(res);
+//        }
+//    	});
+		console.log(step);
+      	cb();
+    }
+    function requestEtcdStatus(cb){
+    	$http({
+          url: frontPath + '/urest/v1.1/cookie',
+          type: 'post',
+          headers:{
+	              	'X-AUTH-TOKEN': authorization,
+	              	'X-CSRF-TOKEN': csrfToken,
+	              },
+          success: function (data) {
+            cb(data);
+          },
+          error: function (res) {
+          	cb({});
+            console.log(res);
+            checkLogout(res);
+          }
+      	});
+//		var data = fakeEtcdStatus;
+//    	cb(data);
+    }
+
+
+	function getUrlParam(name){
+	     var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
+	     var r = window.location.search.substr(1).match(reg);
+	     if(r!=null)return  unescape(r[2]); return null;
+	}
+     function registerOnNextHandler(handler) {
+    	console.log("----------registerOnNextHandler--------------");
+    	console.log(handler)
+        onNextHandler = handler;
+    }
+    function registerOnBackHandler(handler) {
+    	console.log("----------registerOnBackHandler--------------");
+    	console.log(handler)
+        onBackHandler = handler;
+    }
+    function registerOnCancelHandler(handler) {
+    	console.log("----------registerOnCancelHandler--------------");
+    	console.log(handler)
+        onCancelHandler = handler;
+    }
+    function enableNext(enable) {
+    	console.log("----------enableNext--------------");
+    	console.log(enable)
+    	if(enable){
+    		$('#next_btn').removeAttr('disabled');
+    	}else{
+    		$('#next_btn').attr('disabled',"disabled");
+    	}
+    }
+    function enableBack(enable) {
+    	console.log("----------enableBack--------------");
+    	console.log(enable)
+    	if(enable){
+    		$('#back_btn').removeAttr('disabled');
+    	}else{
+    		$('#back_btn').attr('disabled',"disabled");
+    	}
+    }
+    function enableCancel(enable) {
+    	console.log("----------enableCancel--------------");
+    	console.log(enable)
+    	if(enable){
+    		$('#cancel_btn').removeAttr('disabled');
+    	}else{
+    		$('#cancel_btn').attr('disabled',"disabled");
+    	}
+    }
+</script>
+
+
+
+</body>
+
+</html>

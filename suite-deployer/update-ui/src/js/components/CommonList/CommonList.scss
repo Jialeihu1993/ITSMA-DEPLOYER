@@ -1,0 +1,75 @@
+.CommonList{
+    //margin-left: 32px;
+    //margin-top:25px;
+    .list-group-item{
+        border-top-style: none;
+        border-right-style: none;
+        border-left-style: none;
+        margin-bottom: 0px;
+        border-bottom: 1px solid #f0f0f0;
+        padding-left: 0px;
+        .indicator{
+            display: inline-block;
+            position:absolute;
+            top:12px;
+            left: 0px;
+            font-size: 22px;
+            color:#00a981;
+        }
+
+        .indicator-error{
+            color:red;
+        }
+
+        .indicator-pending{
+            color:#cccccc;
+        }
+
+        .content{
+            display: inline-block;
+            font-size: 18px;
+            font-family: HPEMetricMedium;
+            line-height: 24px;
+            padding-left: 36px;
+        }
+
+        
+    }
+
+    .well {
+        margin-bottom: 0px;
+        background-color: #ffe7e7;
+        border-style: none;
+        padding: 0px;
+        padding-left:35px;
+        padding-right: 35px;
+        padding-top:5px;
+        padding-bottom: 5px;
+        font-size: 16px;
+        font-family: HPEMetricRegular;
+        span{
+            padding-left:10px;
+            font-size: 18px;
+            font-family: HPEMetricMedium;
+            color:#2ad2c9;
+        }
+    }
+}
+
+.list-group{
+        margin-bottom: 0px;
+}
+
+.arrow-up {
+    display: block;
+    margin-left: 120px;
+    width: 0; 
+    height: 0; 
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    
+    border-bottom: 10px solid #ffe7e7;
+  }
+
+
+

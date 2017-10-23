@@ -1,0 +1,50 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: itom-sm-deploy-controller-pod
+  namespace: itsma1
+  labels:
+    itsmaService: itom-sm
+spec:
+  nodeSelector:
+    Worker: label
+  containers:
+  - name: itom-sm-deploy-controller-pod
+    image: shc-harbor-dev.hpeswlab.net/itsma/itom-sm-deploy-controller:1.0.1
+    imagePullPolicy: Always
+    resources:
+      requests:
+        cpu: "200m"
+        memory: "256Mi"
+      limits:
+        cpu: "1000m"
+        memory: "1024Mi"
+    env:
+      - name: INSTALLER_URL
+        value: http://suite-conf-svc-itsma.core.svc.cluster.local:8081/itsma
+      - name: MaxTimesFailedStatusAllowed
+        value: "240"
+      - name: IntervalOfCheckStatus
+        value: "30"
+      - name: IntervalOfCheckServiceReady
+        value: "10"
+      - name: InstallType
+        value: new_install
+    volumeMounts:
+    - name: timezone-config
+      mountPath: /etc/localtime
+    - name: nfs
+      mountPath: /var/log/service-deploy-controller/
+      subPath: logs/services/itom-sm/deploy-controller/
+  restartPolicy: Never
+  volumes:
+  - name: nfs
+    persistentVolumeClaim:
+      claimName: global-volume
+  - name: timezone-config
+    hostPath:
+      path: /usr/share/zoneinfo/Asia/Shanghai
+  securityContext:
+    fsGroup: 1999
+  imagePullSecrets:
+  - name: registrypullsecret

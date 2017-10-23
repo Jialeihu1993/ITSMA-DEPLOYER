@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<h1></h1>
+<button id="btn1">enable</button>
+<button id="btn2">disable</button>
+
+<script type="text/javascript">
+    var count = 0;
+
+    
+        
+
+        var parentWnd = window.parent;
+        parentWnd.registerOnNextHandler(next);
+        parentWnd.registerOnBackHandler(back);
+        parentWnd.enableNext(true);
+
+   
+
+    function next() {
+      alert("next")
+    }
+
+    function back() {
+        alert("back")
+    }
+</script>
+</body>
+</html>

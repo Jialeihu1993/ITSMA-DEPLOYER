@@ -1,0 +1,65 @@
+.componentsList{
+    margin-left: 32px;
+
+    
+
+    .list-group-item{
+        border-left: 3px solid #f0f0f0;
+        border-top-style: none;
+        border-right-style: none;
+        border-bottom-style: none;
+        padding-left: 0px;
+        .indicator{
+            display: inline-block;
+            position:absolute;
+            top:22px;
+            left: 0px;
+            width:14px;
+            height: 3px;
+            background-color: #f0f0f0;
+        }
+
+        .ion-checkmark-circled{
+            font-size: 22px;
+            color:#00a981;
+        }
+
+        .type{
+          display: inline-block;
+          padding-left: 24px;
+          font-size: 20px;
+          font-family: HPEMetricMedium;
+          line-height: 24px; 
+        }
+        .content{
+            font-size: 18px;
+            font-family: HPEMetricMedium;
+            line-height: 24px;
+            margin-left: 5px; 
+        }
+        .titleIcon{
+            display: inline-block;
+            position: absolute;
+            top:25px;
+            left:-10px;
+            font-size: 24px;
+            color: #00a981;
+        }
+
+        .title{
+            display:inline-block;
+            padding-left: 24px;
+            font-size: 24px;
+            font-family: HPEMetricSemibold;
+            line-height: 24px; 
+            margin-bottom: 10px;
+            margin-top:15px;
+        }
+    }
+}
+
+.list-group{
+        margin-bottom: 0px;
+}
+
+
